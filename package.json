@@ -1,0 +1,45 @@
+{
+  "name": "vertiwiki",
+  "version": "0.2.4",
+  "description": "100% static, single-file, zero-backend Markdown wiki and documentation engine for 2026 and beyond.",
+  "type": "module",
+  "main": "dist/vertiwiki.html",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && cp dist/index.html dist/vertiwiki.html && cp dist/vertiwiki.html website/vertiwiki.html",
+    "preview": "vite preview"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "dompurify": "^3.2.4",
+    "katex": "^0.16.21",
+    "marked": "^15.0.7",
+    "mermaid": "^11.4.1",
+    "minisearch": "^7.1.1",
+    "prismjs": "^1.29.0"
+  },
+  "devDependencies": {
+    "@types/dompurify": "^3.0.5",
+    "@types/katex": "^0.16.7",
+    "@types/node": "^22.13.5",
+    "@types/prismjs": "^1.26.5",
+    "typescript": "^5.7.3",
+    "vite": "^6.2.0",
+    "vite-plugin-singlefile": "^2.1.0"
+  },
+  "keywords": [
+    "markdown",
+    "wiki",
+    "documentation",
+    "single-file",
+    "static-site-generator",
+    "client-side",
+    "zero-backend",
+    "aeo",
+    "vertiwiki"
+  ],
+  "author": "VertiWiki Contributors",
+  "license": "MIT"
+}

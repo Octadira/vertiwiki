@@ -1,0 +1,23 @@
+{
+  "title": "VertiWiki",
+  "logo": "assets/logo.svg",
+  "brandDisplay": "both",
+  "useSideMenu": true,
+  "useTableOfContents": true,
+  "enableSearch": true,
+  "enableMath": true,
+  "enableMermaid": true,
+  "enableCodeCopy": true,
+  "enableThemeChooser": true,
+  "collapsibleNavigation": true,
+  "defaultTheme": "dark",
+  "themePreset": "obsidian",
+  "navigationFile": "navigation.md",
+  "homePage": "index.md",
+  "footerText": "Powered by <strong>VertiWiki 0.2.4</strong> — Built for 2026 and beyond",
+  "githubUrl": "https://github.com",
+  "customThemes": [
+    "themes/obsidian.json",
+    "themes/onyx-ops.json"
+  ]
+}
