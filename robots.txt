@@ -1,0 +1,31 @@
+# VertiWiki 0.2.3 robots.txt
+# Optimized for AI Answer Engines, Search Bots, and LLMs
+
+User-agent: *
+Allow: /
+
+# Dedicated AI Answer Engines & LLM Crawlers
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+# LLM Directives (llmstxt.org)
+# Link to structured documentation index for LLMs
+# Location: /llms.txt

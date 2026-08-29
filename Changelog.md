@@ -1,0 +1,49 @@
+# Changelog
+
+## VertiWiki 0.2.3 (August 2026) :badge[Latest]{type=success}
+
+### 🎨 Modular External Theme Files & Clean Configuration
+- **Modular Theme Files**: Custom themes can now live in standalone `.json` files inside the `themes/` folder (e.g. `themes/obsidian.json`) and be referenced in `config.json` via `"customThemes": ["themes/obsidian.json"]`.
+- **Streamlined `config.json`**: Reduced configuration size from 70+ lines down to a clean ~20 lines by separating color palettes into dedicated theme files.
+- **Polymorphic Theme Loader**: Asynchronously resolves external theme files, single file path strings, and legacy inline theme objects with robust fallback error handling.
+- **Interactive Visual Sitemap Plugin**: Built-in `::: sitemap` directive generating an instant, responsive card tree of the entire wiki with real-time live search filtering.
+- **Pure `verti-` Architecture**: Clean namespace across all CSS variables (`--verti-*`), DOM containers (`#verti-app`), UI components, and all 13 plugins with full backward compatibility.
+
+---
+
+## VertiWiki 0.2.2 (August 2026)
+
+### ⚡ Header Brand & Accordion Navigation
+- **Flexible Brand Display**: Support for logo-only, text-only, or both logo and title in header via `brandDisplay: "both" | "logo" | "title"`.
+- **Collapsible Sidebar Accordions**: Smart accordion folders in navigation tree with auto-expansion of active article branch (`collapsibleNavigation: true`).
+- **Obsidian Framework Theme**: Full support for custom zero-recompile themes with dynamic Google Fonts injection.
+- **Product Landing Showcase**: Standalone developer landing page and distribution suite in `website/`.
+
+---
+
+## VertiWiki 0.2.1 (August 2026)
+
+### 📑 Interactive Markdown Components Suite
+- **Code & Content Tabs**: Added support for tabbed switchers (`::: tabs ... :::`).
+- **Collapsible FAQs & Accordions**: Added support for collapsible detail blocks (`::: details ... :::`).
+- **Image & Diagram Lightbox**: Fullscreen zoom overlay on image and diagram click with dark blurred backdrop and Escape shortcut.
+- **Prev / Next Page Navigation**: Automatic sequential article pagination cards at the bottom of each page.
+
+### 🤖 Answer Engine Optimization (AEO) & LLM Readiness
+- **Dynamic Zero-Build Schema.org JSON-LD**: Injects and updates `TechArticle`, `BreadcrumbList`, and `WebSite` semantic graphs in `<head>`.
+- **Jekyll & Astro Style Frontmatter**: Native YAML metadata parsing with smart automatic deduction.
+- **1-Click "Copy for AI" Action**: Context exporter button for prompt-ready copy into ChatGPT, Claude, and Perplexity.
+- **`llms.txt` & AI `robots.txt`**: Standard documentation discovery index conforming to `llmstxt.org`.
+- **Universal Multi-Provider Analytics**: Dynamic tracking for GA4, GTM, Plausible, Cloudflare, Umami, and Matomo.
+
+---
+
+## VertiWiki 0.2.0 (August 2026)
+
+### 🚀 Complete Architecture Rewrite
+- Greenfield modern rewrite replacing legacy MDwiki with **Vite 6, TypeScript 5.7+, Node 22+**, and ESM.
+- **Single-File Distribution**: Inlines all styles, icons, fonts, and logic into `dist/vertiwiki.html`.
+- **Zero-XSS Security**: Complete sanitizer integration with **DOMPurify**.
+- **Client-Side Search**: Instant in-memory fuzzy search via **MiniSearch** with `⌘K` modal.
+- **KaTeX & Mermaid Integration**: Native LaTeX math expressions and diagram generation.
+- **Dynamic Theme Engine**: 7 built-in theme presets with automatic dark/light synchronization.
