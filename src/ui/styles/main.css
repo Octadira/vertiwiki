@@ -1,0 +1,1571 @@
+@import './theme.css';
+@import 'katex/dist/katex.min.css';
+@import 'prismjs/themes/prism-tomorrow.css';
+
+/* CSS Reset & Base */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--verti-font-sans);
+  background-color: var(--verti-bg-base);
+  color: var(--verti-text-primary);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* App Shell Layout */
+#verti-app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Header */
+.verti-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  height: var(--verti-header-height);
+  background-color: var(--verti-bg-surface);
+  border-bottom: 1px solid var(--verti-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.verti-header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.verti-brand {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--verti-text-primary);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color var(--verti-transition);
+}
+
+.verti-brand:hover {
+  color: var(--verti-accent);
+}
+
+.verti-brand-logo {
+  height: 28px;
+  width: auto;
+}
+
+.verti-header-center {
+  flex: 1;
+  max-width: 480px;
+  margin: 0 1.5rem;
+}
+
+.verti-header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Search Trigger Button */
+.verti-search-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.4rem 0.8rem;
+  background-color: var(--verti-bg-subtle);
+  border: 1px solid var(--verti-border);
+  border-radius: var(--verti-radius-sm);
+  color: var(--verti-text-muted);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all var(--verti-transition);
+}
+
+.verti-search-btn:hover {
+  border-color: var(--verti-border-hover);
+  background-color: var(--verti-bg-surface);
+  color: var(--verti-text-primary);
+}
+
+.verti-search-btn kbd {
+  margin-left: auto;
+  font-family: var(--verti-font-mono);
+  font-size: 0.75rem;
+  padding: 0.15rem 0.4rem;
+  background-color: var(--verti-bg-surface);
+  border: 1px solid var(--verti-border);
+  border-radius: 4px;
+}
+
+/* Mobile Search Button & Menu Toggle (Desktop defaults) */
+.verti-mobile-search-btn,
+.verti-menu-toggle {
+  display: none !important;
+}
+
+/* Theme Toggle Button */
+.verti-icon-btn {
+  background: transparent;
+  border: 1px solid var(--verti-border);
+  border-radius: var(--verti-radius-sm);
+  color: var(--verti-text-secondary);
+  padding: 0.4rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--verti-transition);
+}
+
+.verti-icon-btn:hover {
+  color: var(--verti-text-primary);
+  border-color: var(--verti-border-hover);
+  background-color: var(--verti-bg-subtle);
+}
+
+/* Theme Chooser Dropdown */
+.verti-theme-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 60;
+  width: 220px;
+  background-color: var(--verti-bg-surface);
+  border: 1px solid var(--verti-border);
+  border-radius: var(--verti-radius-md);
+  box-shadow: var(--verti-shadow-lg);
+  padding: 0.5rem;
+  backdrop-filter: blur(12px);
+}
+
+.verti-theme-menu-header {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--verti-text-muted);
+  padding: 0.4rem 0.6rem 0.25rem 0.6rem;
+  border-bottom: 1px solid var(--verti-border);
+  margin-bottom: 0.35rem;
+}
+
+.verti-theme-menu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.verti-theme-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  padding: 0.45rem 0.6rem;
+  background: transparent;
+  border: none;
+  border-radius: var(--verti-radius-sm);
+  color: var(--verti-text-primary);
+  font-size: 0.85rem;
+  font-family: inherit;
+  cursor: pointer;
+  text-align: left;
+  transition: all var(--verti-transition);
+}
+
+.verti-theme-item:hover {
+  background-color: color-mix(in srgb, var(--verti-text-primary) 10%, transparent);
+}
+
+.verti-theme-item.active {
+  background-color: color-mix(in srgb, var(--verti-accent) 16%, transparent);
+  color: var(--verti-accent);
+  font-weight: 600;
+}
+
+.verti-theme-color-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  flex-shrink: 0;
+}
+
+.verti-theme-name {
+  flex: 1;
+}
+
+.verti-theme-check {
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+/* Main Container Grid */
+.verti-main-container {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Sidebar Left (Navigation) */
+.verti-sidebar {
+  width: var(--verti-sidebar-width);
+  position: sticky;
+  top: var(--verti-header-height);
+  height: calc(100vh - var(--verti-header-height));
+  overflow-y: auto;
+  padding: 1.5rem 1rem;
+  border-right: 1px solid var(--verti-border);
+  background-color: var(--verti-bg-surface);
+  flex-shrink: 0;
+  transition: transform var(--verti-transition);
+}
+
+.verti-sidebar-mobile-header {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--verti-border);
+}
+
+.verti-sidebar-mobile-title {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--verti-text-primary);
+}
+
+.verti-nav-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.verti-nav-section-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--verti-text-muted);
+  padding: 0.75rem 0.5rem 0.25rem 0.5rem;
+}
+
+/* Navigation Accordion (Folders / Collapsible Sections) */
+.verti-nav-accordion {
+  margin-bottom: 0.25rem;
+}
+
+.verti-nav-accordion-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.45rem 0.6rem;
+  background: transparent;
+  border: none;
+  border-radius: var(--verti-radius-sm);
+  color: var(--verti-text-primary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  text-align: left;
+  transition: all var(--verti-transition);
+}
+
+.verti-nav-accordion-toggle:hover {
+  background-color: color-mix(in srgb, var(--verti-text-primary) 8%, transparent);
+  color: var(--verti-accent);
+}
+
+.verti-nav-accordion-title {
+  flex: 1;
+}
+
+.verti-nav-accordion-chevron {
+  color: var(--verti-text-muted);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), color var(--verti-transition);
+  flex-shrink: 0;
+}
+
+.verti-nav-accordion.expanded > .verti-nav-accordion-toggle .verti-nav-accordion-chevron {
+  transform: rotate(180deg);
+  color: var(--verti-accent);
+}
+
+.verti-nav-accordion-content {
+  display: none;
+  padding-left: 0.75rem;
+  margin-top: 0.15rem;
+  border-left: 1px solid var(--verti-border);
+  margin-left: 0.5rem;
+}
+
+.verti-nav-accordion.expanded > .verti-nav-accordion-content {
+  display: block;
+  animation: vertiFadeIn 0.2s ease-out;
+}
+
+@keyframes vertiFadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.verti-nav-link {
+  display: flex;
+  align-items: center;
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--verti-radius-sm);
+  color: var(--verti-text-secondary);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all var(--verti-transition);
+}
+
+.verti-nav-link:hover {
+  background-color: color-mix(in srgb, var(--verti-text-primary) 10%, transparent);
+  color: var(--verti-text-primary);
+}
+
+.verti-nav-link.active {
+  background-color: color-mix(in srgb, var(--verti-accent) 16%, transparent);
+  color: var(--verti-accent);
+  font-weight: 600;
+}
+
+/* Content Area */
+.verti-content-wrapper {
+  flex: 1;
+  min-width: 0;
+  padding: 2.5rem 3rem;
+  display: flex;
+  justify-content: center;
+}
+
+.verti-article-container {
+  width: 100%;
+  max-width: var(--verti-content-max-width);
+}
+
+.verti-article-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  min-height: 28px;
+}
+
+.verti-breadcrumbs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  color: var(--verti-text-muted);
+}
+
+.verti-breadcrumbs a {
+  color: var(--verti-text-muted);
+  text-decoration: none;
+  transition: color var(--verti-transition);
+}
+
+.verti-breadcrumbs a:hover {
+  color: var(--verti-accent);
+}
+
+.verti-breadcrumbs .separator {
+  color: var(--verti-border);
+  user-select: none;
+}
+
+.verti-breadcrumbs .current {
+  color: var(--verti-text-primary);
+  font-weight: 500;
+}
+
+.verti-article-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
+.verti-ai-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.65rem;
+  border-radius: var(--verti-radius-sm);
+  background-color: var(--verti-bg-subtle);
+  border: 1px solid var(--verti-border);
+  color: var(--verti-text-secondary);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--verti-transition);
+  user-select: none;
+}
+
+.verti-ai-copy-btn:hover {
+  background-color: var(--verti-accent-subtle);
+  color: var(--verti-accent);
+  border-color: var(--verti-accent);
+}
+
+.verti-ai-copy-btn.copied {
+  background-color: rgba(34, 197, 94, 0.15);
+  color: #16a34a;
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+.verti-article {
+  width: 100%;
+}
+
+/* Table of Contents (Right Sidebar) */
+.verti-toc-sidebar {
+  width: var(--verti-toc-width);
+  position: sticky;
+  top: var(--verti-header-height);
+  height: calc(100vh - var(--verti-header-height));
+  overflow-y: auto;
+  padding: 2rem 1rem;
+  border-left: 1px solid var(--verti-border);
+  flex-shrink: 0;
+}
+
+.verti-toc-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--verti-text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.verti-toc-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  border-left: 2px solid var(--verti-border);
+}
+
+.verti-toc-item a {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--verti-text-muted);
+  text-decoration: none;
+  padding: 0.25rem 0 0.25rem 0.75rem;
+  transition: all var(--verti-transition);
+  position: relative;
+}
+
+.verti-toc-item.level-3 a {
+  padding-left: 1.5rem;
+  font-size: 0.8rem;
+}
+
+.verti-toc-item a:hover {
+  color: var(--verti-text-primary);
+}
+
+.verti-toc-item.active a {
+  color: var(--verti-accent);
+  font-weight: 600;
+  border-left: 2px solid var(--verti-accent);
+  margin-left: -2px;
+}
+
+/* Typography & Markdown Styles */
+.verti-article h1,
+.verti-article h2,
+.verti-article h3,
+.verti-article h4,
+.verti-article h5,
+.verti-article h6 {
+  color: var(--verti-text-primary);
+  font-weight: 700;
+  line-height: 1.25;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.verti-article h1 { font-size: 2.25rem; margin-top: 0; border-bottom: 1px solid var(--verti-border); padding-bottom: 0.5rem; }
+.verti-article h2 { font-size: 1.65rem; border-bottom: 1px solid var(--verti-border); padding-bottom: 0.4rem; }
+.verti-article h3 { font-size: 1.3rem; }
+.verti-article h4 { font-size: 1.1rem; }
+
+.header-anchor {
+  position: absolute;
+  left: -1.25rem;
+  color: var(--verti-accent);
+  opacity: 0;
+  text-decoration: none;
+  font-weight: normal;
+  transition: opacity var(--verti-transition);
+}
+
+.verti-heading:hover .header-anchor {
+  opacity: 1;
+}
+
+.verti-article p {
+  margin-bottom: 1.25rem;
+  color: var(--verti-text-primary);
+}
+
+.verti-article a {
+  color: var(--verti-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color var(--verti-transition);
+}
+
+.verti-article a:hover {
+  color: var(--verti-accent-hover);
+}
+
+.verti-article ul,
+.verti-article ol {
+  margin-bottom: 1.25rem;
+  padding-left: 1.5rem;
+}
+
+.verti-article li {
+  margin-bottom: 0.35rem;
+}
+
+.verti-article hr {
+  border: 0;
+  border-top: 1px solid var(--verti-border);
+  margin: 2.5rem 0;
+}
+
+/* Blockquotes */
+.verti-article blockquote {
+  border-left: 4px solid var(--verti-border);
+  padding: 0.75rem 1.25rem;
+  margin: 1.5rem 0;
+  background-color: var(--verti-bg-subtle);
+  border-radius: 0 var(--verti-radius-sm) var(--verti-radius-sm) 0;
+  color: var(--verti-text-secondary);
+}
+
+/* Callout Alerts (GFM Style: > [!NOTE], [!WARNING], etc.) */
+.verti-callout {
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+  border-radius: var(--verti-radius-md);
+  border-left: 4px solid;
+  background-color: var(--verti-bg-subtle);
+}
+
+.verti-callout-title {
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  text-transform: capitalize;
+}
+
+.verti-callout.note { border-color: var(--verti-note); background-color: var(--verti-note-bg); }
+.verti-callout.note .verti-callout-title { color: var(--verti-note); }
+
+.verti-callout.tip { border-color: var(--verti-tip); background-color: var(--verti-tip-bg); }
+.verti-callout.tip .verti-callout-title { color: var(--verti-tip); }
+
+.verti-callout.important { border-color: var(--verti-important); background-color: var(--verti-important-bg); }
+.verti-callout.important .verti-callout-title { color: var(--verti-important); }
+
+.verti-callout.warning { border-color: var(--verti-warning); background-color: var(--verti-warning-bg); }
+.verti-callout.warning .verti-callout-title { color: var(--verti-warning); }
+
+.verti-callout.caution { border-color: var(--verti-caution); background-color: var(--verti-caution-bg); }
+.verti-callout.caution .verti-callout-title { color: var(--verti-caution); }
+
+/* Badges & Tags */
+.verti-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.15rem 0.55rem;
+  border-radius: 9999px;
+  line-height: 1.25;
+  vertical-align: middle;
+  margin: 0 0.25rem;
+  border: 1px solid transparent;
+  text-shadow: none;
+  white-space: nowrap;
+}
+
+.verti-badge-primary {
+  background-color: var(--primary, var(--verti-accent));
+  color: var(--primary-foreground, #ffffff);
+  border: 1px solid transparent;
+}
+
+[data-theme='dark'] .verti-badge-primary {
+  background-color: var(--primary, var(--verti-accent));
+  color: var(--primary-foreground, #18181b);
+}
+
+.verti-badge-success {
+  background-color: #16a34a;
+  color: #ffffff;
+  border: 1px solid transparent;
+}
+[data-theme='dark'] .verti-badge-success {
+  background-color: #22c55e;
+  color: #052e16;
+}
+
+.verti-badge-warning {
+  background-color: #ca8a04;
+  color: #ffffff;
+  border: 1px solid transparent;
+}
+[data-theme='dark'] .verti-badge-warning {
+  background-color: #eab308;
+  color: #422006;
+}
+
+.verti-badge-danger {
+  background-color: #dc2626;
+  color: #ffffff;
+  border: 1px solid transparent;
+}
+[data-theme='dark'] .verti-badge-danger {
+  background-color: #ef4444;
+  color: #ffffff;
+}
+
+.verti-badge-purple {
+  background-color: #9333ea;
+  color: #ffffff;
+  border: 1px solid transparent;
+}
+[data-theme='dark'] .verti-badge-purple {
+  background-color: #a855f7;
+  color: #ffffff;
+}
+
+.verti-badge-info {
+  background-color: color-mix(in srgb, var(--verti-text-primary) 12%, transparent);
+  color: var(--verti-text-primary);
+  border-color: var(--verti-border);
+}
+
+/* Tables */
+.verti-article table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.95rem;
+  overflow-x: auto;
+  display: block;
+}
+
+.verti-article th,
+.verti-article td {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--verti-border);
+  text-align: left;
+}
+
+.verti-article th {
+  background-color: var(--verti-bg-subtle);
+  font-weight: 600;
+  color: var(--verti-text-primary);
+}
+
+.verti-article tr:nth-child(even) {
+  background-color: var(--verti-bg-surface);
+}
+
+/* Code & Syntax Highlighting */
+.verti-article code:not(pre code) {
+  font-family: var(--verti-font-mono);
+  font-size: 0.85em;
+  padding: 0.2em 0.4em;
+  background-color: var(--verti-code-bg);
+  border: 1px solid var(--verti-code-border);
+  border-radius: 4px;
+  color: var(--verti-code-text, var(--verti-text-primary));
+  font-weight: 500;
+}
+
+.verti-code-block-wrapper {
+  position: relative;
+  margin: 1.5rem 0;
+  border-radius: var(--verti-radius-md);
+  background-color: #2d2d2d;
+  overflow: hidden;
+  border: 1px solid var(--verti-border);
+}
+
+.verti-code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.4rem 1rem;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: var(--verti-font-mono);
+  font-size: 0.75rem;
+  color: #a0a0a0;
+}
+
+.verti-copy-code-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  color: #d0d0d0;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all var(--verti-transition);
+}
+
+.verti-copy-code-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.verti-article pre {
+  margin: 0 !important;
+  padding: 1.25rem !important;
+  background-color: transparent !important;
+  overflow-x: auto;
+}
+
+.verti-article pre code {
+  font-family: var(--verti-font-mono);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+/* Images & Media */
+.verti-article img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--verti-radius-md);
+  margin: 1.5rem 0;
+  box-shadow: var(--verti-shadow-md);
+}
+
+/* Mermaid Diagrams */
+.verti-mermaid-wrapper {
+  margin: 1.5rem 0;
+  padding: 1.5rem;
+  background-color: var(--verti-bg-surface);
+  border: 1px solid var(--verti-border);
+  border-radius: var(--verti-radius-md);
+  display: flex;
+  justify-content: center;
+  overflow-x: auto;
+}
+
+/* Search Modal Dialog */
+.verti-search-dialog {
+  margin: auto;
+  border: 1px solid var(--verti-border);
+  border-radius: var(--verti-radius-lg);
+  background-color: var(--verti-bg-surface);
+  color: var(--verti-text-primary);
+  width: 90%;
+  max-width: 600px;
+  box-shadow: var(--verti-shadow-lg);
+  padding: 0;
+  outline: none;
+}
+
+.verti-search-dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(6px);
+}
+
+.verti-search-box {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--verti-border);
+  gap: 0.75rem;
+}
+
+.verti-search-box svg {
+  color: var(--verti-text-muted);
+  flex-shrink: 0;
+}
+
+.verti-search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  font-size: 1.05rem;
+  color: var(--verti-text-primary);
+  outline: none;
+  font-family: var(--verti-font-sans);
+}
+
+.verti-search-input::placeholder {
+  color: var(--verti-text-muted);
+}
+
+.verti-search-results {
+  max-height: 380px;
+  overflow-y: auto;
+  padding: 0.5rem;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.verti-search-result-item {
+  padding: 0.75rem 1rem;
+  border-radius: var(--verti-radius-md);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  border: 1px solid transparent;
+  background-color: transparent;
+  transition: all var(--verti-transition);
+}
+
+.verti-search-result-item:hover,
+.verti-search-result-item.selected {
+  background-color: color-mix(in srgb, var(--verti-accent) 14%, var(--verti-bg-surface));
+  border-color: color-mix(in srgb, var(--verti-accent) 35%, transparent);
+}
+
+.verti-search-result-title {
+  font-weight: 600;
+  color: var(--verti-text-primary);
+  font-size: 0.95rem;
+  transition: color var(--verti-transition);
+}
+
+.verti-search-result-item:hover .verti-search-result-title,
+.verti-search-result-item.selected .verti-search-result-title {
+  color: var(--verti-accent);
+}
+
+.verti-search-result-snippet {
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--verti-text-muted);
+  transition: color var(--verti-transition);
+}
+
+.verti-search-result-item:hover .verti-search-result-snippet,
+.verti-search-result-item.selected .verti-search-result-snippet {
+  color: var(--verti-text-secondary);
+}
+
+.verti-search-footer {
+  padding: 0.65rem 1.25rem;
+  border-top: 1px solid var(--verti-border);
+  background-color: var(--verti-bg-subtle);
+  font-size: 0.75rem;
+  color: var(--verti-text-muted);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.verti-search-footer kbd {
+  display: inline-block;
+  padding: 0.1rem 0.35rem;
+  font-size: 0.7rem;
+  font-family: var(--verti-font-mono);
+  background: var(--verti-bg-surface);
+  border: 1px solid var(--verti-border);
+  border-radius: var(--verti-radius-sm);
+  color: var(--verti-text-secondary);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+/* Tabs & Code Switcher */
+.verti-tabs-container {
+  margin: 1.5rem 0;
+  border: 1px solid var(--verti-border);
+  border-radius: var(--verti-radius-md);
+  overflow: hidden;
+  background-color: var(--verti-bg-surface);
+}
+
+.verti-tabs-header {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.35rem 0.5rem 0 0.5rem;
+  background-color: var(--verti-bg-subtle);
+  border-bottom: 1px solid var(--verti-border);
+  overflow-x: auto;
+}
+
+.verti-tab-btn {
+  padding: 0.45rem 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  font-family: var(--verti-font-mono);
+  color: var(--verti-text-muted);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  border-radius: var(--verti-radius-sm) var(--verti-radius-sm) 0 0;
+  cursor: pointer;
+  transition: all var(--verti-transition);
+  white-space: nowrap;
+}
+
+.verti-tab-btn:hover {
+  color: var(--verti-text-primary);
+  background-color: color-mix(in srgb, var(--verti-text-primary) 6%, transparent);
+}
+
+.verti-tab-btn.active {
+  color: var(--verti-accent);
+  border-bottom-color: var(--verti-accent);
+  background-color: var(--verti-bg-surface);
+  font-weight: 600;
+}
+
+.verti-tabs-body {
+  padding: 1rem;
+}
+
+.verti-tab-panel {
+  display: none;
+}
+
+.verti-tab-panel.active {
+  display: block;
+}
+
+.verti-tab-panel .verti-code-block-wrapper {
+  margin: 0;
+}
+
+/* Collapsible Details / Accordions (FAQ) */
+.verti-details {
+  margin: 1.25rem 0;
+  border: 1px solid var(--verti-border);
+  border-radius: var(--verti-radius-md);
+  background-color: var(--verti-bg-surface);
+  overflow: hidden;
+  transition: border-color var(--verti-transition);
+}
+
+.verti-details[open] {
+  border-color: var(--verti-accent);
+}
+
+.verti-details-summary {
+  padding: 0.85rem 1.2rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--verti-text-primary);
+  cursor: pointer;
+  user-select: none;
+  background-color: var(--verti-bg-subtle);
+  transition: background-color var(--verti-transition);
+  list-style-position: inside;
+}
+
+.verti-details-summary:hover {
+  background-color: color-mix(in srgb, var(--verti-text-primary) 6%, transparent);
+}
+
+.verti-details-content {
+  padding: 1rem 1.25rem;
+  border-top: 1px solid var(--verti-border);
+  color: var(--verti-text-primary);
+  line-height: 1.6;
+}
+
+/* Image & Diagram Lightbox */
+.verti-zoomable-img {
+  cursor: zoom-in;
+  transition: transform var(--verti-transition), opacity var(--verti-transition);
+  border-radius: var(--verti-radius-sm);
+}
+
+.verti-zoomable-img:hover {
+  opacity: 0.95;
+}
+
+.verti-lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.verti-lightbox-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.verti-lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+}
+
+.verti-lightbox-container {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1001;
+}
+
+.verti-lightbox-media-wrapper {
+  max-width: 100%;
+  max-height: 80vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.verti-lightbox-img {
+  max-width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: var(--verti-radius-md);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  transform: scale(0.95);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.verti-lightbox-overlay.active .verti-lightbox-img {
+  transform: scale(1);
+}
+
+.verti-lightbox-close {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 1002;
+  background: rgba(0, 0, 0, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.85;
+  transition: all var(--verti-transition);
+}
+
+.verti-lightbox-close:hover {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.9);
+  transform: scale(1.05);
+}
+
+.verti-lightbox-caption {
+  margin-top: 0.75rem;
+  color: #e5e7eb;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* Previous / Next Article Navigation */
+.verti-prev-next-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 3.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--verti-border);
+}
+
+.verti-prev-next-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: var(--verti-radius-md);
+  border: 1px solid var(--verti-border);
+  background-color: var(--verti-bg-surface);
+  text-decoration: none;
+  transition: all var(--verti-transition);
+}
+
+.verti-prev-next-card:hover {
+  border-color: var(--verti-accent);
+  background-color: color-mix(in srgb, var(--verti-accent) 6%, transparent);
+  transform: translateY(-2px);
+  box-shadow: var(--verti-shadow-md);
+}
+
+.verti-prev-next-card.next {
+  text-align: right;
+  align-items: flex-end;
+}
+
+.verti-prev-next-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--verti-text-muted);
+}
+
+.verti-prev-next-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--verti-accent);
+}
+
+/* Footer */
+.verti-footer {
+  margin-top: auto;
+  border-top: 1px solid var(--verti-border);
+  background-color: var(--verti-bg-surface);
+  padding: 1.5rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--verti-text-muted);
+}
+
+/* ==========================================================================
+   Interactive Visual Sitemap Plugin
+   ========================================================================== */
+.verti-sitemap-wrapper {
+  margin: 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.verti-sitemap-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 0.75rem 1rem;
+  background-color: var(--verti-bg-surface);
+  border: 1px solid var(--verti-border);
+  border-radius: var(--verti-radius-md);
+}
+
+.verti-sitemap-stats {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.verti-sitemap-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.8rem;
+  padding: 0.25rem 0.6rem;
+  background-color: var(--verti-bg-subtle);
+  border-radius: var(--verti-radius-sm);
+  color: var(--verti-text-secondary);
+}
+
+.verti-sitemap-badge strong {
+  color: var(--verti-accent);
+}
+
+.verti-sitemap-search-box {
+  display: flex;
+  align-items: center;
+  position: relative;
+  min-width: 220px;
+  max-width: 100%;
+}
+
+.verti-sitemap-search-icon {
+  position: absolute;
+  left: 0.65rem;
+  color: var(--verti-text-muted);
+  pointer-events: none;
+}
+
+.verti-sitemap-search-input {
+  width: 100%;
+  padding: 0.4rem 0.65rem 0.4rem 2rem;
+  font-size: 0.85rem;
+  background-color: var(--verti-bg-subtle);
+  border: 1px solid var(--verti-border);
+  border-radius: var(--verti-radius-sm);
+  color: var(--verti-text-primary);
+  outline: none;
+  transition: all var(--verti-transition);
+}
+
+.verti-sitemap-search-input:focus {
+  border-color: var(--verti-accent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--verti-accent) 20%, transparent);
+}
+
+.verti-sitemap-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.verti-sitemap-card {
+  background-color: var(--verti-bg-surface);
+  border: 1px solid var(--verti-border);
+  border-radius: var(--verti-radius-md);
+  padding: 1rem 1.15rem;
+  transition: all var(--verti-transition);
+}
+
+.verti-sitemap-card:hover {
+  border-color: var(--verti-accent);
+  box-shadow: var(--verti-shadow-sm);
+}
+
+.verti-sitemap-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 0.6rem;
+  margin-bottom: 0.6rem;
+  border-bottom: 1px solid var(--verti-border);
+}
+
+.verti-sitemap-card-title {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--verti-text-primary);
+}
+
+.verti-sitemap-folder-icon {
+  font-size: 1rem;
+}
+
+.verti-sitemap-card-count {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--verti-text-muted);
+  background-color: var(--verti-bg-subtle);
+  padding: 0.15rem 0.45rem;
+  border-radius: 9999px;
+}
+
+.verti-sitemap-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.verti-sitemap-item {
+  margin: 0;
+}
+
+.verti-sitemap-link {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.5rem;
+  border-radius: var(--verti-radius-sm);
+  color: var(--verti-text-secondary);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 500;
+  transition: all var(--verti-transition);
+}
+
+.verti-sitemap-link:hover {
+  background-color: color-mix(in srgb, var(--verti-accent) 12%, transparent);
+  color: var(--verti-accent);
+  transform: translateX(2px);
+}
+
+.verti-sitemap-item-icon {
+  font-size: 0.85rem;
+  color: var(--verti-text-muted);
+  flex-shrink: 0;
+}
+
+.verti-sitemap-empty {
+  padding: 2rem;
+  text-align: center;
+  color: var(--verti-text-muted);
+  font-style: italic;
+  background-color: var(--verti-bg-surface);
+  border: 1px dashed var(--verti-border);
+  border-radius: var(--verti-radius-md);
+}
+
+/* ==========================================================================
+   Multi-Tier Responsive Design Suite (Mobile, Tablet, Desktop)
+   ========================================================================== */
+
+/* 1. Large Tablets & Medium Laptops (<= 1200px) */
+@media (max-width: 1200px) {
+  .verti-toc-sidebar {
+    display: none !important;
+  }
+
+  .verti-content-wrapper {
+    padding: 2rem 2rem;
+  }
+
+  .verti-article-container {
+    max-width: 100%;
+  }
+}
+
+/* 2. Tablets & Small Laptops (<= 992px) */
+@media (max-width: 992px) {
+  .verti-menu-toggle {
+    display: inline-flex !important;
+  }
+
+  .verti-header-center {
+    display: none !important;
+  }
+
+  .verti-mobile-search-btn {
+    display: inline-flex !important;
+  }
+
+  .verti-sidebar-mobile-header {
+    display: flex;
+  }
+
+  .verti-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    height: 100vh;
+    height: 100dvh;
+    width: min(320px, 85vw);
+    z-index: 1000;
+    transform: translateX(-100%);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.4);
+    background-color: var(--verti-bg-surface);
+    padding: 1.25rem 1rem;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .verti-sidebar.open {
+    transform: translateX(0);
+  }
+
+  .verti-sidebar-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .verti-sidebar-backdrop.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .verti-content-wrapper {
+    padding: 1.75rem 1.5rem;
+  }
+}
+
+/* 3. Mobile Phones (<= 640px) */
+@media (max-width: 640px) {
+  .verti-header {
+    padding: 0 0.75rem;
+    height: 56px;
+  }
+
+  .verti-brand {
+    font-size: 1.05rem;
+    gap: 0.35rem;
+  }
+
+  .verti-brand-logo {
+    height: 24px;
+  }
+
+  .verti-header-right {
+    gap: 0.35rem;
+  }
+
+  .verti-icon-btn {
+    padding: 0.35rem;
+  }
+
+  .verti-content-wrapper {
+    padding: 1.25rem 0.85rem;
+  }
+
+  .verti-article-topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .verti-breadcrumbs {
+    font-size: 0.78rem;
+  }
+
+  .verti-ai-copy-btn {
+    align-self: flex-start;
+    font-size: 0.72rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .verti-article h1 {
+    font-size: 1.65rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .verti-article h2 {
+    font-size: 1.35rem;
+    margin-top: 1.5rem;
+  }
+
+  .verti-article h3 {
+    font-size: 1.15rem;
+    margin-top: 1.25rem;
+  }
+
+  .verti-article p,
+  .verti-article li {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .verti-code-block-wrapper {
+    margin: 1rem 0;
+  }
+
+  .verti-tabs-header {
+    padding: 0.25rem 0.35rem;
+    gap: 0.2rem;
+  }
+
+  .verti-tab-btn {
+    padding: 0.4rem 0.65rem;
+    font-size: 0.8rem;
+  }
+
+  .verti-prev-next-container {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    margin-top: 2.5rem;
+  }
+
+  .verti-prev-next-card {
+    padding: 1rem 1.15rem;
+  }
+
+  .verti-prev-next-card.next {
+    text-align: left;
+    align-items: flex-start;
+  }
+
+  .verti-lightbox-close {
+    top: 1rem;
+    right: 1rem;
+    width: 38px;
+    height: 38px;
+    font-size: 1.4rem;
+  }
+
+  .verti-theme-dropdown-menu {
+    width: min(260px, calc(100vw - 1.5rem));
+    right: 0;
+  }
+
+  .verti-search-dialog {
+    width: 95vw;
+    max-width: 95vw;
+    margin: 1rem auto;
+  }
+}
+
+/* 4. Small Mobile Screens (<= 400px) */
+@media (max-width: 400px) {
+  .verti-header {
+    padding: 0 0.5rem;
+  }
+
+  .verti-brand span {
+    max-width: 140px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .verti-content-wrapper {
+    padding: 1rem 0.6rem;
+  }
+}
