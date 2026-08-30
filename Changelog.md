@@ -1,6 +1,16 @@
 # Changelog
 
-## VertiWiki 0.2.7 (August 2026) :badge[Latest]{type=success}
+## VertiWiki 0.2.8 (August 2026) :badge[Latest]{type=success}
+
+### 🗂️ Automatic Directory Indexing (`index.md`) & Smart Fallbacks
+- **Directory Index Resolution**: Navigating to `#/docs/sub-docs/` or `#/docs/sub-docs` automatically resolves and renders `docs/sub-docs/index.md`.
+- **Intelligent Sibling Fallback**: Automatic seamless fallback between `dir/index.md` and `dir.md` without 404 errors.
+- **Smart Navigation Sync**: Active sidebar state and breadcrumbs properly match directory and file routes.
+- **Relative Folder Linking**: Automatically transforms relative markdown folder links (`./sub-docs/`) to client hash index routes.
+
+---
+
+## VertiWiki 0.2.7 (August 2026)
 
 ### 🔀 Path Hash Routing Migration (`#/`) & Incremental Release Pipeline
 - **Clean Modern URL Routing**: Migrated default hash routing from legacy hashbang (`#!`) to standard path hash (`#/path/to/page.md`).
