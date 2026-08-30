@@ -1,6 +1,16 @@
 # Changelog
 
-## VertiWiki 0.2.6 (August 2026) :badge[Latest]{type=success}
+## VertiWiki 0.2.7 (August 2026) :badge[Latest]{type=success}
+
+### 🔀 Path Hash Routing Migration (`#/`) & Incremental Release Pipeline
+- **Clean Modern URL Routing**: Migrated default hash routing from legacy hashbang (`#!`) to standard path hash (`#/path/to/page.md`).
+- **100% Backward Compatibility**: Router seamlessly resolves legacy bookmarks with `#!` and `#` without broken links.
+- **Deep Anchor Linking**: Robust section anchor handling (`#/docs/guide.md#heading`) preventing scroll clashes with table of contents and internal page anchors.
+- **Synchronized Open-Source Pipeline**: Enhanced distribution sync script to preserve Git history and only commit modified files to GitHub.
+
+---
+
+## VertiWiki 0.2.6 (August 2026)
 
 ### 🐛 HTML & Badge Title Sanitization in Document Header, Metadata & TOC
 - **Clean Document & Browser Tab Titles**: Fixed bug where `:badge[...]` tags inside first H1 headings leaked literal HTML span elements (`<span class="verti-badge...`) into `document.title`, browser tabs, OpenGraph metadata, Twitter cards, and Schema.org JSON-LD headline tags.

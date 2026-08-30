@@ -1,11 +1,11 @@
-# 🧠 VertiWiki 0.2.6 :badge[AI & AEO Ready]{type=success}
+# 🧠 VertiWiki 0.2.7 :badge[AI & AEO Ready]{type=success}
 
 > **The 100% Client-Side, Zero-Backend, Zero-Build Markdown Wiki & Documentation Engine for 2026 and Beyond.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7+-blue.svg)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-6.2+-646CFF.svg)](https://vitejs.dev/)
-[![Version](https://img.shields.io/badge/version-0.2.6-teal.svg)](https://github.com/octadira/vertiwiki/releases)
+[![Version](https://img.shields.io/badge/version-0.2.7-teal.svg)](https://github.com/octadira/vertiwiki/releases)
 [![Live Demo](https://img.shields.io/badge/Demo-verti.wiki-emerald.svg)](https://verti.wiki)
 
 [**🌐 Live Demo & Official Website**](https://verti.wiki) • [**📖 Documentation**](https://verti.wiki/#docs/getting-started/quick-start.md) • [**📦 Releases**](https://github.com/Octadira/vertiwiki/releases)

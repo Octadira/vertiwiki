@@ -1,6 +1,6 @@
 # Technical Architecture & Core Overview
 
-**VertiWiki 0.2.6** is an ultra-fast, zero-backend, single-file Markdown wiki and documentation engine. This document details the internal architecture, lifecycle pipeline, and bundling mechanics.
+**VertiWiki 0.2.7** is an ultra-fast, zero-backend, single-file Markdown wiki and documentation engine. This document details the internal architecture, lifecycle pipeline, and bundling mechanics.
 
 ---
 
