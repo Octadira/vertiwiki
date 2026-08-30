@@ -83,10 +83,19 @@ export class Router {
       filePath = decodeURIComponent(hash);
     }
 
+    const rawPath = filePath.trim();
+    const isExplicitDir = rawPath.endsWith('/');
+
     filePath = normalizePath(filePath);
 
     if (!filePath || filePath === '/' || filePath === '') {
       filePath = this.defaultPage;
+    } else if (isExplicitDir) {
+      // Explicit directory path (e.g. #/docs/sub-docs/) -> docs/sub-docs/index.md
+      filePath = `${filePath}/index.md`;
+    } else if (!filePath.includes('.') || !filePath.match(/\.[a-zA-Z0-9]+$/)) {
+      // Extensionless route (e.g. #/docs/sub-docs) -> defaults to directory index.md candidate
+      filePath = `${filePath}/index.md`;
     }
 
     const isMarkdown = Boolean(filePath.match(/\.(md|markdown|mdown)$/i));
@@ -191,7 +200,10 @@ export class Router {
       }
 
       if (filePart.match(/\.(md|markdown|mdown)$/i) || !filePart.includes('.')) {
-        const resolvedPath = resolvePath(currentFilePath, filePart);
+        let resolvedPath = resolvePath(currentFilePath, filePart);
+        if (!resolvedPath.match(/\.(md|markdown|mdown)$/i)) {
+          resolvedPath = `${resolvedPath}/index.md`;
+        }
         a.setAttribute('href', `#/${resolvedPath}${hashPart}`);
       }
     });

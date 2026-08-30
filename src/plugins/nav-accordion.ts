@@ -9,8 +9,12 @@ export const navAccordionPlugin: VertiWikiPlugin = {
   name: 'nav-accordion',
   afterRender: (context) => {
     if (context.config.collapsibleNavigation) {
+      const cleanPath = context.filePath.replace(/\/index\.md$/, '');
       const activeLink = document.querySelector<HTMLAnchorElement>(
-        `.verti-nav-link[href="#/${context.filePath}"], .verti-nav-link[href="#!${context.filePath}"], .cortex-nav-link[href="#/${context.filePath}"], .cortex-nav-link[href="#!${context.filePath}"], .omni-nav-link[href="#/${context.filePath}"], .omni-nav-link[href="#!${context.filePath}"]`
+        `.verti-nav-link[href="#/${context.filePath}"], .verti-nav-link[href="#!${context.filePath}"], ` +
+        `.verti-nav-link[href="#/${cleanPath}"], .verti-nav-link[href="#/${cleanPath}/"], ` +
+        `.cortex-nav-link[href="#/${context.filePath}"], .cortex-nav-link[href="#!${context.filePath}"], ` +
+        `.omni-nav-link[href="#/${context.filePath}"], .omni-nav-link[href="#!${context.filePath}"]`
       );
       if (activeLink) {
         let parent = activeLink.closest('.verti-nav-accordion, .cortex-nav-accordion, .omni-nav-accordion');

@@ -203,3 +203,22 @@ You can change the theme in `config.json` via `"themePreset": "emerald"`.
 This accordion is expanded by default because of the `:open` modifier.
 :::
 ```
+
+---
+
+## 🗂️ Subfolders & Automatic Directory Indexing
+
+VertiWiki includes smart path resolution for nested folder structures:
+
+### 1. Relative Markdown Links
+Write standard relative markdown links — VertiWiki automatically rewrites them into client hash routes:
+```markdown
+[Read Installation Guide](../getting-started/installation.md)
+[Sub-topic Guide](./sub-docs/index.md)
+```
+
+### 2. Automatic Directory Indexing (`index.md`)
+When linking to a directory or navigating directly:
+* Accessing `#/docs/sub-docs/` automatically resolves and loads `docs/sub-docs/index.md`.
+* Accessing `#/docs/sub-docs` (extensionless) will automatically attempt to load `docs/sub-docs/index.md` with graceful fallback to `docs/sub-docs.md`.
+

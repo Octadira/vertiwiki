@@ -307,7 +307,10 @@ export class Layout {
     this.sidebarNavContainer.querySelectorAll<HTMLAnchorElement>('.verti-nav-link, .cortex-nav-link, .omni-nav-link').forEach(link => {
       const href = link.getAttribute('href') || '';
       const path = href.replace(/^#!/, '').replace(/^#\//, '');
-      const isActive = path === activePath;
+      const isActive = path === activePath ||
+                       (activePath.endsWith('/index.md') && (path === activePath.replace(/\/index\.md$/, '') || path === activePath.replace(/\/index\.md$/, '/'))) ||
+                       (!path.endsWith('.md') && activePath === `${path}/index.md`) ||
+                       (activePath.endsWith('.md') && path === activePath.replace(/\.md$/, ''));
       link.classList.toggle('active', isActive);
 
       if (isActive && this.config.collapsibleNavigation) {

@@ -183,19 +183,65 @@ ${currentRawMarkdown}`;
 
   // Main Page Loader
   async function loadPage(route: RouteInfo): Promise<void> {
-    const filePath = route.filePath;
-    layout.updateActiveNavLink(filePath);
+    let filePath = route.filePath;
 
     try {
-      const response = await fetch(filePath);
+      let response = await fetch(filePath);
       let rawMarkdown = await response.text();
-      const isHtmlResponse = rawMarkdown.trim().toLowerCase().startsWith('<!doctype') || 
+      let isHtmlResponse = rawMarkdown.trim().toLowerCase().startsWith('<!doctype') || 
                              rawMarkdown.trim().toLowerCase().startsWith('<html') ||
                              rawMarkdown.trim().toLowerCase().startsWith('<!html');
+
+      // Smart directory index and sibling markdown fallback resolution
+      if (!response.ok || isHtmlResponse) {
+        if (filePath.endsWith('/index.md')) {
+          // If dir/index.md failed, attempt fallback to dir.md
+          const siblingMd = filePath.replace(/\/index\.md$/, '.md');
+          try {
+            const siblingRes = await fetch(siblingMd);
+            if (siblingRes.ok) {
+              const siblingText = await siblingRes.text();
+              const siblingIsHtml = siblingText.trim().toLowerCase().startsWith('<!doctype') ||
+                                    siblingText.trim().toLowerCase().startsWith('<html');
+              if (!siblingIsHtml) {
+                response = siblingRes;
+                rawMarkdown = siblingText;
+                isHtmlResponse = false;
+                filePath = siblingMd;
+                route.filePath = siblingMd;
+              }
+            }
+          } catch {
+            // Ignore fallback error
+          }
+        } else if (filePath.endsWith('.md') && !filePath.endsWith('/index.md')) {
+          // If dir.md failed, attempt fallback to dir/index.md
+          const dirIndexMd = filePath.replace(/\.md$/, '/index.md');
+          try {
+            const dirRes = await fetch(dirIndexMd);
+            if (dirRes.ok) {
+              const dirText = await dirRes.text();
+              const dirIsHtml = dirText.trim().toLowerCase().startsWith('<!doctype') ||
+                                dirText.trim().toLowerCase().startsWith('<html');
+              if (!dirIsHtml) {
+                response = dirRes;
+                rawMarkdown = dirText;
+                isHtmlResponse = false;
+                filePath = dirIndexMd;
+                route.filePath = dirIndexMd;
+              }
+            }
+          } catch {
+            // Ignore fallback error
+          }
+        }
+      }
 
       if (!response.ok || ((filePath.endsWith('.md') || filePath.endsWith('.markdown')) && isHtmlResponse)) {
         throw new Error(`HTTP ${response.status}: Failed to load ${filePath}`);
       }
+
+      layout.updateActiveNavLink(filePath);
 
       // Plugin hook: beforeParse
       const pluginContext = {
