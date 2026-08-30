@@ -1,0 +1,449 @@
+/* Dynamic Theme System Variables */
+:root {
+  --verti-header-height: 60px;
+  --verti-sidebar-width: 280px;
+  --verti-toc-width: 240px;
+  --verti-content-max-width: 900px;
+  --verti-transition: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  --font-serif: Georgia, Cambria, 'Times New Roman', serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace;
+
+  --radius: 0.75rem;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+
+  /* VertiWiki Component Token Aliases */
+  --verti-font-sans: var(--font-sans);
+  --verti-font-mono: var(--font-mono);
+  --verti-radius-sm: var(--radius-sm);
+  --verti-radius-md: var(--radius-md);
+  --verti-radius-lg: var(--radius-lg);
+
+  --verti-bg-base: var(--background);
+  --verti-bg-surface: var(--card);
+  --verti-bg-subtle: var(--muted);
+  --verti-bg-elevated: var(--card);
+
+  --verti-text-primary: var(--foreground);
+  --verti-text-secondary: var(--muted-foreground);
+  --verti-text-muted: var(--muted-foreground);
+
+  --verti-border: var(--border);
+  --verti-border-hover: var(--accent);
+
+  --verti-accent: var(--primary);
+  --verti-accent-hover: var(--primary);
+  --verti-accent-subtle: color-mix(in srgb, var(--verti-accent) 15%, transparent);
+  --verti-accent-contrast: var(--primary-foreground);
+
+  --verti-code-bg: var(--muted);
+  --verti-code-text: var(--foreground);
+  --verti-code-border: var(--border);
+
+  --verti-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --verti-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --verti-shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.12);
+
+  /* Callout colors */
+  --verti-note: #3b82f6;
+  --verti-note-bg: rgba(59, 130, 246, 0.1);
+  --verti-tip: #10b981;
+  --verti-tip-bg: rgba(16, 185, 129, 0.1);
+  --verti-important: #a855f7;
+  --verti-important-bg: rgba(168, 85, 247, 0.1);
+  --verti-warning: #f59e0b;
+  --verti-warning-bg: rgba(245, 158, 11, 0.1);
+  --verti-caution: #ef4444;
+  --verti-caution-bg: rgba(239, 68, 68, 0.1);
+
+  /* Cortex & Omni Backward Compatibility Aliases */
+  --cortex-header-height: var(--verti-header-height);
+  --cortex-sidebar-width: var(--verti-sidebar-width);
+  --cortex-toc-width: var(--verti-toc-width);
+  --cortex-content-max-width: var(--verti-content-max-width);
+  --cortex-transition: var(--verti-transition);
+  --cortex-font-sans: var(--verti-font-sans);
+  --cortex-font-mono: var(--verti-font-mono);
+  --cortex-radius-sm: var(--verti-radius-sm);
+  --cortex-radius-md: var(--verti-radius-md);
+  --cortex-radius-lg: var(--verti-radius-lg);
+  --cortex-bg-base: var(--verti-bg-base);
+  --cortex-bg-surface: var(--verti-bg-surface);
+  --cortex-bg-subtle: var(--verti-bg-subtle);
+  --cortex-bg-elevated: var(--verti-bg-elevated);
+  --cortex-text-primary: var(--verti-text-primary);
+  --cortex-text-secondary: var(--verti-text-secondary);
+  --cortex-text-muted: var(--verti-text-muted);
+  --cortex-border: var(--verti-border);
+  --cortex-border-hover: var(--verti-border-hover);
+  --cortex-accent: var(--verti-accent);
+  --cortex-accent-hover: var(--verti-accent-hover);
+  --cortex-accent-subtle: var(--verti-accent-subtle);
+  --cortex-accent-contrast: var(--verti-accent-contrast);
+  --cortex-code-bg: var(--verti-code-bg);
+  --cortex-code-text: var(--verti-code-text);
+  --cortex-code-border: var(--verti-code-border);
+  --cortex-shadow-sm: var(--verti-shadow-sm);
+  --cortex-shadow-md: var(--verti-shadow-md);
+  --cortex-shadow-lg: var(--verti-shadow-lg);
+  --cortex-note: var(--verti-note);
+  --cortex-note-bg: var(--verti-note-bg);
+  --cortex-tip: var(--verti-tip);
+  --cortex-tip-bg: var(--verti-tip-bg);
+  --cortex-important: var(--verti-important);
+  --cortex-important-bg: var(--verti-important-bg);
+  --cortex-warning: var(--verti-warning);
+  --cortex-warning-bg: var(--verti-warning-bg);
+  --cortex-caution: var(--verti-caution);
+  --cortex-caution-bg: var(--verti-caution-bg);
+
+  --omni-header-height: var(--verti-header-height);
+  --omni-sidebar-width: var(--verti-sidebar-width);
+  --omni-toc-width: var(--verti-toc-width);
+  --omni-content-max-width: var(--verti-content-max-width);
+  --omni-transition: var(--verti-transition);
+  --omni-font-sans: var(--verti-font-sans);
+  --omni-font-mono: var(--verti-font-mono);
+  --omni-radius-sm: var(--verti-radius-sm);
+  --omni-radius-md: var(--verti-radius-md);
+  --omni-radius-lg: var(--verti-radius-lg);
+  --omni-bg-base: var(--verti-bg-base);
+  --omni-bg-surface: var(--verti-bg-surface);
+  --omni-bg-subtle: var(--verti-bg-subtle);
+  --omni-bg-elevated: var(--verti-bg-elevated);
+  --omni-text-primary: var(--verti-text-primary);
+  --omni-text-secondary: var(--verti-text-secondary);
+  --omni-text-muted: var(--verti-text-muted);
+  --omni-border: var(--verti-border);
+  --omni-border-hover: var(--verti-border-hover);
+  --omni-accent: var(--verti-accent);
+  --omni-accent-hover: var(--verti-accent-hover);
+  --omni-accent-subtle: var(--verti-accent-subtle);
+  --omni-accent-contrast: var(--verti-accent-contrast);
+  --omni-code-bg: var(--verti-code-bg);
+  --omni-code-text: var(--verti-code-text);
+  --omni-code-border: var(--verti-code-border);
+  --omni-shadow-sm: var(--verti-shadow-sm);
+  --omni-shadow-md: var(--verti-shadow-md);
+  --omni-shadow-lg: var(--verti-shadow-lg);
+  --omni-note: var(--verti-note);
+  --omni-note-bg: var(--verti-note-bg);
+  --omni-tip: var(--verti-tip);
+  --omni-tip-bg: var(--verti-tip-bg);
+  --omni-important: var(--verti-important);
+  --omni-important-bg: var(--verti-important-bg);
+  --omni-warning: var(--verti-warning);
+  --omni-warning-bg: var(--verti-warning-bg);
+  --omni-caution: var(--verti-caution);
+  --omni-caution-bg: var(--verti-caution-bg);
+}
+
+/* ========================================================
+   THEME 1: DEFAULT (Modern Indigo)
+   ======================================================== */
+:root,
+[data-theme-preset='default'] {
+  --background: #fafafa;
+  --foreground: #09090b;
+  --card: #ffffff;
+  --card-foreground: #09090b;
+  --primary: #6366f1;
+  --primary-foreground: #ffffff;
+  --secondary: #f4f4f5;
+  --secondary-foreground: #18181b;
+  --muted: #f4f4f5;
+  --muted-foreground: #71717a;
+  --accent: #6366f1;
+  --accent-foreground: #ffffff;
+  --border: #e4e4e7;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #18181b;
+  --sidebar-border: #e4e4e7;
+  --radius: 0.6rem;
+}
+
+[data-theme='dark'],
+[data-theme-preset='default'][data-theme='dark'] {
+  --background: #09090b;
+  --foreground: #fafafa;
+  --card: #18181b;
+  --card-foreground: #fafafa;
+  --primary: #818cf8;
+  --primary-foreground: #09090b;
+  --secondary: #27272a;
+  --secondary-foreground: #f4f4f5;
+  --muted: #18181b;
+  --muted-foreground: #a1a1aa;
+  --accent: #818cf8;
+  --accent-foreground: #09090b;
+  --border: #27272a;
+  --sidebar: #121215;
+  --sidebar-foreground: #fafafa;
+  --sidebar-border: #27272a;
+}
+
+/* ========================================================
+   THEME 2: TERRACOTTA (Warm Clay / Sepia / Outfit)
+   ======================================================== */
+[data-theme-preset='terracotta'] {
+  --background: #faf9f5;
+  --foreground: #3d3929;
+  --card: #f5f4ef;
+  --card-foreground: #141413;
+  --primary: #c96442;
+  --primary-foreground: #ffffff;
+  --secondary: #e9e6dc;
+  --secondary-foreground: #535146;
+  --muted: #ede9de;
+  --muted-foreground: #6e6d68;
+  --accent: #e9e6dc;
+  --accent-foreground: #28261b;
+  --border: #dad9d4;
+  --sidebar: #f5f4ee;
+  --sidebar-foreground: #3d3d3a;
+  --sidebar-border: #ebebeb;
+  --font-sans: Outfit, system-ui, sans-serif;
+  --radius: 1rem;
+}
+
+[data-theme-preset='terracotta'][data-theme='dark'] {
+  --background: #262624;
+  --foreground: #f1f1ef;
+  --card: #2c2c2b;
+  --card-foreground: #faf9f5;
+  --primary: #d97757;
+  --primary-foreground: #141413;
+  --secondary: #2c2c2b;
+  --secondary-foreground: #faf9f5;
+  --muted: #1b1b19;
+  --muted-foreground: #b7b5a9;
+  --accent: #34332e;
+  --accent-foreground: #f5f4ee;
+  --border: #3e3e38;
+  --sidebar: #1f1e1d;
+  --sidebar-foreground: #c3c0b6;
+  --sidebar-border: #3e3e38;
+}
+
+/* ========================================================
+   THEME 3: EMERALD (Forest Teal / Green)
+   ======================================================== */
+[data-theme-preset='emerald'] {
+  --background: #f0f2f5;
+  --foreground: #111b21;
+  --card: #ffffff;
+  --card-foreground: #111b21;
+  --primary: #075e54;
+  --primary-foreground: #ffffff;
+  --secondary: #e7f8f0;
+  --secondary-foreground: #075e54;
+  --muted: #f0f2f5;
+  --muted-foreground: #667781;
+  --accent: #25d366;
+  --accent-foreground: #ffffff;
+  --border: #e9edef;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #111b21;
+  --sidebar-border: #e9edef;
+  --font-sans: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --radius: 1rem;
+}
+
+[data-theme-preset='emerald'][data-theme='dark'] {
+  --background: #0b141a;
+  --foreground: #e9edef;
+  --card: #1f2c34;
+  --card-foreground: #e9edef;
+  --primary: #00a884;
+  --primary-foreground: #111b21;
+  --secondary: #12332a;
+  --secondary-foreground: #00a884;
+  --muted: #182229;
+  --muted-foreground: #8696a0;
+  --accent: #25d366;
+  --accent-foreground: #111b21;
+  --border: #2a3942;
+  --sidebar: #111b21;
+  --sidebar-foreground: #e9edef;
+  --sidebar-border: #2a3942;
+}
+
+/* ========================================================
+   THEME 4: NORD (Arctic Ice)
+   ======================================================== */
+[data-theme-preset='nord'] {
+  --background: #eceff4;
+  --foreground: #2e3440;
+  --card: #e5e9f0;
+  --card-foreground: #2e3440;
+  --primary: #5e81ac;
+  --primary-foreground: #eceff4;
+  --secondary: #d8dee9;
+  --secondary-foreground: #3b4252;
+  --muted: #d8dee9;
+  --muted-foreground: #4c566a;
+  --accent: #88c0d0;
+  --accent-foreground: #2e3440;
+  --border: #d8dee9;
+  --sidebar: #e5e9f0;
+  --sidebar-foreground: #2e3440;
+  --sidebar-border: #d8dee9;
+  --radius: 0.5rem;
+}
+
+[data-theme-preset='nord'][data-theme='dark'] {
+  --background: #242933;
+  --foreground: #eceff4;
+  --card: #2e3440;
+  --card-foreground: #eceff4;
+  --primary: #88c0d0;
+  --primary-foreground: #2e3440;
+  --secondary: #3b4252;
+  --secondary-foreground: #eceff4;
+  --muted: #3b4252;
+  --muted-foreground: #d8dee9;
+  --accent: #81a1c1;
+  --accent-foreground: #2e3440;
+  --border: #3b4252;
+  --sidebar: #1e222a;
+  --sidebar-foreground: #d8dee9;
+  --sidebar-border: #2e3440;
+}
+
+/* ========================================================
+   THEME 5: DRACULA (Midnight)
+   ======================================================== */
+[data-theme-preset='dracula'] {
+  --background: #f8f8f2;
+  --foreground: #282a36;
+  --card: #ffffff;
+  --card-foreground: #282a36;
+  --primary: #6272a4;
+  --primary-foreground: #f8f8f2;
+  --secondary: #e2e4ec;
+  --secondary-foreground: #282a36;
+  --muted: #eaebee;
+  --muted-foreground: #6272a4;
+  --accent: #ff79c6;
+  --accent-foreground: #ffffff;
+  --border: #d6d8e2;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #282a36;
+  --sidebar-border: #d6d8e2;
+  --radius: 0.75rem;
+}
+
+[data-theme-preset='dracula'][data-theme='dark'] {
+  --background: #1e1f29;
+  --foreground: #f8f8f2;
+  --card: #282a36;
+  --card-foreground: #f8f8f2;
+  --primary: #bd93f9;
+  --primary-foreground: #282a36;
+  --secondary: #44475a;
+  --secondary-foreground: #f8f8f2;
+  --muted: #21222c;
+  --muted-foreground: #6272a4;
+  --accent: #ff79c6;
+  --accent-foreground: #282a36;
+  --border: #44475a;
+  --sidebar: #191a21;
+  --sidebar-foreground: #f8f8f2;
+  --sidebar-border: #44475a;
+}
+
+/* ========================================================
+   THEME 6: AMETHYST (Cyber Violet)
+   ======================================================== */
+[data-theme-preset='amethyst'] {
+  --background: #fcfaff;
+  --foreground: #2e1065;
+  --card: #ffffff;
+  --card-foreground: #2e1065;
+  --primary: #9333ea;
+  --primary-foreground: #ffffff;
+  --secondary: #f3e8ff;
+  --secondary-foreground: #581c87;
+  --muted: #f3e8ff;
+  --muted-foreground: #7e22ce;
+  --accent: #d946ef;
+  --accent-foreground: #ffffff;
+  --border: #e9d5ff;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #3b0764;
+  --sidebar-border: #e9d5ff;
+  --radius: 0.8rem;
+}
+
+[data-theme-preset='amethyst'][data-theme='dark'] {
+  --background: #0d0714;
+  --foreground: #faf5ff;
+  --card: #1a0f2e;
+  --card-foreground: #faf5ff;
+  --primary: #c084fc;
+  --primary-foreground: #0d0714;
+  --secondary: #2e1065;
+  --secondary-foreground: #faf5ff;
+  --muted: #1e0c38;
+  --muted-foreground: #a855f7;
+  --accent: #f0abfc;
+  --accent-foreground: #0d0714;
+  --border: #3b0764;
+  --sidebar: #130924;
+  --sidebar-foreground: #faf5ff;
+  --sidebar-border: #2e1065;
+}
+
+/* ========================================================
+   THEME 7: EDITORIAL (Serif Sepia)
+   ======================================================== */
+[data-theme-preset='editorial'] {
+  --background: #fbf9f4;
+  --foreground: #292524;
+  --card: #f5f0e6;
+  --card-foreground: #1c1917;
+  --primary: #78350f;
+  --primary-foreground: #ffffff;
+  --secondary: #eee7d7;
+  --secondary-foreground: #44403c;
+  --muted: #f0e9dc;
+  --muted-foreground: #78716c;
+  --accent: #b45309;
+  --accent-foreground: #ffffff;
+  --border: #e2d7c3;
+  --sidebar: #f5f0e6;
+  --sidebar-foreground: #292524;
+  --sidebar-border: #e2d7c3;
+  --font-sans: Georgia, Cambria, 'Times New Roman', serif;
+  --radius: 0.25rem;
+}
+
+[data-theme-preset='editorial'][data-theme='dark'] {
+  --background: #1c1917;
+  --foreground: #f5f5f4;
+  --card: #292524;
+  --card-foreground: #f5f5f4;
+  --primary: #d97706;
+  --primary-foreground: #1c1917;
+  --secondary: #44403c;
+  --secondary-foreground: #f5f5f4;
+  --muted: #292524;
+  --muted-foreground: #a8a29e;
+  --accent: #f59e0b;
+  --accent-foreground: #1c1917;
+  --border: #44403c;
+  --sidebar: #141210;
+  --sidebar-foreground: #f5f5f4;
+  --sidebar-border: #292524;
+  --font-sans: Georgia, Cambria, 'Times New Roman', serif;
+}
+
+/* System Dark Mode Auto Sync */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+  }
+}
