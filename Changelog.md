@@ -1,6 +1,16 @@
 # Changelog
 
-## VertiWiki 0.4.0 (August 2026) :badge[Latest]{type=success}
+## VertiWiki 0.4.1 (September 2026) :badge[Latest]{type=success}
+
+### 🐞 Bug Fixes & Navigation Resiliency
+- **Localized Navigation Link Resolution**: `parseNavigationMarkdown` automatically resolves relative links in localized subfolder navigation files (`ro/navigation.md`, `fr/navigation.md`) to point strictly to the active language route instead of defaulting to English.
+- **Accordion State Preservation on Language Switch**: Navigation accordion groups now evaluate normalized route paths, keeping the active section expanded and highlighting the active link when switching between languages.
+- **Prev/Next Navigation Multi-Language Support**: Correctly matches active document paths across localized mirrors for seamless previous/next navigation.
+- **Double Prefix Protection**: `resolvePath` safely checks for existing locale base directory prefixes to prevent double-prefixing.
+
+---
+
+## VertiWiki 0.4.0 (August 2026)
 
 ### 🌐 Native Multi-Language (i18n) & Mirror Architecture
 - **Zero-Backend Multi-Language Support**: Configurable locales in `config.json` (`locales: [...]`) with dynamic subfolder mirroring (`fr/`, `ro/`, etc.).
