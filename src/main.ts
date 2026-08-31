@@ -6,10 +6,11 @@ import { Pipeline } from './core/pipeline';
 import { Layout } from './ui/layout';
 import { ThemeManager } from './ui/theme';
 import { ThemeChooserDropdown } from './ui/theme-chooser';
+import { LanguageChooserDropdown } from './ui/language-chooser';
 import { TableOfContents } from './ui/toc';
 import { SearchEngine } from './plugins/search';
 import { SearchModal } from './ui/search-modal';
-import { NavigationItem } from './core/types';
+import { NavigationItem, LocaleConfig } from './core/types';
 
 // Plugins
 import { calloutsPlugin } from './plugins/callouts';
@@ -128,11 +129,23 @@ ${currentRawMarkdown}`;
   // Initialize Analytics (if configured in config.json)
   analytics.init(config);
 
+  // Initialize Router
+  const router = new Router(config.homePage, loadPage, config.locales || []);
+
   // Setup Theme Palette Dropdown Chooser
   if (config.enableThemeChooser !== false) {
     const headerRight = document.querySelector<HTMLElement>('.verti-header-right, .cortex-header-right, .omni-header-right');
     if (headerRight) {
       new ThemeChooserDropdown(headerRight, themeManager);
+    }
+  }
+
+  // Setup Language Chooser Dropdown
+  let langDropdown: LanguageChooserDropdown | null = null;
+  if (config.enableLanguageChooser !== false && config.locales && config.locales.length > 1) {
+    const headerRight = document.querySelector<HTMLElement>('.verti-header-right, .cortex-header-right, .omni-header-right');
+    if (headerRight) {
+      langDropdown = new LanguageChooserDropdown(headerRight, router, config.locales);
     }
   }
 
@@ -146,7 +159,10 @@ ${currentRawMarkdown}`;
   let searchModal: SearchModal | null = null;
   if (config.enableSearch) {
     searchModal = new SearchModal(
-      (query) => searchEngine.search(query),
+      (query) => {
+        const currentLocale = router.getCurrentLocale();
+        return searchEngine.search(query, currentLocale?.code);
+      },
       (selected) => {
         router.navigate(selected.path);
       }
@@ -165,27 +181,60 @@ ${currentRawMarkdown}`;
     router.scrollToAnchor(anchor);
   });
 
-  // Load and Parse navigation.md
+  // Dynamic Navigation Loader per Locale
+  let currentLoadedLocaleKey: string | null = null;
   let navigationItems: NavigationItem[] = [];
-  try {
-    const navResponse = await fetch(config.navigationFile);
-    if (navResponse.ok) {
-      const navRaw = await navResponse.text();
-      navigationItems = await parseNavigation(navRaw);
-      layout.renderNavigation(navigationItems, config.homePage);
-      
-      // Index all pages in background for instant search
-      if (config.enableSearch) {
-        searchEngine.indexNavTree(navigationItems);
-      }
+
+  async function loadNavigationForLocale(locale: LocaleConfig | null): Promise<void> {
+    const localeKey = locale ? locale.code : 'default';
+    if (currentLoadedLocaleKey === localeKey && navigationItems.length > 0) {
+      return;
     }
-  } catch (err) {
-    console.info('No navigation.md found or failed to load:', err);
+
+    currentLoadedLocaleKey = localeKey;
+    let navFile = config.navigationFile;
+    if (locale && locale.prefix && !locale.isDefault) {
+      navFile = `${locale.prefix}/${config.navigationFile}`;
+    }
+
+    try {
+      let navResponse = await fetch(navFile);
+      if (!navResponse.ok && navFile !== config.navigationFile) {
+        // Fallback to default navigation file if localized one doesn't exist
+        navResponse = await fetch(config.navigationFile);
+      }
+
+      if (navResponse.ok) {
+        const navRaw = await navResponse.text();
+        navigationItems = await parseNavigation(navRaw);
+        const activeHomePage = locale && locale.prefix && !locale.isDefault
+          ? `${locale.prefix}/${config.homePage}`
+          : config.homePage;
+        layout.renderNavigation(navigationItems, activeHomePage);
+
+        // Index localized pages in background for instant search
+        if (config.enableSearch) {
+          searchEngine.indexNavTree(navigationItems, locale?.code);
+        }
+      }
+    } catch (err) {
+      console.info(`No navigation file found at ${navFile}:`, err);
+    }
   }
 
   // Main Page Loader
   async function loadPage(route: RouteInfo): Promise<void> {
     let filePath = route.filePath;
+    const activeLocale = route.locale || router.getCurrentLocale(filePath);
+
+    // Ensure navigation matches the active locale
+    await loadNavigationForLocale(activeLocale);
+    if (langDropdown) {
+      langDropdown.renderMenu();
+    }
+    if (activeLocale?.code) {
+      document.documentElement.lang = activeLocale.code;
+    }
 
     try {
       let response = await fetch(filePath);
@@ -298,7 +347,8 @@ ${currentRawMarkdown}`;
         id: filePath,
         title: parsed.title,
         path: filePath,
-        content: rawMarkdown.replace(/[#*`_~[\]()]/g, ' ')
+        content: rawMarkdown.replace(/[#*`_~[\]()]/g, ' '),
+        locale: activeLocale?.code
       });
 
     } catch (err) {
@@ -359,8 +409,6 @@ ${currentRawMarkdown}`;
     }
   }
 
-  // Initialize Router
-  const router = new Router(config.homePage, loadPage);
   router.init();
 }
 

@@ -1,13 +1,14 @@
 {
   "name": "vertiwiki",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "100% static, single-file, zero-backend Markdown wiki and documentation engine for 2026 and beyond.",
   "type": "module",
   "main": "dist/vertiwiki.html",
   "scripts": {
     "dev": "vite",
     "build": "vite build && cp dist/index.html dist/vertiwiki.html",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest run"
   },
   "engines": {
     "node": ">=22"
@@ -27,7 +28,8 @@
     "@types/prismjs": "^1.26.5",
     "typescript": "^5.7.3",
     "vite": "^6.2.0",
-    "vite-plugin-singlefile": "^2.1.0"
+    "vite-plugin-singlefile": "^2.1.0",
+    "vitest": "^4.1.11"
   },
   "keywords": [
     "markdown",

@@ -8,7 +8,7 @@ export class SearchEngine {
   constructor() {
     this.miniSearch = new MiniSearch<SearchDocument>({
       fields: ['title', 'content'],
-      storeFields: ['title', 'path', 'content'],
+      storeFields: ['title', 'path', 'content', 'locale'],
       searchOptions: {
         boost: { title: 2 },
         fuzzy: 0.2,
@@ -25,7 +25,7 @@ export class SearchEngine {
     this.miniSearch.add(doc);
   }
 
-  public async indexNavTree(navItems: NavigationItem[]): Promise<void> {
+  public async indexNavTree(navItems: NavigationItem[], locale?: string): Promise<void> {
     const flatten = (items: NavigationItem[]): string[] => {
       const paths: string[] = [];
       items.forEach(item => {
@@ -55,7 +55,8 @@ export class SearchEngine {
             id: path,
             title,
             path,
-            content: cleanContent
+            content: cleanContent,
+            locale
           });
         }
       } catch {
@@ -64,10 +65,16 @@ export class SearchEngine {
     }
   }
 
-  public search(query: string): SearchResultItem[] {
+  public search(query: string, locale?: string): SearchResultItem[] {
     if (!query.trim()) return [];
 
-    const results = this.miniSearch.search(query);
+    const searchOpts: any = locale
+      ? {
+          filter: (doc: SearchDocument) => doc.locale === locale
+        }
+      : undefined;
+
+    const results = this.miniSearch.search(query, searchOpts);
     return results.slice(0, 10).map(res => {
       const content = res.content || '';
       const queryLower = query.toLowerCase();

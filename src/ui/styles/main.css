@@ -222,6 +222,93 @@ body {
   font-weight: bold;
 }
 
+/* Language Chooser Dropdown */
+.verti-lang-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 60;
+  width: 200px;
+  background-color: var(--verti-bg-surface);
+  border: 1px solid var(--verti-border);
+  border-radius: var(--verti-radius-md);
+  box-shadow: var(--verti-shadow-lg);
+  padding: 0.5rem;
+  backdrop-filter: blur(12px);
+}
+
+.verti-lang-menu-header {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--verti-text-muted);
+  padding: 0.4rem 0.6rem 0.25rem 0.6rem;
+  border-bottom: 1px solid var(--verti-border);
+  margin-bottom: 0.35rem;
+}
+
+.verti-lang-menu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.verti-lang-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  padding: 0.45rem 0.6rem;
+  background: transparent;
+  border: none;
+  border-radius: var(--verti-radius-sm);
+  color: var(--verti-text-primary);
+  font-size: 0.85rem;
+  font-family: inherit;
+  cursor: pointer;
+  text-align: left;
+  transition: all var(--verti-transition);
+}
+
+.verti-lang-item:hover {
+  background-color: color-mix(in srgb, var(--verti-text-primary) 10%, transparent);
+}
+
+.verti-lang-item.active {
+  background-color: color-mix(in srgb, var(--verti-accent) 16%, transparent);
+  color: var(--verti-accent);
+  font-weight: 600;
+}
+
+.verti-lang-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 0.15rem 0.35rem;
+  border-radius: var(--verti-radius-sm);
+  background-color: var(--verti-bg-muted);
+  color: var(--verti-text-muted);
+  border: 1px solid var(--verti-border);
+}
+
+.verti-lang-item.active .verti-lang-badge {
+  background-color: var(--verti-accent);
+  color: #ffffff;
+  border-color: transparent;
+}
+
+.verti-lang-label {
+  flex: 1;
+}
+
+.verti-lang-check {
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
 /* Main Container Grid */
 .verti-main-container {
   display: flex;

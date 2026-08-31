@@ -1,7 +1,10 @@
+import { LocaleConfig } from './types';
+
 export interface RouteInfo {
   filePath: string;
   anchor: string;
   isMarkdown: boolean;
+  locale?: LocaleConfig;
 }
 
 export function normalizePath(path: string): string {
@@ -45,13 +48,68 @@ export function resolvePath(baseFilePath: string, relativePath: string): string 
 
 export class Router {
   private defaultPage: string;
+  private locales: LocaleConfig[];
   private onRouteChanged: (route: RouteInfo) => Promise<void>;
 
-  constructor(defaultPage: string, onRouteChanged: (route: RouteInfo) => Promise<void>) {
+  constructor(
+    defaultPage: string,
+    onRouteChanged: (route: RouteInfo) => Promise<void>,
+    locales: LocaleConfig[] = []
+  ) {
     this.defaultPage = defaultPage;
+    this.locales = locales;
     this.onRouteChanged = onRouteChanged;
 
-    window.addEventListener('hashchange', () => this.handleHashChange());
+    if (typeof window !== 'undefined') {
+      window.addEventListener('hashchange', () => this.handleHashChange());
+    }
+  }
+
+  public setLocales(locales: LocaleConfig[]): void {
+    this.locales = locales;
+  }
+
+  public getLocales(): LocaleConfig[] {
+    return this.locales;
+  }
+
+  public getCurrentLocale(filePath?: string): LocaleConfig | null {
+    if (!this.locales || this.locales.length === 0) return null;
+    const path = filePath || this.parseHash(window.location.hash).filePath;
+
+    for (const loc of this.locales) {
+      if (loc.prefix && (path === loc.prefix || path.startsWith(`${loc.prefix}/`))) {
+        return loc;
+      }
+    }
+
+    return this.locales.find(l => l.isDefault) || this.locales[0] || null;
+  }
+
+  public switchLanguage(targetCode: string): void {
+    if (!this.locales || this.locales.length === 0) return;
+    const targetLocale = this.locales.find(l => l.code === targetCode);
+    if (!targetLocale) return;
+
+    const currentRoute = this.parseHash(window.location.hash);
+    const currentLocale = this.getCurrentLocale(currentRoute.filePath);
+
+    let cleanDocPath = currentRoute.filePath;
+
+    if (currentLocale && currentLocale.prefix) {
+      if (cleanDocPath.startsWith(`${currentLocale.prefix}/`)) {
+        cleanDocPath = cleanDocPath.substring(currentLocale.prefix.length + 1);
+      } else if (cleanDocPath === currentLocale.prefix) {
+        cleanDocPath = this.defaultPage;
+      }
+    }
+
+    let targetPath = cleanDocPath;
+    if (targetLocale.prefix && !targetLocale.isDefault) {
+      targetPath = `${targetLocale.prefix}/${cleanDocPath}`;
+    }
+
+    this.navigate(targetPath, currentRoute.anchor);
   }
 
   public init(): void {
@@ -99,8 +157,9 @@ export class Router {
     }
 
     const isMarkdown = Boolean(filePath.match(/\.(md|markdown|mdown)$/i));
+    const locale = this.getCurrentLocale(filePath) || undefined;
 
-    return { filePath, anchor, isMarkdown };
+    return { filePath, anchor, isMarkdown, locale };
   }
 
   public async navigate(path: string, anchor: string = ''): Promise<void> {

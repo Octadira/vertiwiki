@@ -34,6 +34,13 @@ export interface ThemePreset {
   dark: ThemeColors;
 }
 
+export interface LocaleConfig {
+  code: string;
+  label: string;
+  prefix?: string;
+  isDefault?: boolean;
+}
+
 export interface VertiWikiConfig {
   title: string;
   logo?: string;
@@ -45,6 +52,8 @@ export interface VertiWikiConfig {
   enableMermaid: boolean;
   enableCodeCopy: boolean;
   enableThemeChooser: boolean;
+  enableLanguageChooser?: boolean;
+  locales?: LocaleConfig[];
   collapsibleNavigation?: boolean;
   defaultTheme: 'auto' | 'light' | 'dark';
   themePreset: string;
@@ -80,6 +89,7 @@ export interface SearchDocument {
   title: string;
   path: string;
   content: string;
+  locale?: string;
 }
 
 export interface SearchResultItem {

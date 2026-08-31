@@ -1,6 +1,17 @@
 # Changelog
 
-## VertiWiki 0.3.0 (August 2026) :badge[Latest]{type=success}
+## VertiWiki 0.4.0 (August 2026) :badge[Latest]{type=success}
+
+### 🌐 Native Multi-Language (i18n) & Mirror Architecture
+- **Zero-Backend Multi-Language Support**: Configurable locales in `config.json` (`locales: [...]`) with dynamic subfolder mirroring (`fr/`, `ro/`, etc.).
+- **Smart Locale Hash Router**: Router dynamically detects active language prefixes from hash paths (`#/fr/...` vs `#/ro/...`) and preserves current document paths when switching languages.
+- **Language Chooser Dropdown**: Modern SVG globe switcher in the header with active checkmarks and outside-click dismissal, appearing automatically when $\ge 2$ languages are configured.
+- **Locale-Scoped Search**: MiniSearch automatically indexes and scopes queries to the active language, eliminating cross-language result clutter.
+- **Automated Vitest Test Suite**: Added comprehensive unit test coverage for path normalization, locale detection, language switching, and search index scoping.
+
+---
+
+## VertiWiki 0.3.0 (August 2026)
 
 ### 🔗 Native Wikilinks (`[[...]]`) & Bidirectional Cross-Referencing
 - **Zero-Build Wikilinks**: Built-in support for double-bracket links `[[target]]`, `[[target|alias]]`, and `[[target#anchor|alias]]` resolving client-side without any build step.

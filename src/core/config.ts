@@ -10,12 +10,14 @@ export const DEFAULT_CONFIG: VertiWikiConfig = {
   enableMermaid: true,
   enableCodeCopy: true,
   enableThemeChooser: true,
+  enableLanguageChooser: true,
+  locales: [],
   collapsibleNavigation: false,
   defaultTheme: 'auto',
   themePreset: 'default',
   navigationFile: 'navigation.md',
   homePage: 'index.md',
-  footerText: 'Powered by <a href="https://verti.wiki" target="_blank" rel="noopener noreferrer"><strong>VertiWiki 0.3.0</strong></a> — Built for 2026 and beyond',
+  footerText: 'Powered by <a href="https://verti.wiki" target="_blank" rel="noopener noreferrer"><strong>VertiWiki 0.4.0</strong></a> — Built for 2026 and beyond',
   githubUrl: ''
 };
 
