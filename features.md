@@ -4,7 +4,7 @@ description: Explore the rich interactive components available in VertiWiki incl
 tags: [features, tabs, accordion, lightbox, aeo]
 ---
 
-# Modern Features in VertiWiki :badge[v0.3.0]{type=primary} :badge[Interactive]{type=success}
+# Modern Features in VertiWiki :badge[v0.4.0]{type=primary} :badge[Interactive]{type=success}
 
 VertiWiki brings a powerful suite of 2026+ web platform improvements, interactive Markdown components, and answer engine optimizations.
 
@@ -110,13 +110,22 @@ Interlink articles easily using double brackets with zero build step:
 
 ---
 
-## 🔀 6. Previous & Next Page Navigation
+## 🌐 6. Native Multi-Language (i18n) :badge[v0.4.0]{type=success}
+
+Seamlessly author docs in mirror subfolders (`fr/`, `ro/`, etc.) with instant language switching and scoped search:
+
+* Switch languages using the **🌐 Globe Switcher** in the header
+* Read the technical setup in [[docs/guides/multi-language|Multi-Language Guide]]
+
+---
+
+## 🔀 7. Previous & Next Page Navigation
 
 Scroll to the bottom of this article to see the **← Previous Page** and **Next Page →** navigation cards, calculated automatically from `navigation.md`!
 
 ---
 
-## 🗺️ 7. Interactive Visual Sitemap
+## 🗺️ 8. Interactive Visual Sitemap
 
 Embed a full, responsive directory tree of your entire documentation on any page with real-time live search:
 
