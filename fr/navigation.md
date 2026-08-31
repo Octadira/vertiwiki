@@ -1,9 +1,7 @@
-# Documentation VertiWiki (Français)
-
-## Bienvenue
-* [Accueil](fr/index.md)
+# Pour Commencer
+* [Bienvenue](fr/index.md)
 * [Fonctionnalités Interactives](fr/features.md)
 
-## Guides & Références
+# Guides & Références
 * [Architecture du Moteur](docs/architecture/overview.md)
-* [Démarrage Rapide](docs/getting-started/quickstart.md)
+* [Installation & Démarrage](docs/getting-started/installation.md)
