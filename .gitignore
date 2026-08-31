@@ -23,13 +23,6 @@ lerna-debug.log*
 .env
 .env.local
 .env.*.local
-.openwiki/
-
-# OpenWiki & Agent Runtime Ephemera (Keep generated docs, ignore active runtime states)
-openwiki/.run.json
-openwiki/.run.json.*
-openwiki/.page-manifest.json
-openwiki/.last-update.json
 
 # OS & Editor
 .DS_Store
