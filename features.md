@@ -1,138 +1,154 @@
 ---
-title: Modern Features (2026+)
-description: Explore the rich interactive components available in VertiWiki including Code Tabs, Accordions, Lightbox, Math, Diagrams, and Search.
-tags: [features, tabs, accordion, lightbox, aeo]
+title: Modern Features & 14 Built-in Plugins
+description: Explore the comprehensive suite of 14 built-in plugins and interactive components in VertiWiki.
+tags: [features, plugins, tabs, math, mermaid, wikilinks, i18n, search, lightbox, aeo]
 ---
 
-# Modern Features in VertiWiki :badge[v0.4.0]{type=primary} :badge[Interactive]{type=success}
+# Modern Features & 14 Built-in Plugins :badge[v0.4.0]{type=primary} :badge[Interactive Demo]{type=success}
 
-VertiWiki brings a powerful suite of 2026+ web platform improvements, interactive Markdown components, and answer engine optimizations.
+VertiWiki includes **14 built-in zero-dependency plugins** that transform pure Markdown into a dynamic, rich documentation application directly in the browser.
 
 ---
 
-## 📑 1. Multi-Language Code Tabs & Switcher
+## 1. 📢 GitHub Flavored Alerts & Callouts
 
-You can present multi-package or multi-language instructions using clean, animated tab groups:
+> [!NOTE]
+> Informational context and helpful design background.
 
-::: tabs
-== npm
-```bash
-# Install with standard npm
-npm install vertiwiki
-```
-== pnpm
-```bash
-# Install with pnpm (fast & disk efficient)
-pnpm add vertiwiki
-```
-== yarn
-```bash
-# Install with yarn
-yarn add vertiwiki
-```
-== bun
-```bash
-# Install with bun
-bun add vertiwiki
-```
-:::
+> [!TIP]
+> Best practices, optimizations, and pro-tips.
 
-You can also use tabs for programming languages:
+> [!IMPORTANT]
+> Essential instructions and required prerequisites.
+
+> [!WARNING]
+> Deprecation notices, security warnings, or configuration alerts.
+
+> [!CAUTION]
+> High-risk actions that could cause data loss or service disruption.
+
+---
+
+## 2. 📑 Interactive Code & Language Tabs
 
 ::: tabs
 == TypeScript
 ```typescript
 interface WikiConfig {
   title: string;
-  themePreset: string;
+  enableSearch: boolean;
+  locales: LocaleConfig[];
 }
-
-const config: WikiConfig = { title: "VertiWiki", themePreset: "obsidian" };
 ```
 == Python
 ```python
 def get_wiki_config() -> dict:
-    return {"title": "VertiWiki", "theme": "obsidian"}
+    return {"title": "VertiWiki", "search": True, "locales": ["en", "fr", "ro"]}
 ```
-== Rust
-```rust
-struct WikiConfig {
-    title: String,
-    theme: String,
-}
+== Bash
+```bash
+# Build standalone bundle
+npm run build
 ```
 :::
 
 ---
 
-## 📂 2. Collapsible Details & FAQ Accordions
+## 3. 📂 Collapsible Details & FAQs
 
-Easily hide complex details or organize FAQs using accordion blocks:
-
-::: details How do zero-recompile themes work without page reloads?
-VertiWiki utilizes native CSS Custom Properties (Design Tokens) and dynamically switches the `data-theme-preset` attribute on the `<html>` root element. The browser recalculates colors instantly at the GPU compositor layer in **under 1 millisecond**!
+::: details How does zero-backend client rendering work?
+When a route changes, VertiWiki fetches the raw `.md` file using client-side `fetch()`, processes it through the plugin pipeline and `Marked`, sanitizes the HTML via `DOMPurify`, and injects the resulting DOM into the page in less than 15 milliseconds.
 :::
 
-::: details:open Which AI answer engines are supported?
-Thanks to the built-in **AEO (Answer Engine Optimization)** module, VertiWiki generates real-time Schema.org JSON-LD semantic graphs (`TechArticle`, `BreadcrumbList`) and serves `llms.txt`, making it 100% optimized for **ChatGPT Search, Perplexity AI, Claude, Google Gemini, and Microsoft Copilot**.
+::: details Can VertiWiki run completely offline?
+Yes. The single standalone `vertiwiki.html` contains all scripts, fonts, stylesheets, KaTeX equations, and syntax tokenizers embedded in one file.
 :::
 
 ---
 
-## 🏷️ 3. Colored Badges & Status Tags
+## 4. 🏷️ Inline Badges & Pills
 
-Add inline status indicators and category tags anywhere in your text:
-
-* :badge[v0.3.0]{type=primary} Primary Brand Tag
-* :badge[Success]{type=success} Build Passing / Active
-* :badge[Warning]{type=warning} Under Review
-* :badge[Danger]{type=danger} Deprecated API
-* :badge[Purple]{type=purple} Experimental AI
-* :badge[Info]{type=info} General Tag
+* :badge[v0.4.0]{type=primary} Core Release
+* :badge[Success]{type=success} Fast GPU Render
+* :badge[Warning]{type=warning} Deprecated
+* :badge[Error]{type=error} Failed Check
+* :badge[Purple]{type=purple} AEO Ready
+* :badge[Info]{type=info} General Metadata
 
 ---
 
-## 🔍 4. Image & Diagram Lightbox Zoom
+## 5. 📐 KaTeX Mathematical Equations
 
-Click on any image or diagram below to open it in a full-screen, high-resolution **Lightbox modal** with dark blurred backdrop:
+Inline equation: $E = mc^2$ and the Gaussian integral:
 
-![VertiWiki Architecture Overview](https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80)
+$$\int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}$$
 
 ---
 
-## 🔗 5. Bidirectional Wikilinks (`[[...]]`) :badge[v0.3.0]{type=primary}
+## 6. 📊 Mermaid Flowcharts & Sequence Diagrams
 
-Interlink articles easily using double brackets with zero build step:
+```mermaid
+graph LR
+  Markdown[Raw Markdown] --> Parser[Marked Engine]
+  Parser --> Sanitize[DOMPurify]
+  Sanitize --> DOM[Client DOM]
+```
 
-* Cross-link directly to [[themes|Themes & Palettes]]
-* Jump straight to [[math_diagrams#mermaid|Mermaid Diagrams]]
+---
+
+## 7. 🔗 Bidirectional Wikilinks (`[[...]]`)
+
+Interlink articles seamlessly with Obsidian and Logseq vault compatibility:
+
+* Cross-link directly: [[themes|Themes & Palettes]]
+* Jump straight to section: [[math_diagrams#mermaid|Mermaid Diagrams]]
 * Link across subdirectories: [[docs/guides/wikilinks|Complete Wikilinks Guide]]
 
 ---
 
-## 🌐 6. Native Multi-Language (i18n) :badge[v0.4.0]{type=success}
+## 8. 🔍 Image & Diagram Lightbox Zoom
 
-Seamlessly author docs in mirror subfolders (`fr/`, `ro/`, etc.) with instant language switching and scoped search:
+Click on any image to open it in a full-screen, high-resolution **Lightbox modal** with dark blurred backdrop:
 
-* Switch languages using the **🌐 Globe Switcher** in the header
+![VertiWiki Architecture](https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80)
+
+---
+
+## 9. 🌐 Native Multi-Language (i18n) & Mirror Folders
+
+Serve multilingual wikis with mirror subfolders (`fr/`, `ro/`, etc.) and dynamic header language switcher:
+
+* Switch languages using the **🌐 Globe Dropdown** in the header
 * Read the technical setup in [[docs/guides/multi-language|Multi-Language Guide]]
 
 ---
 
-## 🔀 7. Previous & Next Page Navigation
+## 10. ⚡ MiniSearch Client-Side Full-Text Search
 
-Scroll to the bottom of this article to see the **← Previous Page** and **Next Page →** navigation cards, calculated automatically from `navigation.md`!
+Press `⌘K` or `/` anywhere to launch instant, fuzzy full-text search with automatic locale scoping.
 
 ---
 
-## 🗺️ 8. Interactive Visual Sitemap
+## 11. 🧭 Dynamic Table of Contents (TOC) & Scrollspy
 
-Embed a full, responsive directory tree of your entire documentation on any page with real-time live search:
+The right sidebar automatically extracts H2–H4 headings and tracks current scroll position with active highlights using `IntersectionObserver`.
 
-```markdown
-::: sitemap
-:::
-```
+---
 
-Check out the dedicated [Visual Sitemap Page](sitemap.md) to see it in action!
+## 12. 🌲 Auto-Expanding Sidebar Navigation Accordion
 
+Collapsible navigation groups in the left sidebar automatically expand to reveal and highlight the currently active document.
+
+---
+
+## 13. 🔀 Previous & Next Sequential Reading Cards
+
+Every article automatically computes sequential reading navigation cards at the bottom of the page based on `navigation.md`.
+
+---
+
+## 14. 🤖 Answer Engine Optimization (AEO) & Universal Analytics
+
+* Automatically generates Schema.org `TechArticle` and `BreadcrumbList` JSON-LD graphs in `<head>`.
+* Provides structured `llms.txt` index for AI crawlers (ChatGPT, Claude, Perplexity).
+* Zero-recompile analytics support for Google Analytics 4, Plausible, Cloudflare, Umami, and Matomo.
