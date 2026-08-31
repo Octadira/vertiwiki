@@ -35,7 +35,7 @@ When serving or publishing your wiki, ensure the following core files exist in t
   "themePreset": "obsidian",
   "navigationFile": "navigation.md",
   "homePage": "index.md",
-  "footerText": "Powered by <a href=\"https://verti.wiki\" target=\"_blank\"><strong>VertiWiki 0.3.0</strong></a> — Built for 2026 and beyond",
+  "footerText": "Powered by <a href=\"https://verti.wiki\" target=\"_blank\"><strong>VertiWiki</strong></a> — Built for 2026 and beyond",
   "githubUrl": "https://github.com/username/repo",
   "customThemes": [
     "themes/obsidian.json"

@@ -1,10 +1,10 @@
 # Plugin Development API
 
-VertiWiki 0.3.0 features an extensible, async-first **Pipeline Architecture** allowing developers to create custom plugins and extensions easily.
+VertiWiki features an extensible, async-first **Pipeline Architecture** allowing developers to create custom plugins and extensions easily.
 
 ---
 
-## 🧩 Built-in Plugins in VertiWiki 0.3.0
+## 🧩 Built-in Plugins in VertiWiki
 
 VertiWiki ships with 14 built-in plugins registered in the processing pipeline:
 

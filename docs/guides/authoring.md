@@ -85,7 +85,7 @@ Relative images are automatically resolved relative to the Markdown file's locat
 
 ---
 
-## 🔗 Fast Cross-Referencing with Wikilinks (`[[...]]`) :badge[v0.3.0]{type=primary}
+## 🔗 Fast Cross-Referencing with Wikilinks (`[[...]]`) :badge[Core Plugin]{type=primary}
 
 VertiWiki supports double-bracket Wikilinks for rapid cross-referencing between documents:
 

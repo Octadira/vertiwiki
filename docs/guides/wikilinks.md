@@ -6,7 +6,7 @@ date: 2026-08-31
 tags: [wikilinks, obsidian, navigation, cross-referencing, gfm]
 ---
 
-# Wikilinks & Cross-Referencing :badge[v0.3.0]{type=primary} :badge[Core Plugin]{type=success}
+# Wikilinks & Cross-Referencing :badge[Core Plugin]{type=primary} :badge[Core Plugin]{type=success}
 
 VertiWiki provides native, zero-build client-side support for **Wikilinks** (`[[...]]`). This syntax allows authors, technical writers, and PKM (Personal Knowledge Management) users to quickly interlink markdown documents without having to author verbose CommonMark link syntax.
 
