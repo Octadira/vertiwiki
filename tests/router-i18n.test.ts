@@ -51,4 +51,11 @@ describe('Router Multi-Language (i18n) Logic', () => {
     expect(roRoute.filePath).toBe('ro/features.md');
     expect(roRoute.locale?.code).toBe('ro');
   });
+
+  it('correctly resolves localized navigation links in subfolders without double prefixing', () => {
+    expect(resolvePath('ro/navigation.md', 'getting-started/installation.md')).toBe('ro/getting-started/installation.md');
+    expect(resolvePath('ro/navigation.md', 'ro/getting-started/installation.md')).toBe('ro/getting-started/installation.md');
+    expect(resolvePath('fr/navigation.md', 'guides/authoring.md')).toBe('fr/guides/authoring.md');
+    expect(resolvePath('navigation.md', 'guides/authoring.md')).toBe('guides/authoring.md');
+  });
 });

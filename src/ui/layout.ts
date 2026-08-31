@@ -249,9 +249,24 @@ export class Layout {
     }
     this.sidebarEl.style.display = 'block';
 
+    const normalizeCompare = (p: string) => {
+      let clean = (p || '').replace(/^#!/, '').replace(/^#\//, '').replace(/^#/, '').trim();
+      if (clean.endsWith('/index.md')) clean = clean.substring(0, clean.length - 9);
+      else if (clean.endsWith('.md')) clean = clean.substring(0, clean.length - 3);
+      if (clean.endsWith('/')) clean = clean.substring(0, clean.length - 1);
+      return clean;
+    };
+
+    const targetActive = normalizeCompare(activePath);
+
     const hasActiveChild = (item: NavigationItem): boolean => {
       if (!item.children || item.children.length === 0) return false;
-      return item.children.some(child => child.href === activePath || hasActiveChild(child));
+      return item.children.some(child => {
+        if (child.href && !child.isExternal) {
+          if (normalizeCompare(child.href) === targetActive) return true;
+        }
+        return hasActiveChild(child);
+      });
     };
 
     const renderList = (items: NavigationItem[]): string => {
@@ -285,7 +300,7 @@ export class Layout {
             }
 
             const targetHref = item.isExternal ? item.href : `#/${item.href}`;
-            const isActive = activePath === item.href;
+            const isActive = !item.isExternal && normalizeCompare(item.href) === targetActive;
             const targetAttr = item.isExternal ? 'target="_blank" rel="noopener noreferrer"' : '';
 
             return `
@@ -304,13 +319,23 @@ export class Layout {
   }
 
   public updateActiveNavLink(activePath: string): void {
+    const normalizeCompare = (p: string) => {
+      let clean = (p || '').replace(/^#!/, '').replace(/^#\//, '').replace(/^#/, '').trim();
+      if (clean.endsWith('/index.md')) clean = clean.substring(0, clean.length - 9);
+      else if (clean.endsWith('.md')) clean = clean.substring(0, clean.length - 3);
+      if (clean.endsWith('/')) clean = clean.substring(0, clean.length - 1);
+      return clean;
+    };
+
+    const target = normalizeCompare(activePath);
+
     this.sidebarNavContainer.querySelectorAll<HTMLAnchorElement>('.verti-nav-link, .cortex-nav-link, .omni-nav-link').forEach(link => {
       const href = link.getAttribute('href') || '';
-      const path = href.replace(/^#!/, '').replace(/^#\//, '');
-      const isActive = path === activePath ||
-                       (activePath.endsWith('/index.md') && (path === activePath.replace(/\/index\.md$/, '') || path === activePath.replace(/\/index\.md$/, '/'))) ||
-                       (!path.endsWith('.md') && activePath === `${path}/index.md`) ||
-                       (activePath.endsWith('.md') && path === activePath.replace(/\.md$/, ''));
+      const isExternal = href.startsWith('http://') || href.startsWith('https://') || href.startsWith('//');
+      if (isExternal) return;
+
+      const linkTarget = normalizeCompare(href);
+      const isActive = linkTarget === target;
       link.classList.toggle('active', isActive);
 
       if (isActive && this.config.collapsibleNavigation) {

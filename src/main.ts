@@ -29,54 +29,6 @@ import { sitemapPlugin, parseNavigationMarkdown } from './plugins/sitemap';
 import { wikilinksPlugin } from './plugins/wikilinks';
 import { PrevNextNavigation } from './ui/prev-next';
 
-async function parseNavigation(navMarkdown: string): Promise<NavigationItem[]> {
-  const items: NavigationItem[] = [];
-  const lines = navMarkdown.split(/\r?\n/);
-
-  let currentHeader = '';
-  let currentGroup: NavigationItem | null = null;
-
-  for (const line of lines) {
-    const trimmed = line.trim();
-    if (!trimmed) continue;
-
-    // Header line (e.g. # Documentation or ## Guides)
-    const headerMatch = trimmed.match(/^#{1,3}\s+(.+)$/);
-    if (headerMatch) {
-      currentHeader = headerMatch[1].trim();
-      currentGroup = {
-        title: currentHeader,
-        href: '',
-        children: []
-      };
-      items.push(currentGroup);
-      continue;
-    }
-
-    // Markdown link: * [Title](path.md) or - [Title](path.md)
-    const linkMatch = trimmed.match(/^[-*]\s+\[([^\]]+)\]\(([^)]+)\)/);
-    if (linkMatch) {
-      const title = linkMatch[1].trim();
-      const href = linkMatch[2].trim();
-      const isExternal = href.startsWith('http://') || href.startsWith('https://') || href.startsWith('//');
-
-      const navItem: NavigationItem = {
-        title,
-        href,
-        isExternal
-      };
-
-      if (currentGroup && currentGroup.children) {
-        currentGroup.children.push(navItem);
-      } else {
-        items.push(navItem);
-      }
-    }
-  }
-
-  return items;
-}
-
 async function bootstrap() {
   const config = await loadConfig();
 
@@ -185,7 +137,7 @@ ${currentRawMarkdown}`;
   let currentLoadedLocaleKey: string | null = null;
   let navigationItems: NavigationItem[] = [];
 
-  async function loadNavigationForLocale(locale: LocaleConfig | null): Promise<void> {
+  async function loadNavigationForLocale(locale: LocaleConfig | null, currentActivePath?: string): Promise<void> {
     const localeKey = locale ? locale.code : 'default';
     if (currentLoadedLocaleKey === localeKey && navigationItems.length > 0) {
       return;
@@ -202,15 +154,16 @@ ${currentRawMarkdown}`;
       if (!navResponse.ok && navFile !== config.navigationFile) {
         // Fallback to default navigation file if localized one doesn't exist
         navResponse = await fetch(config.navigationFile);
+        navFile = config.navigationFile;
       }
 
       if (navResponse.ok) {
         const navRaw = await navResponse.text();
-        navigationItems = await parseNavigation(navRaw);
-        const activeHomePage = locale && locale.prefix && !locale.isDefault
+        navigationItems = parseNavigationMarkdown(navRaw, navFile);
+        const activeTarget = currentActivePath || (locale && locale.prefix && !locale.isDefault
           ? `${locale.prefix}/${config.homePage}`
-          : config.homePage;
-        layout.renderNavigation(navigationItems, activeHomePage);
+          : config.homePage);
+        layout.renderNavigation(navigationItems, activeTarget);
 
         // Index localized pages in background for instant search
         if (config.enableSearch) {
@@ -227,8 +180,8 @@ ${currentRawMarkdown}`;
     let filePath = route.filePath;
     const activeLocale = route.locale || router.getCurrentLocale(filePath);
 
-    // Ensure navigation matches the active locale
-    await loadNavigationForLocale(activeLocale);
+    // Ensure navigation matches the active locale and current active path
+    await loadNavigationForLocale(activeLocale, filePath);
     if (langDropdown) {
       langDropdown.renderMenu();
     }

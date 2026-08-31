@@ -1,7 +1,8 @@
 import { VertiWikiPlugin } from '../core/pipeline';
 import { NavigationItem } from '../core/types';
+import { resolvePath } from '../core/router';
 
-export function parseNavigationMarkdown(navMarkdown: string): NavigationItem[] {
+export function parseNavigationMarkdown(navMarkdown: string, baseFilePath: string = ''): NavigationItem[] {
   const items: NavigationItem[] = [];
   const lines = navMarkdown.split(/\r?\n/);
 
@@ -29,8 +30,10 @@ export function parseNavigationMarkdown(navMarkdown: string): NavigationItem[] {
     const linkMatch = trimmed.match(/^[-*]\s+\[([^\]]+)\]\(([^)]+)\)/);
     if (linkMatch) {
       const title = linkMatch[1].trim();
-      const href = linkMatch[2].trim();
-      const isExternal = href.startsWith('http://') || href.startsWith('https://') || href.startsWith('//');
+      const rawHref = linkMatch[2].trim();
+      const isExternal = rawHref.startsWith('http://') || rawHref.startsWith('https://') || rawHref.startsWith('//');
+
+      const href = isExternal ? rawHref : (baseFilePath ? resolvePath(baseFilePath, rawHref) : rawHref);
 
       const navItem: NavigationItem = {
         title,
@@ -63,12 +66,24 @@ export const sitemapPlugin: VertiWikiPlugin = {
     const placeholders = context.container.querySelectorAll<HTMLElement>('.verti-sitemap-root[data-sitemap="true"]');
     if (placeholders.length === 0) return;
 
+    let navFile = context.config.navigationFile || 'navigation.md';
+    if (context.filePath && context.filePath.includes('/')) {
+      const firstSeg = context.filePath.split('/')[0];
+      if (context.config.locales?.some(l => l.prefix === firstSeg && !l.isDefault)) {
+        navFile = `${firstSeg}/${context.config.navigationFile || 'navigation.md'}`;
+      }
+    }
+
     let navItems: NavigationItem[] = [];
     try {
-      const navRes = await fetch(context.config.navigationFile || 'navigation.md');
+      let navRes = await fetch(navFile);
+      if (!navRes.ok && navFile !== (context.config.navigationFile || 'navigation.md')) {
+        navFile = context.config.navigationFile || 'navigation.md';
+        navRes = await fetch(navFile);
+      }
       if (navRes.ok) {
         const navText = await navRes.text();
-        navItems = parseNavigationMarkdown(navText);
+        navItems = parseNavigationMarkdown(navText, navFile);
       }
     } catch (err) {
       console.warn('[VertiWiki] Sitemap plugin could not load navigation file:', err);

@@ -42,7 +42,16 @@ export function resolvePath(baseFilePath: string, relativePath: string): string 
   }
 
   const baseDir = baseFilePath.includes('/') ? baseFilePath.substring(0, baseFilePath.lastIndexOf('/')) : '';
-  const combined = baseDir ? `${baseDir}/${relativePath}` : relativePath;
+  if (!baseDir) {
+    return normalizePath(relativePath);
+  }
+
+  // Prevent double prefixing if relativePath already starts with baseDir
+  if (relativePath === baseDir || relativePath.startsWith(`${baseDir}/`)) {
+    return normalizePath(relativePath);
+  }
+
+  const combined = `${baseDir}/${relativePath}`;
   return normalizePath(combined);
 }
 
