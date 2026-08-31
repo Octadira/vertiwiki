@@ -1,6 +1,6 @@
 # Technical Architecture & Core Overview
 
-**VertiWiki 0.2.8** is an ultra-fast, zero-backend, single-file Markdown wiki and documentation engine. This document details the internal architecture, lifecycle pipeline, and bundling mechanics.
+**VertiWiki 0.3.0** is an ultra-fast, zero-backend, single-file Markdown wiki and documentation engine. This document details the internal architecture, lifecycle pipeline, and bundling mechanics.
 
 ---
 
@@ -14,7 +14,7 @@ flowchart TB
         FetchEngine["Async Fetcher (fetch + path resolver)"]
         
         subgraph PipelineEngine["Core Pipeline (src/core/pipeline.ts)"]
-            HookBefore["beforeParse Hooks (Tabs, Details, Badges)"]
+            HookBefore["beforeParse Hooks (Wikilinks, Tabs, Details, Badges)"]
             Parser["Markdown Parser (Marked v15 + DOMPurify)"]
             HookAfter["afterParse Hooks"]
             DOMInject["DOM Injection & Relative Path Rewriter"]
@@ -66,7 +66,7 @@ When a user navigates or the page initially loads, VertiWiki executes the follow
    * Extracts page metadata, title, author, description, tags, and optional per-page theme preset overrides (`theme: terracotta`).
 
 4. **Pipeline: `beforeParse`**:
-   * Passes the raw Markdown string through all registered plugins (Tabs, Details accordions, Badges, Callouts) for pre-processing.
+   * Passes the raw Markdown string through all registered plugins (Wikilinks, Tabs, Details accordions, Badges, Callouts) for pre-processing.
 
 5. **Parsing & Sanitization**:
    * Parses Markdown to HTML using **Marked v15** with GFM tables, task lists, and auto-slugified heading anchors.

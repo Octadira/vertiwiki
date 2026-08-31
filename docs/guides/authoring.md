@@ -85,6 +85,21 @@ Relative images are automatically resolved relative to the Markdown file's locat
 
 ---
 
+## 🔗 Fast Cross-Referencing with Wikilinks (`[[...]]`) :badge[v0.3.0]{type=primary}
+
+VertiWiki supports double-bracket Wikilinks for rapid cross-referencing between documents:
+
+```markdown
+* Basic link: [[features]]
+* Link with alias: [[features|Explore All Features]]
+* Link with anchor: [[math_diagrams#mermaid|Mermaid Diagrams]]
+* Subfolder link: [[docs/guides/wikilinks|Wikilinks Guide]]
+```
+
+For the complete specification and Obsidian vault compatibility, see the [Wikilinks Guide](wikilinks.md).
+
+---
+
 ## 📢 Callout Alerts (GitHub Style)
 
 Create highlighted cards for notes, tips, warnings, and cautions:

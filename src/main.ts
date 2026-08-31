@@ -25,6 +25,7 @@ import { detailsPlugin } from './plugins/details';
 import { lightboxPlugin } from './plugins/lightbox';
 import { navAccordionPlugin } from './plugins/nav-accordion';
 import { sitemapPlugin, parseNavigationMarkdown } from './plugins/sitemap';
+import { wikilinksPlugin } from './plugins/wikilinks';
 import { PrevNextNavigation } from './ui/prev-next';
 
 async function parseNavigation(navMarkdown: string): Promise<NavigationItem[]> {
@@ -119,6 +120,7 @@ ${currentRawMarkdown}`;
   pipeline.registerPlugin(lightboxPlugin);
   pipeline.registerPlugin(navAccordionPlugin);
   pipeline.registerPlugin(sitemapPlugin);
+  pipeline.registerPlugin(wikilinksPlugin);
 
   // Setup Previous / Next Page Navigation
   const prevNextNav = new PrevNextNavigation(layout.contentArticle.parentElement!);

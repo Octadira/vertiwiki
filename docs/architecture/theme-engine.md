@@ -1,6 +1,6 @@
 # Theme Engine & Design System
 
-The VertiWiki 0.2.6 theme engine is built on modern **CSS Custom Properties (Design Tokens)** compatible with standard Tailwind CSS v4 and shadcn/ui architectures.
+The VertiWiki 0.3.0 theme engine is built on modern **CSS Custom Properties (Design Tokens)** compatible with standard Tailwind CSS v4 and shadcn/ui architectures.
 
 ---
 

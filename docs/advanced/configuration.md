@@ -9,7 +9,7 @@ This document is located deep in `docs/advanced/configuration.md`.
 
 ## 1. Directory Hierarchy
 
-VertiWiki 0.2.2 automatically resolves all relative file links and images within subfolders.
+VertiWiki 0.3.0 automatically resolves all relative file links, Wikilinks (`[[...]]`), and images within subfolders.
 
 ```
 docs/

@@ -1,11 +1,11 @@
-# 🧠 VertiWiki 0.2.8
+# 🧠 VertiWiki 0.3.0
 
 > **The 100% Client-Side, Zero-Backend, Zero-Build Markdown Wiki & Documentation Engine for 2026 and Beyond.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7+-blue.svg)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-6.2+-646CFF.svg)](https://vitejs.dev/)
-[![Version](https://img.shields.io/badge/version-0.2.8-teal.svg)](https://github.com/octadira/vertiwiki/releases)
+[![Version](https://img.shields.io/badge/version-0.3.0-teal.svg)](https://github.com/octadira/vertiwiki/releases)
 [![AI & AEO Ready](https://img.shields.io/badge/AI_%26_AEO-Ready-2ea44f.svg)](#)
 [![Live Demo](https://img.shields.io/badge/Demo-verti.wiki-emerald.svg)](https://verti.wiki)
 
@@ -18,6 +18,7 @@ VertiWiki is a fast, modern client-side documentation engine. It runs completely
 ## ✨ Features (2026+)
 
 * 📦 **Single-File Distribution**: Ship a single standalone `vertiwiki.html` (or `index.html`) alongside your `.md` files.
+* 🔗 **Native Wikilinks & Cross-Referencing**: Built-in client-side support for `[[page]]`, `[[page|alias]]`, and `[[page#anchor]]` with Obsidian vault compatibility.
 * 🎨 **Modular Theme Engine**: Standalone theme files in `themes/` (e.g. `themes/obsidian.json`) with zero build steps and dynamic Google Fonts.
 * 🤖 **Answer Engine Optimization (AEO)**: Dynamic Schema.org JSON-LD graph generation, `llms.txt`, and 1-click **Copy for AI** prompt exporter.
 * 🏷️ **Jekyll / Astro Frontmatter**: Native YAML metadata support with automatic smart fallback deduction.

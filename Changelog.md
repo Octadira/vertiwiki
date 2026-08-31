@@ -1,6 +1,16 @@
 # Changelog
 
-## VertiWiki 0.2.8 (August 2026) :badge[Latest]{type=success}
+## VertiWiki 0.3.0 (August 2026) :badge[Latest]{type=success}
+
+### 🔗 Native Wikilinks (`[[...]]`) & Bidirectional Cross-Referencing
+- **Zero-Build Wikilinks**: Built-in support for double-bracket links `[[target]]`, `[[target|alias]]`, and `[[target#anchor|alias]]` resolving client-side without any build step.
+- **Code Block & Inline Code Isolation**: Intelligently protects fenced code blocks (```` ```...``` ````) and inline backticks (`` `...` ``) from accidental wikilink expansion.
+- **Obsidian & PKM Vault Interoperability**: Seamlessly author and drop Obsidian/Logseq vaults directly into VertiWiki.
+- **Comprehensive Documentation**: Added dedicated [Wikilinks Guide](docs/guides/wikilinks.md), interactive demos in [Modern Features](features.md), and sidebar integration in [Navigation](navigation.md).
+
+---
+
+## VertiWiki 0.2.8 (August 2026)
 
 ### 🗂️ Automatic Directory Indexing (`index.md`) & Smart Fallbacks
 - **Directory Index Resolution**: Navigating to `#/docs/sub-docs/` or `#/docs/sub-docs` automatically resolves and renders `docs/sub-docs/index.md`.

@@ -4,14 +4,14 @@ description: 100% static, single-file, zero-backend Markdown wiki and documentat
 tags: [wiki, markdown, documentation, static]
 ---
 
-# Welcome to VertiWiki :badge[v0.2.8]{type=primary} :badge[AI & AEO Ready]{type=success}
+# Welcome to VertiWiki :badge[v0.3.0]{type=primary} :badge[AI & AEO Ready]{type=success}
 
 > **Zero Backend &bull; Zero Server Build &bull; Single-File Wiki & Docs Engine for 2026 and Beyond**
 
 ---
 
 > [!NOTE]
-> You are currently viewing the modernized **VertiWiki 0.2.8** engine. It renders pure Markdown directly in your browser with zero build steps needed on the server.
+> You are currently viewing the modernized **VertiWiki 0.3.0** engine. It renders pure Markdown directly in your browser with zero build steps needed on the server.
 
 ---
 

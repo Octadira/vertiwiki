@@ -17,7 +17,24 @@ VertiWiki adheres strictly to **Semantic Versioning 2.0.0 (SemVer)**:
 
 ## 📜 Version History
 
-### **v0.2.6** (Current Active Release — August 2026) :badge[Latest]{type=success}
+### **v0.3.0** (Current Active Release — August 2026) :badge[Latest]{type=success}
+* 🔗 **Native Wikilinks (`[[...]]`)**: Direct double-bracket page linking, custom aliases (`[[page|alias]]`), deep anchors (`[[page#section]]`), and Obsidian/Logseq vault compatibility.
+* 🛡️ **Code Block Protection**: Automatic isolation of fenced code blocks and inline code spans during wikilink compilation.
+* 📚 **Synchronized Documentation**: Added dedicated Wikilinks guide, interactive feature demos, and updated sitemaps.
+
+---
+
+### **v0.2.8** (August 2026)
+* 🗂️ **Automatic Directory Indexing**: Seamless resolution of `#/docs/sub-docs/` to `docs/sub-docs/index.md` with sibling fallback.
+
+---
+
+### **v0.2.7** (August 2026)
+* 🔀 **Path Hash Routing Migration**: Standardized modern URL routing (`#/path/to/page.md`) with anchor linking.
+
+---
+
+### **v0.2.6** (August 2026)
 * 🐛 **HTML & Badge Sanitization**: Guaranteed plain-text sanitization for document titles and metadata, stripping visual badge spans from tab titles, OpenGraph, and TOC headings.
 * 🔗 **Integrated Brand Link**: Embedded primary `https://verti.wiki` project link directly into the footer.
 

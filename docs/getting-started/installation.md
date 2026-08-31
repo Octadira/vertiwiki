@@ -3,7 +3,7 @@
 Welcome to the nested installation guide located in `docs/getting-started/installation.md`.
 
 > [!TIP]
-> This page demonstrates **subfolder navigation, relative links, and breadcrumbs** in VertiWiki 0.2.2.
+> This page demonstrates **subfolder navigation, relative links, and breadcrumbs** in VertiWiki 0.3.0.
 
 ---
 

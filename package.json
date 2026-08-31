@@ -1,6 +1,6 @@
 {
   "name": "vertiwiki",
-  "version": "0.2.8",
+  "version": "0.3.0",
   "description": "100% static, single-file, zero-backend Markdown wiki and documentation engine for 2026 and beyond.",
   "type": "module",
   "main": "dist/vertiwiki.html",

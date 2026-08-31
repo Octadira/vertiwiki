@@ -1,15 +1,16 @@
 # Plugin Development API
 
-VertiWiki 0.2.6 features an extensible, async-first **Pipeline Architecture** allowing developers to create custom plugins and extensions easily.
+VertiWiki 0.3.0 features an extensible, async-first **Pipeline Architecture** allowing developers to create custom plugins and extensions easily.
 
 ---
 
-## 🧩 Built-in Plugins in VertiWiki 0.2.6
+## 🧩 Built-in Plugins in VertiWiki 0.3.0
 
-VertiWiki ships with 13 built-in plugins registered in the processing pipeline:
+VertiWiki ships with 14 built-in plugins registered in the processing pipeline:
 
 | Plugin Name | Module | Hook Phases | Description |
 | :--- | :--- | :--- | :--- |
+| `wikilinks` | `src/plugins/wikilinks.ts` | `beforeParse` | Double-bracket `[[wikilinks]]` cross-referencing & anchor resolution |
 | `callouts` | `src/plugins/callouts.ts` | `beforeParse` | GitHub GFM alerts (`> [!NOTE]`, `> [!TIP]`, etc.) |
 | `code-highlight` | `src/plugins/code-highlight.ts` | `afterRender` | Prism.js syntax highlighting & 1-click code copying |
 | `math` | `src/plugins/math.ts` | `afterRender` | KaTeX inline and block LaTeX math rendering |

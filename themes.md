@@ -1,6 +1,6 @@
-# 🎨 VertiWiki 0.2.6 Theme System :badge[OKLCH Color Space]{type=purple} :badge[Instant Switching]{type=success}
+# 🎨 VertiWiki 0.3.0 Theme System :badge[OKLCH Color Space]{type=purple} :badge[Instant Switching]{type=success}
 
-VertiWiki 0.2.6 comes with a powerful, **100% offline, zero-reload theme engine** based on modern CSS custom properties and standard Tailwind / shadcn design tokens.
+VertiWiki 0.3.0 comes with a powerful, **100% offline, zero-reload theme engine** based on modern CSS custom properties and standard Tailwind / shadcn design tokens.
 
 ---
 

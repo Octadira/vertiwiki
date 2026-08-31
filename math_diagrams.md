@@ -1,6 +1,6 @@
 # Math & Mermaid Diagrams
 
-VertiWiki 0.2.2 comes with built-in support for **KaTeX** math formulas and **Mermaid.js** diagrams.
+VertiWiki 0.3.0 comes with built-in support for **KaTeX** math formulas and **Mermaid.js** diagrams.
 
 ---
 

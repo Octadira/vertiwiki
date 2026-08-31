@@ -4,7 +4,7 @@ description: Explore the rich interactive components available in VertiWiki incl
 tags: [features, tabs, accordion, lightbox, aeo]
 ---
 
-# Modern Features in VertiWiki :badge[v0.2.6]{type=primary} :badge[Interactive]{type=success}
+# Modern Features in VertiWiki :badge[v0.3.0]{type=primary} :badge[Interactive]{type=success}
 
 VertiWiki brings a powerful suite of 2026+ web platform improvements, interactive Markdown components, and answer engine optimizations.
 
@@ -83,7 +83,7 @@ Thanks to the built-in **AEO (Answer Engine Optimization)** module, VertiWiki ge
 
 Add inline status indicators and category tags anywhere in your text:
 
-* :badge[v0.2.2]{type=primary} Primary Brand Tag
+* :badge[v0.3.0]{type=primary} Primary Brand Tag
 * :badge[Success]{type=success} Build Passing / Active
 * :badge[Warning]{type=warning} Under Review
 * :badge[Danger]{type=danger} Deprecated API
@@ -100,13 +100,23 @@ Click on any image or diagram below to open it in a full-screen, high-resolution
 
 ---
 
-## 🔀 5. Previous & Next Page Navigation
+## 🔗 5. Bidirectional Wikilinks (`[[...]]`) :badge[v0.3.0]{type=primary}
+
+Interlink articles easily using double brackets with zero build step:
+
+* Cross-link directly to [[themes|Themes & Palettes]]
+* Jump straight to [[math_diagrams#mermaid|Mermaid Diagrams]]
+* Link across subdirectories: [[docs/guides/wikilinks|Complete Wikilinks Guide]]
+
+---
+
+## 🔀 6. Previous & Next Page Navigation
 
 Scroll to the bottom of this article to see the **← Previous Page** and **Next Page →** navigation cards, calculated automatically from `navigation.md`!
 
 ---
 
-## 🗺️ 6. Interactive Visual Sitemap
+## 🗺️ 7. Interactive Visual Sitemap
 
 Embed a full, responsive directory tree of your entire documentation on any page with real-time live search:
 
@@ -116,3 +126,4 @@ Embed a full, responsive directory tree of your entire documentation on any page
 ```
 
 Check out the dedicated [Visual Sitemap Page](sitemap.md) to see it in action!
+

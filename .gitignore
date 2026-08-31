@@ -3,12 +3,16 @@ node_modules/
 .pnp
 .pnp.js
 
-# Vite & Development Caches
+# Build & Development Caches
 .vite/
 .turbo/
 .cache/
+dist-ssr/
+*.tsbuildinfo
 
 # Logs
+logs/
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -19,12 +23,20 @@ lerna-debug.log*
 .env
 .env.local
 .env.*.local
+.openwiki/
+
+# OpenWiki & Agent Runtime Ephemera (Keep generated docs, ignore active runtime states)
+openwiki/.run.json
+openwiki/.run.json.*
+openwiki/.page-manifest.json
+openwiki/.last-update.json
 
 # OS & Editor
 .DS_Store
 .AppleDouble
 .LSOverride
 Thumbs.db
+ehthumbs.db
 .idea/
 .vscode/*
 !.vscode/settings.json
@@ -33,7 +45,12 @@ Thumbs.db
 *.sublime-workspace
 *.sublime-project
 
-# Temporary Debug & Screenshots
+# Temporary, Debug & Backup files
 Screenshot *.png
 *.tmp
 *.bak
+*.swp
+*.swo
+*~
+*.orig
+

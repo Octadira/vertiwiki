@@ -1,10 +1,10 @@
-# VertiWiki 0.2.8 Documentation
+# VertiWiki 0.3.0 Documentation
 > VertiWiki is a 100% static, zero-backend, single-file Markdown wiki and documentation engine for 2026 and beyond.
 
 ## Core Documentation
 * [Welcome & Overview](index.md): Introduction to VertiWiki capabilities and architecture.
 * [Installation Guide](docs/getting-started/installation.md): Quick setup, local testing, and subfolder demonstration.
-* [Modern Features](features.md): List of modern 2026+ frontend features (Tabs, Details, Lightbox, Badges).
+* [Modern Features](features.md): List of modern 2026+ frontend features (Tabs, Details, Lightbox, Badges, Wikilinks).
 * [Theme System & Templates](themes.md): Multi-theme engine, dedicated theme files in themes/, design tokens, and custom palettes.
 * [Visual Sitemap](sitemap.md): Interactive directory tree with instant real-time live search.
 
@@ -15,6 +15,7 @@
 
 ## Guides & Operations
 * [Authoring Guide](docs/guides/authoring.md): Writing in Markdown with GFM, KaTeX math, Mermaid diagrams, tabs, details, and subfolders.
+* [Wikilinks & Cross-Referencing](docs/guides/wikilinks.md): Fast bidirectional [[wikilinks]] syntax, aliases, anchors, and Obsidian vault compatibility.
 * [Deployment Guide](docs/guides/deployment.md): Static hosting setup (GitHub Pages, Cloudflare Pages, Netlify, S3) and Universal Analytics configuration.
 * [XML Sitemaps & SEO Guide](docs/guides/sitemap-seo.md): Generating sitemap.xml with online tools for search engine indexing.
 * [Advanced Configuration](docs/advanced/configuration.md): Deep subfolder hierarchy and navigation setup.

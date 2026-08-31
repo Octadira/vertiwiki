@@ -7,6 +7,7 @@
 
 # Guides & Authoring
 * [Authoring Guide](docs/guides/authoring.md)
+* [Wikilinks & Cross-Referencing](docs/guides/wikilinks.md)
 * [Deployment Guide](docs/guides/deployment.md)
 * [XML Sitemaps & SEO Guide](docs/guides/sitemap-seo.md)
 * [Advanced Configuration](docs/advanced/configuration.md)
