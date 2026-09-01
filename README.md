@@ -1,11 +1,11 @@
-# 🧠 VertiWiki 0.4.0
+# 🧠 VertiWiki 0.4.1
 
 > **The 100% Client-Side, Zero-Backend, Zero-Build Markdown Wiki & Documentation Engine for 2026 and Beyond.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7+-blue.svg)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-6.2+-646CFF.svg)](https://vitejs.dev/)
-[![Version](https://img.shields.io/badge/version-0.4.0-teal.svg)](https://github.com/octadira/vertiwiki/releases)
+[![Version](https://img.shields.io/badge/version-0.4.1-teal.svg)](https://github.com/octadira/vertiwiki/releases)
 [![AI & AEO Ready](https://img.shields.io/badge/AI_%26_AEO-Ready-2ea44f.svg)](#)
 [![Live Demo](https://img.shields.io/badge/Demo-verti.wiki-emerald.svg)](https://verti.wiki)
 
