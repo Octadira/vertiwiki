@@ -4,7 +4,7 @@ description: 100% static, single-file, zero-backend Markdown wiki and documentat
 tags: [wiki, markdown, documentation, static]
 ---
 
-# Welcome to VertiWiki :badge[v0.4.1]{type=primary} :badge[AI & AEO Ready]{type=success}
+# Welcome to VertiWiki :badge[v0.5.0]{type=primary} :badge[AI & AEO Ready]{type=success}
 
 > **Zero Backend &bull; Zero Server Build &bull; Single-File Wiki & Docs Engine for 2026 and Beyond**
 
@@ -20,7 +20,7 @@ tags: [wiki, markdown, documentation, static]
 VertiWiki combines the simplicity of Markdown with modern web capabilities:
 
 * **Zero Backend & Zero Build**: Works on any static hosting (GitHub Pages, Netlify, Cloudflare Pages, S3) or even straight from a local USB drive.
-* **AEO & LLM Ready**: Dynamic Schema.org JSON-LD graph generation, Jekyll-style frontmatter, `llms.txt`, and 1-click **Copy for AI**.
+* **AEO & LLM Ready**: AgentDocsSpec discovery directive (`llms-txt-directive-html`), Schema.org JSON-LD graphs, Jekyll-style frontmatter, configurable `llms.txt`, and 1-click **Copy for AI**.
 * **Single-File Distribution**: The entire engine is bundled into a single standalone `vertiwiki.html` file.
 * **Universal Analytics**: Zero-recompile tracking for GA4, GTM, Plausible, Cloudflare, Umami, and Matomo.
 * **Multi-Theme Engine**: 7 presets (including Warm Terracotta and Forest Emerald) and instant palette chooser.

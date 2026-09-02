@@ -1,6 +1,7 @@
-import { ThemePreset } from '../core/types';
-import { BUILTIN_THEMES } from './themes/presets';
+import { ThemePreset, CustomThemeDefinition, ThemeColors } from '../core/types';
+import { BUILTIN_THEMES, normalizeThemePreset } from './themes/presets';
 
+export { normalizeThemePreset };
 export type ThemeMode = 'auto' | 'light' | 'dark';
 
 export class ThemeManager {
@@ -11,29 +12,38 @@ export class ThemeManager {
   constructor(
     defaultMode: ThemeMode = 'auto',
     defaultPreset: string = 'default',
-    customThemes: ThemePreset[] = [],
+    customThemes: (ThemePreset | CustomThemeDefinition)[] = [],
     enableThemeChooser: boolean = true
   ) {
     // Register builtin themes
     BUILTIN_THEMES.forEach(t => this.themes.set(t.id, t));
 
-    // Register user custom themes
+    // Register user custom themes with defensive normalization
     customThemes.forEach(t => {
-      this.themes.set(t.id, t);
-      this.injectCustomThemeCss(t);
+      if (t && typeof t === 'object' && t.id) {
+        this.registerTheme(t);
+      }
     });
 
+    const getStorage = (key: string): string | null => {
+      try {
+        return typeof localStorage !== 'undefined' ? localStorage.getItem(key) : null;
+      } catch {
+        return null;
+      }
+    };
+
     const savedMode = (
-      localStorage.getItem('vertiwiki_theme') ||
-      localStorage.getItem('cortexwiki_theme') ||
-      localStorage.getItem('omniwiki_theme')
+      getStorage('vertiwiki_theme') ||
+      getStorage('cortexwiki_theme') ||
+      getStorage('omniwiki_theme')
     ) as ThemeMode;
 
     const savedPreset = enableThemeChooser
       ? (
-          localStorage.getItem('vertiwiki_preset') ||
-          localStorage.getItem('cortexwiki_preset') ||
-          localStorage.getItem('omniwiki_preset')
+          getStorage('vertiwiki_preset') ||
+          getStorage('cortexwiki_preset') ||
+          getStorage('omniwiki_preset')
         )
       : null;
 
@@ -42,11 +52,20 @@ export class ThemeManager {
 
     this.apply();
 
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-      if (this.currentMode === 'auto') {
-        this.apply();
-      }
-    });
+    if (typeof window !== 'undefined' && window.matchMedia) {
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+        if (this.currentMode === 'auto') {
+          this.apply();
+        }
+      });
+    }
+  }
+
+  public registerTheme(theme: ThemePreset | CustomThemeDefinition): ThemePreset {
+    const normalized = normalizeThemePreset(theme, this.themes);
+    this.themes.set(normalized.id, normalized);
+    this.injectCustomThemeCss(normalized);
+    return normalized;
   }
 
   public getAvailableThemes(): ThemePreset[] {
@@ -72,35 +91,55 @@ export class ThemeManager {
 
   public setMode(mode: ThemeMode): void {
     this.currentMode = mode;
-    localStorage.setItem('vertiwiki_theme', mode);
+    try {
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem('vertiwiki_theme', mode);
+      }
+    } catch {
+      // Ignore storage errors in restricted contexts
+    }
     this.apply();
   }
 
   public setPreset(presetId: string): void {
     if (this.themes.has(presetId)) {
       this.currentPreset = presetId;
-      localStorage.setItem('vertiwiki_preset', presetId);
+      try {
+        if (typeof localStorage !== 'undefined') {
+          localStorage.setItem('vertiwiki_preset', presetId);
+        }
+      } catch {
+        // Ignore storage errors in restricted contexts
+      }
       this.apply();
     }
   }
 
   private apply(): void {
+    if (typeof document === 'undefined' || !document.documentElement) return;
+
     // Set preset attribute
     document.documentElement.setAttribute('data-theme-preset', this.currentPreset);
 
     // Set dark/light mode attribute
     let effectiveMode = this.currentMode;
     if (effectiveMode === 'auto') {
-      effectiveMode = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      const prefersDark =
+        typeof window !== 'undefined' && window.matchMedia
+          ? window.matchMedia('(prefers-color-scheme: dark)').matches
+          : false;
+      effectiveMode = prefersDark ? 'dark' : 'light';
     }
 
     document.documentElement.setAttribute('data-theme', effectiveMode);
   }
 
   private injectCustomThemeCss(theme: ThemePreset): void {
+    if (typeof document === 'undefined') return;
+
     // Load external web font if provided
     const fontUrl = theme.fontUrl || theme.light.fontUrl || theme.dark.fontUrl;
-    if (fontUrl) {
+    if (fontUrl && document.head) {
       const fontLinkId = `verti-font-${theme.id}`;
       if (!document.getElementById(fontLinkId)) {
         const link = document.createElement('link');
@@ -112,12 +151,15 @@ export class ThemeManager {
     }
 
     const styleId = `verti-theme-${theme.id}`;
-    if (document.getElementById(styleId)) return;
+    const existingStyle = document.getElementById(styleId);
+    if (existingStyle) {
+      existingStyle.remove();
+    }
 
     const style = document.createElement('style');
     style.id = styleId;
 
-    const buildProps = (colors: typeof theme.light) => `
+    const buildProps = (colors: ThemeColors) => `
       --background: ${colors.background};
       --foreground: ${colors.foreground};
       --card: ${colors.card};
@@ -137,6 +179,7 @@ export class ThemeManager {
       ${colors.fontSans ? `--font-sans: ${colors.fontSans};` : ''}
       ${colors.fontMono ? `--font-mono: ${colors.fontMono};` : ''}
       ${colors.fontSerif ? `--font-serif: ${colors.fontSerif};` : ''}
+      ${colors.fontHeading ? `--font-heading: ${colors.fontHeading};` : ''}
       ${colors.radius ? `--radius: ${colors.radius};` : ''}
     `;
 
@@ -150,6 +193,8 @@ export class ThemeManager {
       }
     `;
 
-    document.head.appendChild(style);
+    if (document.head) {
+      document.head.appendChild(style);
+    }
   }
 }

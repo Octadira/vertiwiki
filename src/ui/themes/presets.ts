@@ -1,11 +1,4 @@
-import { ThemePreset } from '../../core/types';
-
-/**
- * Helper template function for creating custom themes
- */
-export function defineTheme(preset: ThemePreset): ThemePreset {
-  return preset;
-}
+import { ThemePreset, CustomThemeDefinition, ThemeColors } from '../../core/types';
 
 export const BUILTIN_THEMES: ThemePreset[] = [
   {
@@ -338,3 +331,68 @@ export const BUILTIN_THEMES: ThemePreset[] = [
     }
   }
 ];
+
+/**
+ * Defensively normalizes a raw or partial theme definition against a base/fallback theme.
+ * Guarantees that the returned ThemePreset has 100% complete, non-empty, and valid color tokens,
+ * preventing any runtime undefined or CSS IACVT (Invalid At Computed-Value Time) corruption.
+ */
+export function normalizeThemePreset(
+  raw: CustomThemeDefinition | ThemePreset,
+  registeredThemes?: Map<string, ThemePreset>
+): ThemePreset {
+  const baseId = raw.extends || 'default';
+  const base =
+    (registeredThemes && registeredThemes.get(baseId)) ||
+    BUILTIN_THEMES.find(t => t.id === baseId) ||
+    (registeredThemes && registeredThemes.get('default')) ||
+    BUILTIN_THEMES.find(t => t.id === 'default') ||
+    BUILTIN_THEMES[0];
+
+  const cleanColors = (
+    fallback: ThemeColors,
+    custom?: Partial<ThemeColors>
+  ): ThemeColors => {
+    if (!custom || typeof custom !== 'object') {
+      return { ...fallback };
+    }
+
+    const result: ThemeColors = { ...fallback };
+
+    for (const [key, val] of Object.entries(custom)) {
+      if (
+        val !== undefined &&
+        val !== null &&
+        typeof val === 'string' &&
+        val.trim() !== ''
+      ) {
+        (result as any)[key] = val.trim();
+      }
+    }
+
+    return result;
+  };
+
+  const light = cleanColors(base.light, raw.light);
+  const dark = cleanColors(base.dark, raw.dark);
+
+  return {
+    id: raw.id,
+    name: (raw.name && raw.name.trim()) || raw.id,
+    description: raw.description ?? base.description,
+    icon: raw.icon ?? base.icon ?? '🎨',
+    previewColor: (raw.previewColor && raw.previewColor.trim()) || light.primary || base.previewColor,
+    fontUrl: raw.fontUrl ?? base.fontUrl,
+    extends: raw.extends,
+    light,
+    dark
+  };
+}
+
+/**
+ * Helper template function for creating custom themes with defensive normalization.
+ */
+export function defineTheme(preset: ThemePreset | CustomThemeDefinition): ThemePreset {
+  return normalizeThemePreset(preset);
+}
+

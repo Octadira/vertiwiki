@@ -1,6 +1,19 @@
 # Changelog
 
-## VertiWiki 0.4.1 (September 2026) :badge[Latest]{type=success}
+## VertiWiki 0.5.0 (September 2026) :badge[Latest]{type=success}
+
+### 🎨 Custom Theme Inheritance (`extends`) & Defensive Normalization
+- **Theme Inheritance (`extends`)**: Custom themes can now extend built-in presets (e.g. `extends: "dracula"`, `extends: "github-dark"`) or other custom themes, selectively overriding only specific CSS variables.
+- **Defensive Theme Normalization**: Safely validates and normalizes partial or malformed theme configurations with system fallbacks, preventing broken styles.
+- **Cycle & Depth Protection**: Robust cycle detection and maximum inheritance depth limits to prevent infinite recursion during theme resolution.
+
+### 🤖 Agent Docs Discovery (`AgentDocsSpec`) & Configurable `llmsTxtUrl`
+- **Configurable `llmsTxtUrl`**: Added `llmsTxtUrl` property to `config.json` and runtime defaults (defaults to `/llms.txt`).
+- **AI Agent Discovery Header Directives**: The AEO plugin dynamically injects `<meta name="agent-docs" content="...">` and `<link rel="help" ...>` in `<head>` to guide autonomous AI agents and web crawlers to structured documentation.
+
+---
+
+## VertiWiki 0.4.1 (September 2026)
 
 ### 🐞 Bug Fixes & Navigation Resiliency
 - **Localized Navigation Link Resolution**: `parseNavigationMarkdown` automatically resolves relative links in localized subfolder navigation files (`ro/navigation.md`, `fr/navigation.md`) to point strictly to the active language route instead of defaulting to English.

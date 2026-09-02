@@ -4,7 +4,7 @@ description: Explore the comprehensive suite of 14 built-in plugins and interact
 tags: [features, plugins, tabs, math, mermaid, wikilinks, i18n, search, lightbox, aeo]
 ---
 
-# Modern Features & 14 Built-in Plugins :badge[v0.4.1]{type=primary} :badge[Interactive Demo]{type=success}
+# Modern Features & 14 Built-in Plugins :badge[v0.5.0]{type=primary} :badge[Interactive Demo]{type=success}
 
 VertiWiki includes **14 built-in zero-dependency plugins** that transform pure Markdown into a dynamic, rich documentation application directly in the browser.
 
@@ -68,7 +68,7 @@ Yes. The single standalone `vertiwiki.html` contains all scripts, fonts, stylesh
 
 ## 4. 🏷️ Inline Badges & Pills
 
-* :badge[v0.4.1]{type=primary} Core Release
+* :badge[v0.5.0]{type=primary} Core Release
 * :badge[Success]{type=success} Fast GPU Render
 * :badge[Warning]{type=warning} Deprecated
 * :badge[Error]{type=error} Failed Check
@@ -147,8 +147,10 @@ Every article automatically computes sequential reading navigation cards at the 
 
 ---
 
-## 14. 🤖 Answer Engine Optimization (AEO) & Universal Analytics
+## 14. 🤖 Answer Engine Optimization (AEO) & Agent-Friendly Docs
 
-* Automatically generates Schema.org `TechArticle` and `BreadcrumbList` JSON-LD graphs in `<head>`.
-* Provides structured `llms.txt` index for AI crawlers (ChatGPT, Claude, Perplexity).
-* Zero-recompile analytics support for Google Analytics 4, Plausible, Cloudflare, Umami, and Matomo.
+* **AgentDocsSpec Discovery Directive**: Injects a visually-hidden, screen-reader accessible directive at the top of the DOM for AI coding agents (`llms-txt-directive-html`), pointing directly to the documentation index and raw Markdown files.
+* **Configurable LLM Index**: Customize or disable the LLM index path via `"llmsTxtUrl": "/llms.txt"` in `config.json` (or set to `null` to disable).
+* **Dynamic JSON-LD Graphs**: Automatically generates Schema.org `TechArticle` and `BreadcrumbList` graphs in `<head>` on route change.
+* **AI Alternate Links**: Exposes `<link rel="alternate" type="text/markdown">` and `<link rel="llms-txt">` headers for automated LLM scrapers.
+* **Zero-Recompile Analytics**: Built-in support for Google Analytics 4, Plausible, Cloudflare, Umami, and Matomo.

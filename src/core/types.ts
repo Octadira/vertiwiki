@@ -30,8 +30,21 @@ export interface ThemePreset {
   icon?: string;
   previewColor: string;
   fontUrl?: string;
+  extends?: string;
   light: ThemeColors;
   dark: ThemeColors;
+}
+
+export interface CustomThemeDefinition {
+  id: string;
+  name?: string;
+  description?: string;
+  icon?: string;
+  previewColor?: string;
+  fontUrl?: string;
+  extends?: string;
+  light?: Partial<ThemeColors>;
+  dark?: Partial<ThemeColors>;
 }
 
 export interface LocaleConfig {
@@ -57,10 +70,11 @@ export interface VertiWikiConfig {
   collapsibleNavigation?: boolean;
   defaultTheme: 'auto' | 'light' | 'dark';
   themePreset: string;
-  customThemes?: (string | ThemePreset)[] | string;
-  resolvedThemes?: ThemePreset[];
+  customThemes?: (string | ThemePreset | CustomThemeDefinition)[] | string;
+  resolvedThemes?: (ThemePreset | CustomThemeDefinition)[];
   navigationFile: string;
   homePage: string;
+  llmsTxtUrl?: string | null;
   footerText?: string;
   githubUrl?: string;
   googleAnalyticsId?: string;

@@ -10,13 +10,49 @@ export class AEOEngine {
   }
 
   private ensureBaseMetaTags(): void {
-    // 1. Link to LLMs.txt if not present
-    if (!document.querySelector('link[rel="llms-txt"]')) {
-      const link = document.createElement('link');
-      link.rel = 'llms-txt';
-      link.href = 'llms.txt';
-      document.head.appendChild(link);
+    if (typeof document === 'undefined') return;
+
+    const isDisabled = this.config.llmsTxtUrl === null || this.config.llmsTxtUrl === '';
+    const targetUrl = this.config.llmsTxtUrl || '/llms.txt';
+
+    // 1. Link to LLMs.txt
+    let link = document.querySelector<HTMLLinkElement>('link[rel="llms-txt"]');
+    if (isDisabled) {
+      if (link) link.remove();
+    } else {
+      if (!link) {
+        link = document.createElement('link');
+        link.rel = 'llms-txt';
+        document.head.appendChild(link);
+      }
+      link.href = targetUrl;
     }
+
+    // 2. In-Page AI Agent Discovery Directive (AgentDocsSpec llms-txt-directive-html)
+    this.ensureAgentDirective(isDisabled, targetUrl);
+  }
+
+  private ensureAgentDirective(isDisabled: boolean, targetUrl: string): void {
+    if (typeof document === 'undefined') return;
+
+    let directiveEl = document.querySelector<HTMLElement>('.verti-agent-directive');
+
+    if (isDisabled) {
+      if (directiveEl) directiveEl.remove();
+      return;
+    }
+
+    if (!directiveEl) {
+      directiveEl = document.createElement('div');
+      directiveEl.className = 'verti-agent-directive';
+      directiveEl.setAttribute('aria-hidden', 'false');
+      directiveEl.style.cssText = 'position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;';
+      if (document.body) {
+        document.body.insertBefore(directiveEl, document.body.firstChild);
+      }
+    }
+
+    directiveEl.innerHTML = `<p>For AI coding agents: A complete documentation index is available at <a href="${targetUrl}">${targetUrl}</a>. Raw documentation pages are served as Markdown at corresponding *.md URLs or via Accept: text/markdown.</p>`;
   }
 
   public updatePageMetadata(filePath: string, parsed: ParsedMarkdown): void {

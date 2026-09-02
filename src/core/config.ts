@@ -1,4 +1,4 @@
-import { VertiWikiConfig, ThemePreset } from './types';
+import { VertiWikiConfig, ThemePreset, CustomThemeDefinition } from './types';
 
 export const DEFAULT_CONFIG: VertiWikiConfig = {
   title: 'VertiWiki',
@@ -17,7 +17,8 @@ export const DEFAULT_CONFIG: VertiWikiConfig = {
   themePreset: 'default',
   navigationFile: 'navigation.md',
   homePage: 'index.md',
-  footerText: 'Powered by <a href="https://verti.wiki" target="_blank" rel="noopener noreferrer"><strong>VertiWiki 0.4.1</strong></a> — Built for 2026 and beyond',
+  llmsTxtUrl: '/llms.txt',
+  footerText: 'Powered by <a href="https://verti.wiki" target="_blank" rel="noopener noreferrer"><strong>VertiWiki 0.5.0</strong></a> — Built for 2026 and beyond',
   githubUrl: ''
 };
 
@@ -35,7 +36,7 @@ export async function loadConfig(): Promise<VertiWikiConfig> {
   }
 
   // Resolve custom themes (supports file paths like "themes/obsidian.json" and inline objects)
-  const resolvedThemes: ThemePreset[] = [];
+  const resolvedThemes: (ThemePreset | CustomThemeDefinition)[] = [];
   if (mergedConfig.customThemes) {
     const rawThemes = Array.isArray(mergedConfig.customThemes)
       ? mergedConfig.customThemes
@@ -46,7 +47,7 @@ export async function loadConfig(): Promise<VertiWikiConfig> {
         try {
           const themeRes = await fetch(item);
           if (themeRes.ok) {
-            const themeData = (await themeRes.json()) as ThemePreset;
+            const themeData = (await themeRes.json()) as CustomThemeDefinition;
             if (themeData && themeData.id) {
               resolvedThemes.push(themeData);
             }
@@ -56,8 +57,8 @@ export async function loadConfig(): Promise<VertiWikiConfig> {
         } catch (err) {
           console.warn(`[VertiWiki] Error fetching theme file "${item}":`, err);
         }
-      } else if (item && typeof item === 'object' && item.id) {
-        resolvedThemes.push(item);
+      } else if (item && typeof item === 'object' && (item as any).id) {
+        resolvedThemes.push(item as CustomThemeDefinition);
       }
     }
   }

@@ -1,4 +1,4 @@
-# VertiWiki 0.4.1 Documentation
+# VertiWiki 0.5.0 Documentation
 > VertiWiki is a 100% static, zero-backend, single-file Markdown wiki and documentation engine for 2026 and beyond.
 
 ## Core Documentation

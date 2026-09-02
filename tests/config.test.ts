@@ -9,5 +9,6 @@ describe('Configuration Specification', () => {
     expect(Array.isArray(DEFAULT_CONFIG.locales)).toBe(true);
     expect(DEFAULT_CONFIG.defaultTheme).toBe('auto');
     expect(DEFAULT_CONFIG.themePreset).toBe('default');
+    expect(DEFAULT_CONFIG.llmsTxtUrl).toBe('/llms.txt');
   });
 });
