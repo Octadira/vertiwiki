@@ -1,6 +1,16 @@
 # Changelog
 
-## VertiWiki 0.5.0 (September 2026) :badge[Latest]{type=success}
+## VertiWiki 0.5.1 (September 2026) :badge[Latest]{type=success}
+
+### 🐞 Mermaid Diagrams Contrast & Dark Theme Harmonization
+- **Theme-Aware Diagram Tokens**: Mermaid node shapes (`rect`, `circle`, `polygon`) now dynamically map to `--verti-bg-subtle` and `--verti-border`, eliminating the clash of light pastel boxes on dark backgrounds.
+- **Node Label Text Contrast**: Fixed specificity issue where `.verti-article p` forced white text over light boxes; diagram text and labels now inherit `--verti-text-primary` with guaranteed >10:1 contrast on all dark themes.
+- **Dynamic Theme Mode Detection**: `mermaidPlugin` dynamically initializes with `theme: 'dark'` or `theme: 'default'` based on active document theme and system preference.
+- **Connectors, Markers & Sequence Diagrams**: Harmonized stroke and marker colors with `--verti-text-secondary` and added complete theme token support for Sequence Diagrams, State Diagrams, and Class Diagrams.
+
+---
+
+## VertiWiki 0.5.0 (September 2026)
 
 ### 🎨 Custom Theme Inheritance (`extends`) & Defensive Normalization
 - **Theme Inheritance (`extends`)**: Custom themes can now extend built-in presets (e.g. `extends: "dracula"`, `extends: "github-dark"`) or other custom themes, selectively overriding only specific CSS variables.

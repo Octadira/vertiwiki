@@ -1,8 +1,6 @@
 import mermaid from 'mermaid';
 import { VertiWikiPlugin } from '../core/pipeline';
 
-let mermaidInitialized = false;
-
 export const mermaidPlugin: VertiWikiPlugin = {
   name: 'mermaid',
   afterRender: async (context) => {
@@ -11,14 +9,18 @@ export const mermaidPlugin: VertiWikiPlugin = {
     const mermaidBlocks = context.container.querySelectorAll<HTMLElement>('pre code.language-mermaid, pre code.lang-mermaid');
     if (mermaidBlocks.length === 0) return;
 
-    if (!mermaidInitialized) {
-      mermaid.initialize({
-        startOnLoad: false,
-        theme: 'default',
-        securityLevel: 'loose'
-      });
-      mermaidInitialized = true;
-    }
+    const isDark = typeof document !== 'undefined' && (
+      document.documentElement.getAttribute('data-theme') === 'dark' ||
+      (document.documentElement.getAttribute('data-theme') !== 'light' &&
+       typeof window !== 'undefined' && window.matchMedia?.('(prefers-color-scheme: dark)').matches)
+    );
+
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: isDark ? 'dark' : 'default',
+      securityLevel: 'loose',
+      fontFamily: 'inherit'
+    });
 
     let idCounter = 0;
     for (const code of Array.from(mermaidBlocks)) {

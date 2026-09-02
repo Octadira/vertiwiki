@@ -4,7 +4,7 @@ description: 100% static, single-file, zero-backend Markdown wiki and documentat
 tags: [wiki, markdown, documentation, static]
 ---
 
-# Welcome to VertiWiki :badge[v0.5.0]{type=primary} :badge[AI & AEO Ready]{type=success}
+# Welcome to VertiWiki :badge[v0.5.1]{type=primary} :badge[AI & AEO Ready]{type=success}
 
 > **Zero Backend &bull; Zero Server Build &bull; Single-File Wiki & Docs Engine for 2026 and Beyond**
 

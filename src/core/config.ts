@@ -18,7 +18,7 @@ export const DEFAULT_CONFIG: VertiWikiConfig = {
   navigationFile: 'navigation.md',
   homePage: 'index.md',
   llmsTxtUrl: '/llms.txt',
-  footerText: 'Powered by <a href="https://verti.wiki" target="_blank" rel="noopener noreferrer"><strong>VertiWiki 0.5.0</strong></a> — Built for 2026 and beyond',
+  footerText: 'Powered by <a href="https://verti.wiki" target="_blank" rel="noopener noreferrer"><strong>VertiWiki 0.5.1</strong></a> — Built for 2026 and beyond',
   githubUrl: ''
 };
 

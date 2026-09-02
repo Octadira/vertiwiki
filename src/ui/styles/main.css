@@ -885,6 +885,163 @@ body {
   display: flex;
   justify-content: center;
   overflow-x: auto;
+  transition: background-color var(--verti-transition), border-color var(--verti-transition);
+}
+
+.verti-mermaid-wrapper svg {
+  max-width: 100%;
+  height: auto;
+  font-family: var(--verti-font-sans);
+}
+
+/* Reset paragraph margins inside mermaid foreignObject */
+.verti-mermaid-wrapper p {
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1.4 !important;
+  color: inherit !important;
+}
+
+/* Node shapes & containers across all themes */
+.verti-mermaid-wrapper .node rect,
+.verti-mermaid-wrapper .node circle,
+.verti-mermaid-wrapper .node ellipse,
+.verti-mermaid-wrapper .node polygon,
+.verti-mermaid-wrapper .node path:not(.flowchart-link) {
+  fill: var(--verti-bg-subtle) !important;
+  stroke: var(--verti-border) !important;
+  stroke-width: 1.5px !important;
+  transition: fill var(--verti-transition), stroke var(--verti-transition);
+}
+
+/* Node text & labels */
+.verti-mermaid-wrapper .node .label,
+.verti-mermaid-wrapper .nodeLabel,
+.verti-mermaid-wrapper .nodeLabel p,
+.verti-mermaid-wrapper .label text,
+.verti-mermaid-wrapper .label span,
+.verti-mermaid-wrapper .label tspan {
+  color: var(--verti-text-primary) !important;
+  fill: var(--verti-text-primary) !important;
+  font-family: var(--verti-font-sans) !important;
+}
+
+/* Flowchart Links & Edge lines */
+.verti-mermaid-wrapper .edgePath path,
+.verti-mermaid-wrapper .flowchart-link {
+  stroke: var(--verti-text-secondary) !important;
+  stroke-width: 1.5px !important;
+}
+
+/* Edge Labels */
+.verti-mermaid-wrapper .edgeLabel,
+.verti-mermaid-wrapper .edgeLabel p,
+.verti-mermaid-wrapper .edgeLabel span {
+  color: var(--verti-text-secondary) !important;
+  fill: var(--verti-text-secondary) !important;
+  background-color: var(--verti-bg-surface) !important;
+  font-family: var(--verti-font-sans) !important;
+}
+
+.verti-mermaid-wrapper .edgeLabel rect,
+.verti-mermaid-wrapper .labelBkg {
+  fill: var(--verti-bg-surface) !important;
+  background-color: var(--verti-bg-surface) !important;
+}
+
+/* Arrowheads & Markers */
+.verti-mermaid-wrapper marker path,
+.verti-mermaid-wrapper marker polygon {
+  fill: var(--verti-text-secondary) !important;
+  stroke: var(--verti-text-secondary) !important;
+}
+
+/* Clusters / Subgraphs */
+.verti-mermaid-wrapper .cluster rect {
+  fill: var(--verti-bg-base) !important;
+  stroke: var(--verti-border) !important;
+  stroke-width: 1.5px !important;
+}
+
+.verti-mermaid-wrapper .cluster-label span,
+.verti-mermaid-wrapper .cluster-label text {
+  color: var(--verti-text-muted) !important;
+  fill: var(--verti-text-muted) !important;
+  font-weight: 600;
+}
+
+/* Sequence Diagram Styling */
+.verti-mermaid-wrapper .actor,
+.verti-mermaid-wrapper rect.actor {
+  fill: var(--verti-bg-subtle) !important;
+  stroke: var(--verti-border) !important;
+}
+
+.verti-mermaid-wrapper text.actor,
+.verti-mermaid-wrapper text.actor > tspan {
+  fill: var(--verti-text-primary) !important;
+  stroke: none !important;
+  font-family: var(--verti-font-sans) !important;
+}
+
+.verti-mermaid-wrapper line.actor-line {
+  stroke: var(--verti-border) !important;
+}
+
+.verti-mermaid-wrapper .messageLine0,
+.verti-mermaid-wrapper .messageLine1 {
+  stroke: var(--verti-text-secondary) !important;
+  stroke-width: 1.5px !important;
+}
+
+.verti-mermaid-wrapper text.messageText {
+  fill: var(--verti-text-primary) !important;
+  stroke: none !important;
+  font-family: var(--verti-font-sans) !important;
+}
+
+.verti-mermaid-wrapper rect.note,
+.verti-mermaid-wrapper .note {
+  fill: var(--verti-bg-subtle) !important;
+  stroke: var(--verti-accent) !important;
+}
+
+.verti-mermaid-wrapper text.noteText,
+.verti-mermaid-wrapper text.noteText > tspan {
+  fill: var(--verti-text-primary) !important;
+  font-family: var(--verti-font-sans) !important;
+}
+
+.verti-mermaid-wrapper line.loopLine {
+  stroke: var(--verti-border) !important;
+}
+
+.verti-mermaid-wrapper text.loopText,
+.verti-mermaid-wrapper text.labelText {
+  fill: var(--verti-text-primary) !important;
+  font-family: var(--verti-font-sans) !important;
+}
+
+.verti-mermaid-wrapper rect.labelBox {
+  fill: var(--verti-bg-subtle) !important;
+  stroke: var(--verti-border) !important;
+}
+
+.verti-mermaid-wrapper .sequenceNumber {
+  fill: var(--verti-accent-contrast) !important;
+}
+
+/* Class / State Diagrams */
+.verti-mermaid-wrapper g.stateGroup rect,
+.verti-mermaid-wrapper g.classGroup rect {
+  fill: var(--verti-bg-subtle) !important;
+  stroke: var(--verti-border) !important;
+}
+
+.verti-mermaid-wrapper .state-title,
+.verti-mermaid-wrapper .classTitle {
+  color: var(--verti-text-primary) !important;
+  fill: var(--verti-text-primary) !important;
 }
 
 /* Search Modal Dialog */
