@@ -38,8 +38,18 @@ function scriptToEndOfBodyPlugin(): Plugin {
           const scriptCloseIndex = html.indexOf('</script>') + 9;
           const scriptTag = html.slice(scriptOpenIndex, scriptCloseIndex);
           html = html.slice(0, scriptOpenIndex) + html.slice(scriptCloseIndex);
-          html = html.replace('</body>', `${scriptTag}\n</body>`);
+          html = html.replace('</body>', () => `${scriptTag}\n</body>`);
+          // Ensure favicon link in standalone bundle remains assets/favicon.ico for zero-build end-user configuration
+          html = html.replace(/<link rel="icon"[^>]*href="[^"]*favicon[^"]*"[^>]*>/i, '<link rel="icon" href="assets/favicon.ico" />');
           fs.writeFileSync(distIndex, html, 'utf8');
+        }
+      }
+      const distDir = path.resolve(process.cwd(), 'dist');
+      if (fs.existsSync(distDir)) {
+        for (const file of fs.readdirSync(distDir)) {
+          if (/^favicon-.*\.(ico|svg|png)$/.test(file)) {
+            try { fs.unlinkSync(path.join(distDir, file)); } catch {}
+          }
         }
       }
     }

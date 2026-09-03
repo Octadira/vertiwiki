@@ -57,6 +57,7 @@ export interface LocaleConfig {
 export interface VertiWikiConfig {
   title: string;
   logo?: string;
+  favicon?: string;
   brandDisplay?: 'both' | 'logo' | 'title';
   useSideMenu: boolean;
   useTableOfContents: boolean;

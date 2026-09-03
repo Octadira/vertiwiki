@@ -1,6 +1,17 @@
 # Changelog
 
-## VertiWiki 0.6.0 (September 2026) :badge[Latest]{type=success}
+## VertiWiki 0.6.1 (September 2026) :badge[Latest]{type=success}
+
+### 🐞 Favicon Rendering & Progressive Enhancement Fix
+- **Universal Progressive Enhancement Favicons**: Inlined high-contrast 32x32 PNG, scalable vector SVG with `sizes="any"`, and `apple-touch-icon` as Data URIs directly in `<head>`, eliminating network dependencies and resolving missing icons on Google Chrome, Apple Safari, and Chromium browsers.
+- **Standalone Single-File Preservation**: Replaced external asset extraction with inlined Data URIs, guaranteeing the favicon renders immediately in standalone `dist/vertiwiki.html` across all environments (offline, `file://`, subfolder deployments, and static hosts).
+- **Public Fallback Assets**: Added `public/favicon.ico`, `public/favicon.png`, and `public/favicon.svg` to satisfy automatic root speculative browser requests and prevent 404 caching on localhost dev servers.
+- **Bundle String Replace Bug Fix**: Fixed a critical pattern substitution bug in `vite.config.ts` (`scriptToEndOfBodyPlugin`) by using a callback function in `String.prototype.replace()`, preventing regex pattern syntax from duplicating DOCTYPE tags and corrupting the bundled JavaScript.
+- **Dynamic Favicon Configuration**: Added optional `favicon?: string;` property to `VertiWikiConfig`, allowing users to dynamically customize the favicon through `config.json`.
+
+---
+
+## VertiWiki 0.6.0 (September 2026)
 
 ### 📁 Subfolder Content Roots & Isolated Demo Fixtures
 - **Subfolder Documentation Hosting**: VertiWiki natively supports hosting documentation in subdirectories (e.g. `demo/` or `content/`) with automatic base directory resolution during language switching and dynamic navigation tree loading.

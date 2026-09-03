@@ -80,7 +80,7 @@ You can organize your files in subdirectories at any depth. VertiWiki automatica
 Relative images are automatically resolved relative to the Markdown file's location:
 ```markdown
 ![Architecture Diagram](images/architecture.png)
-![Shared Asset](../../assets/logo.png)
+![Shared Asset](../../assets/logo.svg)
 ```
 
 ---

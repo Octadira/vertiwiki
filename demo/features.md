@@ -4,7 +4,7 @@ description: Explore the comprehensive suite of 14 built-in plugins and interact
 tags: [features, plugins, tabs, math, mermaid, wikilinks, i18n, search, lightbox, aeo]
 ---
 
-# Modern Features & 14 Built-in Plugins :badge[v0.6.0]{type=primary} :badge[Interactive Demo]{type=success}
+# Modern Features & 14 Built-in Plugins :badge[v0.6.1]{type=primary} :badge[Interactive Demo]{type=success}
 
 VertiWiki includes **14 built-in zero-dependency plugins** that transform pure Markdown into a dynamic, rich documentation application directly in the browser.
 
@@ -68,7 +68,7 @@ Yes. The single standalone `vertiwiki.html` contains all scripts, fonts, stylesh
 
 ## 4. 🏷️ Inline Badges & Pills
 
-* :badge[v0.6.0]{type=primary} Core Release
+* :badge[v0.6.1]{type=primary} Core Release
 * :badge[Success]{type=success} Fast GPU Render
 * :badge[Warning]{type=warning} Deprecated
 * :badge[Error]{type=error} Failed Check

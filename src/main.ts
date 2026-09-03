@@ -28,9 +28,13 @@ import { navAccordionPlugin } from './plugins/nav-accordion';
 import { sitemapPlugin, parseNavigationMarkdown } from './plugins/sitemap';
 import { wikilinksPlugin } from './plugins/wikilinks';
 import { PrevNextNavigation } from './ui/prev-next';
+import { resolveFavicon, applyFavicon } from './core/favicon';
 
 async function bootstrap() {
   const config = await loadConfig();
+
+  const faviconUrl = await resolveFavicon(config);
+  applyFavicon(faviconUrl);
 
   const themeManager = new ThemeManager(
     config.defaultTheme,
