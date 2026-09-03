@@ -71,6 +71,35 @@ export function parseFrontmatter(markdown: string): { frontmatter: Record<string
   return { frontmatter, body };
 }
 
+export function autoCloseFences(markdown: string): string {
+  const lines = markdown.replace(/\r\n?/g, '\n').split('\n');
+  const fenceRe = /^( {0,3})((`{3,})|(~{3,}))(.*)?$/;
+  let openFence: { char: string; length: number } | null = null;
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const match = fenceRe.exec(line);
+    if (match) {
+      const char = match[3] ? '`' : '~';
+      const length = (match[3] || match[4]).length;
+      const info = (match[5] || '').trim();
+
+      if (!openFence) {
+        openFence = { char, length };
+      } else {
+        if (char === openFence.char && length >= openFence.length && info === '') {
+          openFence = null;
+        }
+      }
+    }
+  }
+
+  if (openFence) {
+    return markdown + '\n' + openFence.char.repeat(openFence.length) + '\n';
+  }
+  return markdown;
+}
+
 export class MarkdownParser {
   constructor() {
     marked.setOptions({
@@ -80,7 +109,8 @@ export class MarkdownParser {
   }
 
   public parse(rawMarkdown: string): ParsedMarkdown {
-    const { frontmatter, body } = parseFrontmatter(rawMarkdown);
+    const { frontmatter, body: rawBody } = parseFrontmatter(rawMarkdown);
+    const body = autoCloseFences(rawBody);
 
     // 1. Extract first H1 for title if not in frontmatter
     let title = frontmatter.title ? cleanTitle(frontmatter.title) : '';
@@ -113,10 +143,11 @@ export class MarkdownParser {
     renderer.heading = function({ tokens, depth }) {
       const text = this.parser.parseInline(tokens);
       const plainText = text.replace(/<[^>]*>/g, '').trim();
-      let slug = slugify(plainText) || `heading-${depth}`;
+      const baseSlug = slugify(plainText) || `heading-${depth}`;
+      let slug = baseSlug;
       let counter = 1;
       while (usedSlugs.has(slug)) {
-        slug = `${slug}-${counter++}`;
+        slug = `${baseSlug}-${counter++}`;
       }
       usedSlugs.add(slug);
 
@@ -125,8 +156,7 @@ export class MarkdownParser {
 
     const dirtyHtml = marked.parse(body, { renderer }) as string;
 
-    // Secure DOMPurify configuration allowing safe tags for KaTeX, Mermaid, SVGs, and Iframes
-    const cleanHtml = DOMPurify.sanitize(dirtyHtml, {
+    const purifyConfig = {
       ADD_TAGS: [
         'iframe',
         'math',
@@ -183,7 +213,11 @@ export class MarkdownParser {
         'data-tabs-id',
         'open'
       ]
-    });
+    };
+
+    const cleanHtml = typeof DOMPurify?.sanitize === 'function'
+      ? DOMPurify.sanitize(dirtyHtml, purifyConfig)
+      : dirtyHtml;
 
     return {
       html: cleanHtml,

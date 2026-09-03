@@ -103,19 +103,36 @@ export class Router {
     const currentRoute = this.parseHash(window.location.hash);
     const currentLocale = this.getCurrentLocale(currentRoute.filePath);
 
+    // Identify root base directory from defaultPage (e.g. 'demo' from 'demo/index.md')
+    const baseDir = this.defaultPage.includes('/')
+      ? this.defaultPage.substring(0, this.defaultPage.lastIndexOf('/'))
+      : '';
+
     let cleanDocPath = currentRoute.filePath;
 
+    // 1. Remove current locale prefix or baseDir to obtain clean document path
     if (currentLocale && currentLocale.prefix) {
       if (cleanDocPath.startsWith(`${currentLocale.prefix}/`)) {
         cleanDocPath = cleanDocPath.substring(currentLocale.prefix.length + 1);
       } else if (cleanDocPath === currentLocale.prefix) {
-        cleanDocPath = this.defaultPage;
+        cleanDocPath = this.defaultPage.includes('/')
+          ? this.defaultPage.substring(this.defaultPage.lastIndexOf('/') + 1)
+          : this.defaultPage;
       }
+    } else if (baseDir && cleanDocPath.startsWith(`${baseDir}/`)) {
+      cleanDocPath = cleanDocPath.substring(baseDir.length + 1);
     }
 
+    // 2. Build target path accounting for baseDir and targetLocale
     let targetPath = cleanDocPath;
     if (targetLocale.prefix && !targetLocale.isDefault) {
-      targetPath = `${targetLocale.prefix}/${cleanDocPath}`;
+      if (baseDir && !targetLocale.prefix.startsWith(`${baseDir}/`)) {
+        targetPath = `${baseDir}/${targetLocale.prefix}/${cleanDocPath}`;
+      } else {
+        targetPath = `${targetLocale.prefix}/${cleanDocPath}`;
+      }
+    } else if (baseDir) {
+      targetPath = `${baseDir}/${cleanDocPath}`;
     }
 
     this.navigate(targetPath, currentRoute.anchor);

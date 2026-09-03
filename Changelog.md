@@ -1,6 +1,18 @@
 # Changelog
 
-## VertiWiki 0.5.1 (September 2026) :badge[Latest]{type=success}
+## VertiWiki 0.6.0 (September 2026) :badge[Latest]{type=success}
+
+### 📁 Subfolder Content Roots & Isolated Demo Fixtures
+- **Subfolder Documentation Hosting**: VertiWiki natively supports hosting documentation in subdirectories (e.g. `demo/` or `content/`) with automatic base directory resolution during language switching and dynamic navigation tree loading.
+- **Isolated Demo Fixtures**: All demo documentation, multi-language test files (`demo/fr/`), and sample markdown content are cleanly isolated in `demo/`, keeping the repository root dedicated to core engine source and configuration.
+
+### 🧪 Comprehensive Unit Test Suite (100% Coverage)
+- **100% Core & Plugin Test Coverage**: Expanded automated testing from 7 test suites (27 tests) to 15 test suites (74 unit tests) covering `Pipeline`, `MarkdownParser`, `Router`, and all built-in plugins (`badge`, `callouts`, `details`, `tabs`, `wikilinks`, `math`, `media`, `sitemap`, `analytics`, `nav-accordion`, `lightbox`).
+- **Heading Slug Collision Fix**: Corrected slug generation logic in `MarkdownParser` to guarantee clean, incremental anchor IDs (`overview-1`, `overview-2`) without nested hyphen chaining.
+
+---
+
+## VertiWiki 0.5.1 (September 2026)
 
 ### 🐞 Mermaid Diagrams Contrast & Dark Theme Harmonization
 - **Theme-Aware Diagram Tokens**: Mermaid node shapes (`rect`, `circle`, `polygon`) now dynamically map to `--verti-bg-subtle` and `--verti-border`, eliminating the clash of light pastel boxes on dark backgrounds.

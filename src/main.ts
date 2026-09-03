@@ -144,9 +144,22 @@ ${currentRawMarkdown}`;
     }
 
     currentLoadedLocaleKey = localeKey;
+    const navDir = config.navigationFile.includes('/')
+      ? config.navigationFile.substring(0, config.navigationFile.lastIndexOf('/'))
+      : '';
+    const navFileName = config.navigationFile.includes('/')
+      ? config.navigationFile.substring(config.navigationFile.lastIndexOf('/') + 1)
+      : config.navigationFile;
+
     let navFile = config.navigationFile;
     if (locale && locale.prefix && !locale.isDefault) {
-      navFile = `${locale.prefix}/${config.navigationFile}`;
+      if (locale.prefix.startsWith(`${navDir}/`)) {
+        navFile = `${locale.prefix}/${navFileName}`;
+      } else if (navDir) {
+        navFile = `${navDir}/${locale.prefix}/${navFileName}`;
+      } else {
+        navFile = `${locale.prefix}/${navFileName}`;
+      }
     }
 
     try {
@@ -160,9 +173,21 @@ ${currentRawMarkdown}`;
       if (navResponse.ok) {
         const navRaw = await navResponse.text();
         navigationItems = parseNavigationMarkdown(navRaw, navFile);
-        const activeTarget = currentActivePath || (locale && locale.prefix && !locale.isDefault
-          ? `${locale.prefix}/${config.homePage}`
-          : config.homePage);
+
+        const homeDir = config.homePage.includes('/')
+          ? config.homePage.substring(0, config.homePage.lastIndexOf('/'))
+          : '';
+        const homeFileName = config.homePage.includes('/')
+          ? config.homePage.substring(config.homePage.lastIndexOf('/') + 1)
+          : config.homePage;
+
+        const defaultLocalizedTarget = locale && locale.prefix && !locale.isDefault
+          ? (locale.prefix.startsWith(`${homeDir}/`)
+              ? `${locale.prefix}/${homeFileName}`
+              : (homeDir ? `${homeDir}/${locale.prefix}/${homeFileName}` : `${locale.prefix}/${homeFileName}`))
+          : config.homePage;
+
+        const activeTarget = currentActivePath || defaultLocalizedTarget;
         layout.renderNavigation(navigationItems, activeTarget);
 
         // Index localized pages in background for instant search

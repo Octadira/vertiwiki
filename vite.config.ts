@@ -24,13 +24,36 @@ function rawHtmlServerPlugin(): Plugin {
   };
 }
 
+function scriptToEndOfBodyPlugin(): Plugin {
+  return {
+    name: 'script-to-end-of-body',
+    enforce: 'post',
+    closeBundle() {
+      const distIndex = path.resolve(process.cwd(), 'dist/index.html');
+      if (fs.existsSync(distIndex)) {
+        let html = fs.readFileSync(distIndex, 'utf8');
+        const headCloseIndex = html.indexOf('</head>');
+        const scriptOpenIndex = html.indexOf('<script');
+        if (scriptOpenIndex !== -1 && scriptOpenIndex < headCloseIndex) {
+          const scriptCloseIndex = html.indexOf('</script>') + 9;
+          const scriptTag = html.slice(scriptOpenIndex, scriptCloseIndex);
+          html = html.slice(0, scriptOpenIndex) + html.slice(scriptCloseIndex);
+          html = html.replace('</body>', `${scriptTag}\n</body>`);
+          fs.writeFileSync(distIndex, html, 'utf8');
+        }
+      }
+    }
+  };
+}
+
 export default defineConfig({
   plugins: [
     rawHtmlServerPlugin(),
     viteSingleFile({
       useRecommendedBuildConfig: true,
       removeViteModuleLoader: true
-    })
+    }),
+    scriptToEndOfBodyPlugin()
   ],
   esbuild: {
     charset: 'ascii'

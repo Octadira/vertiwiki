@@ -21,6 +21,6 @@
 
 # Project & Community
 * [GitHub Repository](https://github.com/Octadira/vertiwiki)
-* [Changelog & Release Notes](Changelog.md)
+* [Changelog & Release Notes](../Changelog.md)
 * [Versioning Policy & Roadmap](docs/versioning-and-roadmap.md)
 * [Official Website (verti.wiki)](https://verti.wiki)

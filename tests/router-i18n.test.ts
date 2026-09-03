@@ -58,4 +58,23 @@ describe('Router Multi-Language (i18n) Logic', () => {
     expect(resolvePath('fr/navigation.md', 'guides/authoring.md')).toBe('fr/guides/authoring.md');
     expect(resolvePath('navigation.md', 'guides/authoring.md')).toBe('guides/authoring.md');
   });
+
+  it('resolves explicit directory routes and extensionless routes to index.md', () => {
+    const router = new Router('index.md', async () => {}, locales);
+
+    // Empty or root hash
+    expect(router.parseHash('#').filePath).toBe('index.md');
+    expect(router.parseHash('#/').filePath).toBe('index.md');
+    expect(router.parseHash('#!/').filePath).toBe('index.md');
+
+    // Explicit directory path
+    expect(router.parseHash('#/docs/guides/').filePath).toBe('docs/guides/index.md');
+
+    // Extensionless path
+    expect(router.parseHash('#/docs/guides').filePath).toBe('docs/guides/index.md');
+    expect(router.parseHash('#/features').filePath).toBe('features/index.md');
+
+    // Path with .md extension preserves exact filename
+    expect(router.parseHash('#/features.md').filePath).toBe('features.md');
+  });
 });
