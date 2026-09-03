@@ -1,6 +1,18 @@
 # Changelog
 
-## VertiWiki 0.6.1 (September 2026) :badge[Latest]{type=success}
+## VertiWiki 0.6.2 (September 2026) :badge[Latest]{type=success}
+
+### 🌐 Universal Portability & Path-Agnostic Architecture
+- **Path-Agnostic Core Directives**: Replaced fixed path references in `index.html` with relative URLs (`llms.txt`, `index.md`), ensuring the standalone single-file engine (`dist/vertiwiki.html`) resolves correctly anywhere it is deployed (domain root `/`, subfolders `/docs/`, `/wiki/`, GitHub Pages, or offline `file:///`).
+- **Relative Default Configuration**: Updated `DEFAULT_CONFIG.llmsTxtUrl` from `'/llms.txt'` to `'llms.txt'`, harmonizing it with `homePage: 'index.md'` and `navigationFile: 'navigation.md'`.
+- **Universal Hosting Recipes (`deploy/`)**: Overhauled all deployment configurations (`vercel.json`, `netlify.toml`, `cloudflare/worker-snippet.js`, `_redirects`, `_headers`, `nginx/vertiwiki.conf`, `apache/.htaccess`, `aws/cloudfront-function.js`) to eliminate hardcoded `/docs` path assumptions:
+  - Full support for AI Content Negotiation (`Accept: text/markdown`) across domain root `/` and any arbitrary subpath `/:path*`.
+  - Added universal Single Page Application (SPA) fallbacks to prevent 404 errors on clean extensionless URLs.
+  - Added root vs. subfolder deployment guidance in `deploy/README.md`.
+
+---
+
+## VertiWiki 0.6.1 (September 2026)
 
 ### 🐞 Favicon Rendering & Progressive Enhancement Fix
 - **Universal Progressive Enhancement Favicons**: Inlined high-contrast 32x32 PNG, scalable vector SVG with `sizes="any"`, and `apple-touch-icon` as Data URIs directly in `<head>`, eliminating network dependencies and resolving missing icons on Google Chrome, Apple Safari, and Chromium browsers.

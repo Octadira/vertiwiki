@@ -21,7 +21,7 @@
   "navigationFile": "demo/navigation.md",
   "homePage": "demo/index.md",
   "llmsTxtUrl": "demo/llms.txt",
-  "footerText": "Powered by <a href=\"https://verti.wiki\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>VertiWiki 0.6.1</strong></a> — Built for 2026 and beyond",
+  "footerText": "Powered by <a href=\"https://verti.wiki\" target=\"_blank\" rel=\"noopener noreferrer\"><strong>VertiWiki 0.6.2</strong></a> — Built for 2026 and beyond",
   "githubUrl": "https://github.com/Octadira/vertiwiki",
   "customThemes": [
     "themes/obsidian.json",

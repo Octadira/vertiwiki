@@ -1,0 +1,37 @@
+# Apache HTTP Server Configuration (.htaccess) for VertiWiki
+# Place this file in your website root or /docs/ directory.
+
+# 1. MIME Types & Charsets
+AddType text/markdown .md
+AddType text/plain .txt
+AddType application/json .json
+AddDefaultCharset UTF-8
+
+# 2. Permissive CORS for AI Scrapers and Headless Agents
+<IfModule mod_headers.c>
+    <FilesMatch "\.(md|txt|json)$">
+        Header set Access-Control-Allow-Origin "*"
+        Header set Cache-Control "public, max-age=0, must-revalidate"
+    </FilesMatch>
+</IfModule>
+
+# 3. Rewrite Engine & AI Content Negotiation
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # Content Negotiation: If client sends Accept: text/markdown on root
+    RewriteCond %{HTTP:Accept} text/markdown [NC]
+    RewriteRule ^/?$ index.md [L]
+
+    # Content Negotiation: If client sends Accept: text/markdown on clean URL
+    RewriteCond %{HTTP:Accept} text/markdown [NC]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME}.md -f
+    RewriteRule ^(.*)$ $1.md [L]
+
+    # Universal SPA Fallback: Clean URLs route to index.html
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^.*$ index.html [L]
+</IfModule>

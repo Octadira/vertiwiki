@@ -1,0 +1,5 @@
+# Cloudflare Pages Redirects for VertiWiki
+# Place this file in the root of your published output directory.
+
+# Universal SPA fallback for clean URLs
+/* /index.html 200

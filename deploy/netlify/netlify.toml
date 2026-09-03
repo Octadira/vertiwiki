@@ -1,0 +1,40 @@
+# Netlify Configuration for VertiWiki
+# Place this file in your project root.
+
+[build]
+  publish = "."
+
+# Serve Markdown files with correct MIME type and permissive CORS
+[[headers]]
+  for = "/*.md"
+  [headers.values]
+    Content-Type = "text/markdown; charset=utf-8"
+    Access-Control-Allow-Origin = "*"
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/*.txt"
+  [headers.values]
+    Content-Type = "text/plain; charset=utf-8"
+    Access-Control-Allow-Origin = "*"
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/*.json"
+  [headers.values]
+    Content-Type = "application/json; charset=utf-8"
+    Access-Control-Allow-Origin = "*"
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# Content Negotiation for Accept: text/markdown on root
+[[redirects]]
+  from = "/"
+  to = "/index.md"
+  status = 200
+  conditions = {Headers = {Accept = "text/markdown"}}
+
+# Universal SPA Fallback for clean URLs
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

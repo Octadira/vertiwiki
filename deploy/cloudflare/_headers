@@ -1,0 +1,20 @@
+# Cloudflare Pages Headers for VertiWiki
+# Place this file in the root of your published output directory.
+
+# Serve Markdown files with official MIME type and permissive CORS for AI crawlers
+/*.md
+  Content-Type: text/markdown; charset=utf-8
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Serve LLM discovery index & text files
+/*.txt
+  Content-Type: text/plain; charset=utf-8
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Configuration and themes
+/*.json
+  Content-Type: application/json; charset=utf-8
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=0, must-revalidate

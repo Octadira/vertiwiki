@@ -13,7 +13,7 @@ export class AEOEngine {
     if (typeof document === 'undefined') return;
 
     const isDisabled = this.config.llmsTxtUrl === null || this.config.llmsTxtUrl === '';
-    const targetUrl = this.config.llmsTxtUrl || '/llms.txt';
+    const targetUrl = this.config.llmsTxtUrl || 'llms.txt';
 
     // 1. Link to LLMs.txt
     let link = document.querySelector<HTMLLinkElement>('link[rel="llms-txt"]');

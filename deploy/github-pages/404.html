@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Redirecting to VertiWiki...</title>
+  <!--
+    GitHub Pages SPA Fallback Trick:
+    GitHub Pages does not support custom server rewrites. If you use clean URLs
+    instead of hash routing, GitHub Pages serves this 404.html.
+    This script converts the path into a hash route and redirects to the index.
+  -->
+  <script>
+    (function() {
+      var path = window.location.pathname;
+      var repo = path.split('/')[1] || '';
+      var clean = path.replace(/^\/[^/]+/, '');
+      if (clean && clean !== '/') {
+        window.location.replace(window.location.origin + '/' + repo + '/#/' + clean.replace(/^\//, ''));
+      } else {
+        window.location.replace(window.location.origin + '/' + repo + '/#/index.md');
+      }
+    })();
+  </script>
+</head>
+<body>
+  <p>Redirecting to documentation...</p>
+</body>
+</html>

@@ -56,11 +56,11 @@ describe('AEOEngine & Agent Directive', () => {
     (global as any).document = originalDocument;
   });
 
-  it('injects agent directive with default /llms.txt', () => {
+  it('injects agent directive with default llms.txt', () => {
     new AEOEngine({ ...DEFAULT_CONFIG });
     const directive = (global as any).document.querySelector('.verti-agent-directive');
     expect(directive).not.toBeNull();
-    expect(directive.innerHTML).toContain('/llms.txt');
+    expect(directive.innerHTML).toContain('llms.txt');
     expect(directive.innerHTML).toContain('For AI coding agents');
   });
 
