@@ -27,8 +27,8 @@ describe('detailsPlugin', () => {
   it('transforms collapsed details block syntax into semantic HTML details', () => {
     const md = `::: details Click to expand\nHidden content inside.\n:::`;
     const result = detailsPlugin.beforeParse!(md, {} as any) as string;
-    expect(result).toContain('<details class="verti-details cortex-details omni-details">');
-    expect(result).toContain('<summary class="verti-details-summary cortex-details-summary omni-details-summary">Click to expand</summary>');
+    expect(result).toContain('<details class="verti-details">');
+    expect(result).toContain('<summary class="verti-details-summary">Click to expand</summary>');
     expect(result).toContain('Hidden content inside.');
     expect(result).not.toContain(' open>');
   });
@@ -36,7 +36,7 @@ describe('detailsPlugin', () => {
   it('transforms open details block syntax with open attribute', () => {
     const md = `::: details:open Always Visible\nOpen content inside.\n:::`;
     const result = detailsPlugin.beforeParse!(md, {} as any) as string;
-    expect(result).toContain('<details class="verti-details cortex-details omni-details" open>');
+    expect(result).toContain('<details class="verti-details" open>');
     expect(result).toContain('Always Visible');
   });
 });
@@ -56,10 +56,10 @@ const x = 42;
 
     const result = tabsPlugin.beforeParse!(md, {} as any) as string;
     expect(result).toContain('class="verti-tabs-container');
-    expect(result).toContain('<button class="verti-tab-btn cortex-tab-btn omni-tab-btn active"');
+    expect(result).toContain('<button class="verti-tab-btn active"');
     expect(result).toContain('TypeScript</button>');
     expect(result).toContain('JavaScript</button>');
-    expect(result).toContain('class="verti-tab-panel cortex-tab-panel omni-tab-panel active"');
+    expect(result).toContain('class="verti-tab-panel active"');
     expect(result).toContain('const x: number = 42;');
   });
 

@@ -9,7 +9,7 @@ function rawHtmlServerPlugin(): Plugin {
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
         const rawUrl = req.url?.split('?')[0] || '';
-        if (rawUrl.endsWith('vertiwiki.html') || rawUrl.endsWith('cortexwiki.html')) {
+        if (rawUrl.endsWith('vertiwiki.html')) {
           const cleanPath = rawUrl.startsWith('/') ? rawUrl.slice(1) : rawUrl;
           const filePath = path.resolve(process.cwd(), cleanPath);
           if (fs.existsSync(filePath)) {
@@ -20,6 +20,28 @@ function rawHtmlServerPlugin(): Plugin {
         }
         next();
       });
+    }
+  };
+}
+
+function optimizeKatexFontsPlugin(): Plugin {
+  return {
+    name: 'optimize-katex-fonts',
+    enforce: 'pre',
+    load(id) {
+      if (id.endsWith('/src/ui/styles/main.css') || id.endsWith('styles/main.css')) {
+        let mainCss = fs.readFileSync(id, 'utf8');
+        const katexCssPath = path.resolve(process.cwd(), 'node_modules/katex/dist/katex.min.css');
+        if (fs.existsSync(katexCssPath)) {
+          let katexCss = fs.readFileSync(katexCssPath, 'utf8');
+          // Strip obsolete .woff and .ttf from @font-face, keeping solely modern .woff2
+          katexCss = katexCss.replace(/,url\(fonts\/[^)]+\.woff\) format\(["']woff["']\),url\(fonts\/[^)]+\.ttf\) format\(["']truetype["']\)/g, '');
+          const fontsDir = path.resolve(process.cwd(), 'node_modules/katex/dist/fonts').replace(/\\/g, '/');
+          katexCss = katexCss.replace(/url\(fonts\//g, `url(${fontsDir}/`);
+          mainCss = mainCss.replace(/@import\s+['"]katex\/dist\/katex\.min\.css['"];/, katexCss);
+        }
+        return mainCss;
+      }
     }
   };
 }
@@ -59,6 +81,7 @@ function scriptToEndOfBodyPlugin(): Plugin {
 export default defineConfig({
   plugins: [
     rawHtmlServerPlugin(),
+    optimizeKatexFontsPlugin(),
     viteSingleFile({
       useRecommendedBuildConfig: true,
       removeViteModuleLoader: true

@@ -1,6 +1,7 @@
 import { VertiWikiPlugin } from '../core/pipeline';
 import { NavigationItem } from '../core/types';
 import { resolvePath } from '../core/router';
+import { escapeHtml } from '../core/escape';
 
 export function parseNavigationMarkdown(navMarkdown: string, baseFilePath: string = ''): NavigationItem[] {
   const items: NavigationItem[] = [];
@@ -94,7 +95,7 @@ export const sitemapPlugin: VertiWikiPlugin = {
         el.innerHTML = `
           <div class="verti-callout note">
             <div class="verti-callout-title">Sitemap Empty</div>
-            <p>No navigation structure found in <code>${context.config.navigationFile}</code>.</p>
+            <p>No navigation structure found in <code>${escapeHtml(context.config.navigationFile)}</code>.</p>
           </div>
         `;
       });
@@ -126,10 +127,10 @@ export const sitemapPlugin: VertiWikiPlugin = {
               const target = child.isExternal ? ' target="_blank" rel="noopener noreferrer"' : '';
               const icon = child.isExternal ? '↗' : '📄';
               return `
-                <li class="verti-sitemap-item" data-title="${child.title.toLowerCase()}" data-href="${child.href.toLowerCase()}">
-                  <a href="${href}" class="verti-sitemap-link"${target}>
+                <li class="verti-sitemap-item" data-title="${escapeHtml(child.title.toLowerCase())}" data-href="${escapeHtml(child.href.toLowerCase())}">
+                  <a href="${escapeHtml(href)}" class="verti-sitemap-link"${target}>
                     <span class="verti-sitemap-item-icon">${icon}</span>
-                    <span class="verti-sitemap-item-title">${child.title}</span>
+                    <span class="verti-sitemap-item-title">${escapeHtml(child.title)}</span>
                   </a>
                 </li>
               `;
@@ -137,11 +138,11 @@ export const sitemapPlugin: VertiWikiPlugin = {
             .join('');
 
           cardsHtml += `
-            <div class="verti-sitemap-card" data-section="${item.title.toLowerCase()}">
+            <div class="verti-sitemap-card" data-section="${escapeHtml(item.title.toLowerCase())}">
               <div class="verti-sitemap-card-header">
                 <div class="verti-sitemap-card-title">
                   <span class="verti-sitemap-folder-icon">📁</span>
-                  <span>${item.title}</span>
+                  <span>${escapeHtml(item.title)}</span>
                 </div>
                 <span class="verti-sitemap-card-count">${item.children.length} articles</span>
               </div>
@@ -155,12 +156,12 @@ export const sitemapPlugin: VertiWikiPlugin = {
           const target = item.isExternal ? ' target="_blank" rel="noopener noreferrer"' : '';
           const icon = item.isExternal ? '↗' : '📄';
           cardsHtml += `
-            <div class="verti-sitemap-card single" data-section="${item.title.toLowerCase()}">
+            <div class="verti-sitemap-card single" data-section="${escapeHtml(item.title.toLowerCase())}">
               <ul class="verti-sitemap-list">
-                <li class="verti-sitemap-item" data-title="${item.title.toLowerCase()}" data-href="${item.href.toLowerCase()}">
-                  <a href="${href}" class="verti-sitemap-link"${target}>
+                <li class="verti-sitemap-item" data-title="${escapeHtml(item.title.toLowerCase())}" data-href="${escapeHtml(item.href.toLowerCase())}">
+                  <a href="${escapeHtml(href)}" class="verti-sitemap-link"${target}>
                     <span class="verti-sitemap-item-icon">${icon}</span>
-                    <span class="verti-sitemap-item-title" style="font-weight: 600;">${item.title}</span>
+                    <span class="verti-sitemap-item-title" style="font-weight: 600;">${escapeHtml(item.title)}</span>
                   </a>
                 </li>
               </ul>

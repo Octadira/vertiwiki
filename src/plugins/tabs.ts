@@ -1,4 +1,5 @@
 import { VertiWikiPlugin } from '../core/pipeline';
+import { escapeHtml } from '../core/escape';
 
 /**
  * VertiWiki Code & Content Tabs Plugin
@@ -59,27 +60,27 @@ export const tabsPlugin: VertiWikiPlugin = {
       const navButtons = tabs
         .map((tab, idx) => {
           const isActive = idx === 0 ? ' active' : '';
-          return `<button class="verti-tab-btn cortex-tab-btn omni-tab-btn${isActive}" data-tab-target="${tabGroupId}-panel-${idx}" type="button">${tab.title}</button>`;
+          return `<button class="verti-tab-btn${isActive}" data-tab-target="${tabGroupId}-panel-${idx}" type="button">${escapeHtml(tab.title)}</button>`;
         })
         .join('');
 
       const panels = tabs
         .map((tab, idx) => {
           const isActive = idx === 0 ? ' active' : '';
-          return `<div class="verti-tab-panel cortex-tab-panel omni-tab-panel${isActive}" id="${tabGroupId}-panel-${idx}">\n\n${tab.content}\n\n</div>`;
+          return `<div class="verti-tab-panel${isActive}" id="${tabGroupId}-panel-${idx}">\n\n${tab.content}\n\n</div>`;
         })
         .join('');
 
-      return `\n<div class="verti-tabs-container cortex-tabs-container omni-tabs-container" id="${tabGroupId}">\n<div class="verti-tabs-header cortex-tabs-header omni-tabs-header">${navButtons}</div>\n<div class="verti-tabs-body cortex-tabs-body omni-tabs-body">\n${panels}\n</div>\n</div>\n`;
+      return `\n<div class="verti-tabs-container" id="${tabGroupId}">\n<div class="verti-tabs-header">${navButtons}</div>\n<div class="verti-tabs-body">\n${panels}\n</div>\n</div>\n`;
     });
   },
 
   afterRender: (context) => {
-    const tabContainers = context.container.querySelectorAll('.verti-tabs-container, .cortex-tabs-container, .omni-tabs-container');
+    const tabContainers = context.container.querySelectorAll('.verti-tabs-container');
     
     tabContainers.forEach(container => {
-      const buttons = container.querySelectorAll<HTMLButtonElement>('.verti-tab-btn, .cortex-tab-btn, .omni-tab-btn');
-      const panels = container.querySelectorAll<HTMLElement>('.verti-tab-panel, .cortex-tab-panel, .omni-tab-panel');
+      const buttons = container.querySelectorAll<HTMLButtonElement>('.verti-tab-btn');
+      const panels = container.querySelectorAll<HTMLElement>('.verti-tab-panel');
 
       buttons.forEach(btn => {
         btn.addEventListener('click', () => {

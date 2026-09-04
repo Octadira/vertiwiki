@@ -1,6 +1,23 @@
 # Changelog
 
-## VertiWiki 0.6.3 (September 2026) :badge[Latest]{type=success}
+## VertiWiki 0.7.0 (September 2026) :badge[Latest]{type=success}
+
+### 🛡️ Core Security Hardening & Zero-XSS Guarantee
+- **DOM-Based XSS Remediation**: Secured the 404 route error handler, breadcrumbs navigation generator, search result modal snippets, and visual sitemap plugin using a centralized `escapeHtml` utility.
+- **Mermaid Diagram Strict Security**: Upgraded Mermaid engine configuration to `securityLevel: 'strict'` and enforced `DOMPurify.sanitize()` on all rendered SVG diagrams.
+- **Iframe Source Hardening**: Enforced origin validation on iframe elements within `MarkdownParser`, restricting embeds to secure protocols.
+
+### ⚡ KaTeX Font Optimization (~1.1 MB Standalone Bundle Reduction)
+- **Modern WOFF2 Font Pruning**: Added `optimizeKatexFontsPlugin` to the Vite build pipeline, pruning obsolete `.woff` and `.ttf` formats from KaTeX `@font-face` rules. Reduced standalone CSS payload from 1.50 MB to 408 KB (-73%) and overall `dist/vertiwiki.html` size from 5.13 MB to 4.02 MB.
+
+### 🧹 Design System Standard & Legacy Namespace Purge
+- **Pure `.verti-*` Namespace**: Completely eliminated all legacy `cortex-*` and `omni-*` classes and selectors across all components and plugins.
+- **Purged Legacy CSS Variables**: Removed all deprecated `--cortex-*` and `--omni-*` fallback tokens from `theme.css`.
+- **Runtime Reliability**: Converted `LightboxManager` to lazy initialization on demand and unified Markdown fallback fetching.
+
+---
+
+## VertiWiki 0.6.3 (September 2026)
 
 ### 🐞 Directory Trailing Slash Normalization & Hash Route Integrity
 - **Vercel Trailing Slash Fix**: Enforced `"trailingSlash": true` in `deploy/vercel/vercel.json`, preventing Vercel Edge 308 redirects from stripping directory trailing slashes and corrupting browser address bars from `https://www.verti.wiki/docs/#/` into `/docs#/`.

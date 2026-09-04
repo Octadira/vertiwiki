@@ -20,7 +20,7 @@ export const badgePlugin: VertiWikiPlugin = {
 
     return markdown.replace(badgeRegex, (_, text, type = 'info') => {
       const cleanType = type.toLowerCase().trim();
-      return `<span class="verti-badge verti-badge-${cleanType} cortex-badge cortex-badge-${cleanType} omni-badge omni-badge-${cleanType}">${text}</span>`;
+      return `<span class="verti-badge verti-badge-${cleanType}">${text}</span>`;
     });
   }
 };

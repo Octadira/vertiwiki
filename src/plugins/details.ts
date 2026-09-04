@@ -21,7 +21,7 @@ export const detailsPlugin: VertiWikiPlugin = {
 
     return markdown.replace(detailsRegex, (_, openAttr, title, content) => {
       const isOpen = openAttr === ':open' ? ' open' : '';
-      return `\n<details class="verti-details cortex-details omni-details"${isOpen}>\n<summary class="verti-details-summary cortex-details-summary omni-details-summary">${title.trim()}</summary>\n<div class="verti-details-content cortex-details-content omni-details-content">\n\n${content.trim()}\n\n</div>\n</details>\n`;
+      return `\n<details class="verti-details"${isOpen}>\n<summary class="verti-details-summary">${title.trim()}</summary>\n<div class="verti-details-content">\n\n${content.trim()}\n\n</div>\n</details>\n`;
     });
   }
 };

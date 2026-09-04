@@ -1,4 +1,5 @@
 import { SearchResultItem } from '../core/types';
+import { escapeHtml } from '../core/escape';
 
 export class SearchModal {
   private dialog: HTMLDialogElement;
@@ -17,17 +18,17 @@ export class SearchModal {
     this.onSelectResult = onSelectResult;
 
     this.dialog = document.createElement('dialog');
-    this.dialog.className = 'verti-search-dialog cortex-search-dialog omni-search-dialog';
+    this.dialog.className = 'verti-search-dialog';
     this.dialog.innerHTML = `
-      <div class="verti-search-box cortex-search-box omni-search-box">
+      <div class="verti-search-box">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="11" cy="11" r="8"></circle>
           <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
-        <input type="text" class="verti-search-input cortex-search-input omni-search-input" placeholder="Search documentation, guides, and pages..." autofocus />
+        <input type="text" class="verti-search-input" placeholder="Search documentation, guides, and pages..." autofocus />
       </div>
-      <ul class="verti-search-results cortex-search-results omni-search-results"></ul>
-      <div class="verti-search-footer cortex-search-footer omni-search-footer">
+      <ul class="verti-search-results"></ul>
+      <div class="verti-search-footer">
         <span>Navigate with <kbd>↑</kbd> <kbd>↓</kbd></span>
         <span>Select with <kbd>↵</kbd></span>
         <span>Close with <kbd>esc</kbd></span>
@@ -36,17 +37,8 @@ export class SearchModal {
 
     document.body.appendChild(this.dialog);
 
-    this.input = (
-      this.dialog.querySelector('.verti-search-input') ||
-      this.dialog.querySelector('.cortex-search-input') ||
-      this.dialog.querySelector('.omni-search-input')
-    ) as HTMLInputElement;
-
-    this.resultsContainer = (
-      this.dialog.querySelector('.verti-search-results') ||
-      this.dialog.querySelector('.cortex-search-results') ||
-      this.dialog.querySelector('.omni-search-results')
-    ) as HTMLUListElement;
+    this.input = this.dialog.querySelector('.verti-search-input') as HTMLInputElement;
+    this.resultsContainer = this.dialog.querySelector('.verti-search-results') as HTMLUListElement;
 
     this.setupEvents();
   }
@@ -126,7 +118,7 @@ export class SearchModal {
   private renderResults(): void {
     if (this.input.value.trim() === '') {
       this.resultsContainer.innerHTML = `
-        <li style="padding: 2rem; text-align: center; color: var(--verti-text-muted, var(--cortex-text-muted, var(--omni-text-muted))); font-size: 0.9rem;">
+        <li style="padding: 2rem; text-align: center; color: var(--verti-text-muted); font-size: 0.9rem;">
           Type a query to search through the wiki...
         </li>
       `;
@@ -135,7 +127,7 @@ export class SearchModal {
 
     if (this.results.length === 0) {
       this.resultsContainer.innerHTML = `
-        <li style="padding: 2rem; text-align: center; color: var(--verti-text-muted, var(--cortex-text-muted, var(--omni-text-muted))); font-size: 0.9rem;">
+        <li style="padding: 2rem; text-align: center; color: var(--verti-text-muted); font-size: 0.9rem;">
           No matching results found.
         </li>
       `;
@@ -143,13 +135,13 @@ export class SearchModal {
     }
 
     this.resultsContainer.innerHTML = this.results.map((r, idx) => `
-      <li class="verti-search-result-item cortex-search-result-item omni-search-result-item ${idx === this.selectedIndex ? 'selected' : ''}" data-index="${idx}">
-        <div class="verti-search-result-title cortex-search-result-title omni-search-result-title">${this.escapeHtml(r.title)}</div>
-        <div class="verti-search-result-snippet cortex-search-result-snippet omni-search-result-snippet">${r.snippet}</div>
+      <li class="verti-search-result-item ${idx === this.selectedIndex ? 'selected' : ''}" data-index="${idx}">
+        <div class="verti-search-result-title">${escapeHtml(r.title)}</div>
+        <div class="verti-search-result-snippet">${escapeHtml(r.snippet)}</div>
       </li>
     `).join('');
 
-    const items = this.resultsContainer.querySelectorAll<HTMLLIElement>('.verti-search-result-item, .cortex-search-result-item, .omni-search-result-item');
+    const items = this.resultsContainer.querySelectorAll<HTMLLIElement>('.verti-search-result-item');
     items.forEach(item => {
       item.addEventListener('click', () => {
         const idx = parseInt(item.getAttribute('data-index') || '0', 10);
@@ -163,18 +155,12 @@ export class SearchModal {
   }
 
   private updateSelection(): void {
-    const items = this.resultsContainer.querySelectorAll<HTMLLIElement>('.verti-search-result-item, .cortex-search-result-item, .omni-search-result-item');
+    const items = this.resultsContainer.querySelectorAll<HTMLLIElement>('.verti-search-result-item');
     items.forEach((item, idx) => {
       item.classList.toggle('selected', idx === this.selectedIndex);
       if (idx === this.selectedIndex) {
         item.scrollIntoView({ block: 'nearest' });
       }
     });
-  }
-
-  private escapeHtml(str: string): string {
-    const div = document.createElement('div');
-    div.textContent = str;
-    return div.innerHTML;
   }
 }

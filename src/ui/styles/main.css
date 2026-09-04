@@ -1428,16 +1428,14 @@ body {
   color: var(--verti-text-muted);
 }
 
-.verti-footer a,
-.cortex-footer a {
+.verti-footer a {
   color: var(--verti-text-primary, inherit);
   text-decoration: none;
   font-weight: 600;
   transition: color 0.15s ease;
 }
 
-.verti-footer a:hover,
-.cortex-footer a:hover {
+.verti-footer a:hover {
   color: var(--verti-primary, #00eefc);
   text-decoration: underline;
 }

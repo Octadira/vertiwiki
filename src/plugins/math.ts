@@ -14,7 +14,7 @@ export const mathPlugin: VertiWikiPlugin = {
       const formula = code.textContent || '';
       try {
         const mathDiv = document.createElement('div');
-        mathDiv.className = 'verti-math-block cortex-math-block omni-math-block';
+        mathDiv.className = 'verti-math-block';
         mathDiv.style.margin = '1.5rem 0';
         mathDiv.style.textAlign = 'center';
         mathDiv.style.overflowX = 'auto';
@@ -71,11 +71,11 @@ export const mathPlugin: VertiWikiPlugin = {
 
         const span = document.createElement(isDisplay ? 'div' : 'span');
         if (isDisplay) {
-          span.className = 'verti-math-display cortex-math-display omni-math-display';
+          span.className = 'verti-math-display';
           span.style.margin = '1rem 0';
           span.style.textAlign = 'center';
         } else {
-          span.className = 'verti-math-inline cortex-math-inline omni-math-inline';
+          span.className = 'verti-math-inline';
         }
 
         try {

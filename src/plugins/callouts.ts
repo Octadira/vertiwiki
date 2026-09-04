@@ -33,13 +33,13 @@ export const calloutsPlugin: VertiWikiPlugin = {
         firstParagraph.innerHTML = remainingText;
 
         const callout = document.createElement('div');
-        callout.className = `verti-callout cortex-callout omni-callout ${config.class}`;
+        callout.className = `verti-callout ${config.class}`;
         callout.innerHTML = `
-          <div class="verti-callout-title cortex-callout-title omni-callout-title">
-            <span class="verti-callout-icon cortex-callout-icon omni-callout-icon">${config.icon}</span>
+          <div class="verti-callout-title">
+            <span class="verti-callout-icon">${config.icon}</span>
             <span>${config.title}</span>
           </div>
-          <div class="verti-callout-body cortex-callout-body omni-callout-body">${bq.innerHTML}</div>
+          <div class="verti-callout-body">${bq.innerHTML}</div>
         `;
         bq.replaceWith(callout);
       } else if (legacyMatch) {
@@ -52,13 +52,13 @@ export const calloutsPlugin: VertiWikiPlugin = {
         firstParagraph.innerHTML = legacyMatch[2];
 
         const callout = document.createElement('div');
-        callout.className = `verti-callout cortex-callout omni-callout ${config.class}`;
+        callout.className = `verti-callout ${config.class}`;
         callout.innerHTML = `
-          <div class="verti-callout-title cortex-callout-title omni-callout-title">
-            <span class="verti-callout-icon cortex-callout-icon omni-callout-icon">${config.icon}</span>
+          <div class="verti-callout-title">
+            <span class="verti-callout-icon">${config.icon}</span>
             <span>${config.title}</span>
           </div>
-          <div class="verti-callout-body cortex-callout-body omni-callout-body">${bq.innerHTML}</div>
+          <div class="verti-callout-body">${bq.innerHTML}</div>
         `;
         bq.replaceWith(callout);
       }

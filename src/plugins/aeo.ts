@@ -91,11 +91,7 @@ export class AEOEngine {
   }
 
   private updateJsonLd(filePath: string, parsed: ParsedMarkdown, description: string, url: string): void {
-    let scriptEl = (
-      document.getElementById('verti-aeo-jsonld') ||
-      document.getElementById('cortex-aeo-jsonld') ||
-      document.getElementById('omni-aeo-jsonld')
-    ) as HTMLScriptElement;
+    let scriptEl = document.getElementById('verti-aeo-jsonld') as HTMLScriptElement;
     if (!scriptEl) {
       scriptEl = document.createElement('script');
       scriptEl.id = 'verti-aeo-jsonld';

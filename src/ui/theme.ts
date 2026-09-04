@@ -33,18 +33,10 @@ export class ThemeManager {
       }
     };
 
-    const savedMode = (
-      getStorage('vertiwiki_theme') ||
-      getStorage('cortexwiki_theme') ||
-      getStorage('omniwiki_theme')
-    ) as ThemeMode;
+    const savedMode = getStorage('vertiwiki_theme') as ThemeMode;
 
     const savedPreset = enableThemeChooser
-      ? (
-          getStorage('vertiwiki_preset') ||
-          getStorage('cortexwiki_preset') ||
-          getStorage('omniwiki_preset')
-        )
+      ? getStorage('vertiwiki_preset')
       : null;
 
     this.currentMode = savedMode || defaultMode || 'auto';

@@ -11,6 +11,7 @@ import { TableOfContents } from './ui/toc';
 import { SearchEngine } from './plugins/search';
 import { SearchModal } from './ui/search-modal';
 import { NavigationItem, LocaleConfig } from './core/types';
+import { escapeHtml } from './core/escape';
 
 // Plugins
 import { calloutsPlugin } from './plugins/callouts';
@@ -99,7 +100,7 @@ ${currentRawMarkdown}`;
 
   // Setup Theme Palette Dropdown Chooser
   if (config.enableThemeChooser !== false) {
-    const headerRight = document.querySelector<HTMLElement>('.verti-header-right, .cortex-header-right, .omni-header-right');
+    const headerRight = document.querySelector<HTMLElement>('.verti-header-right');
     if (headerRight) {
       new ThemeChooserDropdown(headerRight, themeManager);
     }
@@ -108,14 +109,14 @@ ${currentRawMarkdown}`;
   // Setup Language Chooser Dropdown
   let langDropdown: LanguageChooserDropdown | null = null;
   if (config.enableLanguageChooser !== false && config.locales && config.locales.length > 1) {
-    const headerRight = document.querySelector<HTMLElement>('.verti-header-right, .cortex-header-right, .omni-header-right');
+    const headerRight = document.querySelector<HTMLElement>('.verti-header-right');
     if (headerRight) {
       langDropdown = new LanguageChooserDropdown(headerRight, router, config.locales);
     }
   }
 
   // Setup Theme Toggle Button (Light/Dark mode)
-  const themeToggleBtn = document.querySelector('.verti-theme-toggle, .cortex-theme-toggle, .omni-theme-toggle');
+  const themeToggleBtn = document.querySelector('.verti-theme-toggle');
   themeToggleBtn?.addEventListener('click', () => {
     themeManager.toggleMode();
   });
@@ -133,7 +134,7 @@ ${currentRawMarkdown}`;
       }
     );
 
-    const searchBtns = document.querySelectorAll('.verti-search-btn, .cortex-search-btn, .omni-search-btn, .verti-mobile-search-btn, .cortex-mobile-search-btn, .omni-mobile-search-btn');
+    const searchBtns = document.querySelectorAll('.verti-search-btn, .verti-mobile-search-btn');
     searchBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         searchModal?.open();
@@ -213,6 +214,21 @@ ${currentRawMarkdown}`;
     }
   }
 
+  async function fetchMarkdownResource(targetPath: string): Promise<{ text: string; path: string } | null> {
+    try {
+      const response = await fetch(targetPath);
+      if (!response.ok) return null;
+      const text = await response.text();
+      const isHtml = text.trim().toLowerCase().startsWith('<!doctype') ||
+                     text.trim().toLowerCase().startsWith('<html') ||
+                     text.trim().toLowerCase().startsWith('<!html');
+      if (isHtml) return null;
+      return { text, path: targetPath };
+    } catch {
+      return null;
+    }
+  }
+
   // Main Page Loader
   async function loadPage(route: RouteInfo): Promise<void> {
     let filePath = route.filePath;
@@ -228,60 +244,24 @@ ${currentRawMarkdown}`;
     }
 
     try {
-      let response = await fetch(filePath);
-      let rawMarkdown = await response.text();
-      let isHtmlResponse = rawMarkdown.trim().toLowerCase().startsWith('<!doctype') || 
-                             rawMarkdown.trim().toLowerCase().startsWith('<html') ||
-                             rawMarkdown.trim().toLowerCase().startsWith('<!html');
+      let fetched = await fetchMarkdownResource(filePath);
 
       // Smart directory index and sibling markdown fallback resolution
-      if (!response.ok || isHtmlResponse) {
+      if (!fetched) {
         if (filePath.endsWith('/index.md')) {
-          // If dir/index.md failed, attempt fallback to dir.md
-          const siblingMd = filePath.replace(/\/index\.md$/, '.md');
-          try {
-            const siblingRes = await fetch(siblingMd);
-            if (siblingRes.ok) {
-              const siblingText = await siblingRes.text();
-              const siblingIsHtml = siblingText.trim().toLowerCase().startsWith('<!doctype') ||
-                                    siblingText.trim().toLowerCase().startsWith('<html');
-              if (!siblingIsHtml) {
-                response = siblingRes;
-                rawMarkdown = siblingText;
-                isHtmlResponse = false;
-                filePath = siblingMd;
-                route.filePath = siblingMd;
-              }
-            }
-          } catch {
-            // Ignore fallback error
-          }
-        } else if (filePath.endsWith('.md') && !filePath.endsWith('/index.md')) {
-          // If dir.md failed, attempt fallback to dir/index.md
-          const dirIndexMd = filePath.replace(/\.md$/, '/index.md');
-          try {
-            const dirRes = await fetch(dirIndexMd);
-            if (dirRes.ok) {
-              const dirText = await dirRes.text();
-              const dirIsHtml = dirText.trim().toLowerCase().startsWith('<!doctype') ||
-                                dirText.trim().toLowerCase().startsWith('<html');
-              if (!dirIsHtml) {
-                response = dirRes;
-                rawMarkdown = dirText;
-                isHtmlResponse = false;
-                filePath = dirIndexMd;
-                route.filePath = dirIndexMd;
-              }
-            }
-          } catch {
-            // Ignore fallback error
-          }
+          fetched = await fetchMarkdownResource(filePath.replace(/\/index\.md$/, '.md'));
+        } else if (filePath.endsWith('.md')) {
+          fetched = await fetchMarkdownResource(filePath.replace(/\.md$/, '/index.md'));
         }
       }
 
-      if (!response.ok || ((filePath.endsWith('.md') || filePath.endsWith('.markdown')) && isHtmlResponse)) {
-        throw new Error(`HTTP ${response.status}: Failed to load ${filePath}`);
+      if (!fetched) {
+        throw new Error(`Failed to load ${filePath}`);
       }
+
+      filePath = fetched.path;
+      route.filePath = fetched.path;
+      let rawMarkdown = fetched.text;
 
       layout.updateActiveNavLink(filePath);
 
@@ -391,12 +371,19 @@ ${currentRawMarkdown}`;
       layout.contentArticle.innerHTML = `
         <div class="verti-callout caution" style="margin-top: 2rem;">
           <div class="verti-callout-title">Page Not Found (404)</div>
-          <p>Could not locate the requested markdown file: <code>${filePath}</code>.</p>
+          <p>Could not locate the requested markdown file: <code>${escapeHtml(filePath)}</code>.</p>
           <p><a href="#/${config.homePage}">Return to Home &rarr;</a></p>
         </div>
       `;
       layout.updateBreadcrumbs(filePath, '404 Not Found');
       document.title = `404 Not Found — ${config.title}`;
+      aeoEngine.updatePageMetadata(filePath, {
+        title: '404 Not Found',
+        description: 'The requested page could not be found.',
+        html: '',
+        frontmatter: {},
+        rawBody: ''
+      });
     }
   }
 

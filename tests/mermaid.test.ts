@@ -73,7 +73,7 @@ describe('Mermaid Plugin Integration', () => {
     expect(mermaid.initialize).toHaveBeenCalledWith(expect.objectContaining({
       startOnLoad: false,
       theme: 'dark',
-      securityLevel: 'loose'
+      securityLevel: 'strict'
     }));
     expect(mermaid.render).toHaveBeenCalled();
     expect(mockCode.parentElement.replaceWith).toHaveBeenCalled();

@@ -25,7 +25,7 @@ export function cleanTitle(raw: string): string {
   if (!raw) return '';
   return raw
     // Remove rendered badge spans
-    .replace(/<span[^>]*class="[^"]*(?:verti|cortex|omni)-badge[^"]*"[^>]*>[\s\S]*?<\/span>/gi, '')
+    .replace(/<span[^>]*class="[^"]*verti-badge[^"]*"[^>]*>[\s\S]*?<\/span>/gi, '')
     // Remove markdown badge syntax if not yet transformed
     .replace(/:badge\[[^\]]+\](?:\{type=[^}]+\})?/gi, '')
     // Remove any remaining HTML tags
@@ -151,10 +151,22 @@ export class MarkdownParser {
       }
       usedSlugs.add(slug);
 
-      return `\n<h${depth} id="${slug}" class="verti-heading cortex-heading omni-heading">${text}</h${depth}>\n`;
+      return `\n<h${depth} id="${slug}" class="verti-heading">${text}</h${depth}>\n`;
     };
 
     const dirtyHtml = marked.parse(body, { renderer }) as string;
+
+    if (typeof DOMPurify?.addHook === 'function') {
+      DOMPurify.removeHook('uponSanitizeElement');
+      DOMPurify.addHook('uponSanitizeElement', (node, data) => {
+        if (data.tagName === 'iframe') {
+          const src = node.getAttribute('src') || '';
+          if (!src || (!src.startsWith('https://') && !src.startsWith('http://') && !src.startsWith('/'))) {
+            node.remove();
+          }
+        }
+      });
+    }
 
     const purifyConfig = {
       ADD_TAGS: [

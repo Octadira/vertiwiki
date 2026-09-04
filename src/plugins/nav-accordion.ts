@@ -12,19 +12,15 @@ export const navAccordionPlugin: VertiWikiPlugin = {
       const cleanPath = context.filePath.replace(/\/index\.md$/, '');
       const activeLink = document.querySelector<HTMLAnchorElement>(
         `.verti-nav-link[href="#/${context.filePath}"], .verti-nav-link[href="#!${context.filePath}"], ` +
-        `.verti-nav-link[href="#/${cleanPath}"], .verti-nav-link[href="#/${cleanPath}/"], ` +
-        `.cortex-nav-link[href="#/${context.filePath}"], .cortex-nav-link[href="#!${context.filePath}"], ` +
-        `.omni-nav-link[href="#/${context.filePath}"], .omni-nav-link[href="#!${context.filePath}"]`
+        `.verti-nav-link[href="#/${cleanPath}"], .verti-nav-link[href="#/${cleanPath}/"]`
       );
       if (activeLink) {
-        let parent = activeLink.closest('.verti-nav-accordion, .cortex-nav-accordion, .omni-nav-accordion');
+        let parent = activeLink.closest('.verti-nav-accordion');
         while (parent) {
           parent.classList.add('expanded');
-          const toggleBtn = parent.querySelector<HTMLButtonElement>(
-            '.verti-nav-accordion-toggle, .cortex-nav-accordion-toggle, .omni-nav-accordion-toggle'
-          );
+          const toggleBtn = parent.querySelector<HTMLButtonElement>('.verti-nav-accordion-toggle');
           toggleBtn?.setAttribute('aria-expanded', 'true');
-          parent = parent.parentElement?.closest('.verti-nav-accordion, .cortex-nav-accordion, .omni-nav-accordion') || null;
+          parent = parent.parentElement?.closest('.verti-nav-accordion') || null;
         }
       }
     }
