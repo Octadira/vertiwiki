@@ -1,5 +1,6 @@
 # Cloudflare Pages Redirects for VertiWiki
-# Place this file in the root of your published output directory.
-
-# Universal SPA fallback for clean URLs
-/* /index.html 200
+#
+# VertiWiki is 100% static and uses hash-based client routing (#/page.md).
+# Do NOT add a blind catch-all redirect (/* /index.html 200) here, as doing so
+# turns non-existent URLs into Soft 404s (status 200) and harms AEO / SEO health.
+# For AI Agent Content Negotiation, use worker-snippet.js instead.

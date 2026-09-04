@@ -88,10 +88,6 @@
         }
       ],
       "destination": "/:path.md"
-    },
-    {
-      "source": "/:path((?!assets\\/|themes\\/|.*\\.[a-zA-Z0-9]+$).*)",
-      "destination": "/index.html"
     }
   ]
 }

@@ -35,26 +35,10 @@ function handler(event) {
         }
     }
 
-    // 2. Default directory index
+    // 2. Default root index
     if (uri === '' || uri === '/') {
         request.uri = '/index.html';
         return request;
-    }
-    if (uri.endsWith('/')) {
-        request.uri = uri + 'index.html';
-        return request;
-    }
-
-    // 3. Normalize extensionless directory paths to enforce trailing slash (e.g. /docs -> /docs/)
-    // This prevents browser relative path resolution issues (such as /docs#/ instead of /docs/#/)
-    if (uri.indexOf('.') === -1 && !uri.endsWith('/') && uri.indexOf('/assets/') === -1 && uri.indexOf('/themes/') === -1) {
-        return {
-            statusCode: 308,
-            statusDescription: 'Permanent Redirect',
-            headers: {
-                'location': { value: uri + '/' }
-            }
-        };
     }
 
     return request;
