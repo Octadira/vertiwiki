@@ -7,7 +7,13 @@ AddType text/plain .txt
 AddType application/json .json
 AddDefaultCharset UTF-8
 
-# 2. Permissive CORS for AI Scrapers and Headless Agents
+# 2. Directory Slash Handling
+# Ensures directories without trailing slash redirect to with slash (e.g. /docs -> /docs/)
+<IfModule mod_dir.c>
+    DirectorySlash On
+</IfModule>
+
+# 3. Permissive CORS for AI Scrapers and Headless Agents
 <IfModule mod_headers.c>
     <FilesMatch "\.(md|txt|json)$">
         Header set Access-Control-Allow-Origin "*"
@@ -15,7 +21,7 @@ AddDefaultCharset UTF-8
     </FilesMatch>
 </IfModule>
 
-# 3. Rewrite Engine & AI Content Negotiation
+# 4. Rewrite Engine & AI Content Negotiation
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteBase /
@@ -23,6 +29,12 @@ AddDefaultCharset UTF-8
     # Content Negotiation: If client sends Accept: text/markdown on root
     RewriteCond %{HTTP:Accept} text/markdown [NC]
     RewriteRule ^/?$ index.md [L]
+
+    # Content Negotiation: If client sends Accept: text/markdown on directory
+    RewriteCond %{HTTP:Accept} text/markdown [NC]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteCond %{REQUEST_FILENAME}/index.md -f
+    RewriteRule ^(.*)/?$ $1/index.md [L]
 
     # Content Negotiation: If client sends Accept: text/markdown on clean URL
     RewriteCond %{HTTP:Accept} text/markdown [NC]

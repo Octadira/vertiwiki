@@ -7,7 +7,8 @@
  * Capabilities:
  * 1. AI Content Negotiation: If 'Accept: text/markdown' header is present,
  *    rewrites documentation paths to the corresponding raw '.md' file in the S3 bucket.
- * 2. Directory Indexing: Rewrites '/docs' or '/docs/' to '/docs/index.html'.
+ * 2. Directory Normalization & Indexing: Normalizes '/docs' to '/docs/' via 308 redirect,
+ *    and rewrites trailing slash directory requests to 'index.html'.
  * 3. Clean URLs: Rewrites extensionless URLs to their markdown equivalent if requested by agents.
  */
 function handler(event) {
@@ -42,6 +43,18 @@ function handler(event) {
     if (uri.endsWith('/')) {
         request.uri = uri + 'index.html';
         return request;
+    }
+
+    // 3. Normalize extensionless directory paths to enforce trailing slash (e.g. /docs -> /docs/)
+    // This prevents browser relative path resolution issues (such as /docs#/ instead of /docs/#/)
+    if (uri.indexOf('.') === -1 && !uri.endsWith('/') && uri.indexOf('/assets/') === -1 && uri.indexOf('/themes/') === -1) {
+        return {
+            statusCode: 308,
+            statusDescription: 'Permanent Redirect',
+            headers: {
+                'location': { value: uri + '/' }
+            }
+        };
     }
 
     return request;

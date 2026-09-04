@@ -1,6 +1,23 @@
 # Changelog
 
-## VertiWiki 0.6.2 (September 2026) :badge[Latest]{type=success}
+## VertiWiki 0.6.3 (September 2026) :badge[Latest]{type=success}
+
+### 🐞 Directory Trailing Slash Normalization & Hash Route Integrity
+- **Vercel Trailing Slash Fix**: Enforced `"trailingSlash": true` in `deploy/vercel/vercel.json`, preventing Vercel Edge 308 redirects from stripping directory trailing slashes and corrupting browser address bars from `https://www.verti.wiki/docs/#/` into `/docs#/`.
+- **Directory Markdown AI Content Negotiation**: Added directory rewrite support (`/:path*/` $\rightarrow$ `/:path*/index.md`) across Vercel, Netlify, Apache, and AWS CloudFront when `Accept: text/markdown` is requested.
+- **Universal Multi-Host Hardening (`deploy/`)**:
+  - **Netlify**: Explicitly enabled `[build.processing.html] pretty_urls = true` to guarantee directory trailing slash normalization.
+  - **Apache**: Added explicit `DirectorySlash On` and directory index detection (`REQUEST_FILENAME -d`) to `.htaccess`.
+  - **AWS CloudFront**: CloudFront Function now issues an explicit 308 redirect for extensionless directory-like paths before requesting S3 keys.
+  - **Cloudflare Worker**: Added 308 redirect normalization for extensionless directory paths before passing through to origin.
+- **Client-Side Defensive Router & AEO Normalization**:
+  - Added `normalizeDirectoryUrl` in `src/core/router.ts` with dedicated unit test coverage.
+  - At engine bootstrap in `src/main.ts`, if the application is opened on a directory path without a trailing slash (e.g. `/docs#/`), the URL is normalized via `history.replaceState` without a full page reload, ensuring correct RFC-compliant relative fetch resolution (`config.json`, `index.md`).
+  - Guaranteed trailing slash preservation in dynamic Schema.org JSON-LD BreadcrumbList generation in `src/plugins/aeo.ts`.
+
+---
+
+## VertiWiki 0.6.2 (September 2026)
 
 ### 🌐 Universal Portability & Path-Agnostic Architecture
 - **Path-Agnostic Core Directives**: Replaced fixed path references in `index.html` with relative URLs (`llms.txt`, `index.md`), ensuring the standalone single-file engine (`dist/vertiwiki.html`) resolves correctly anywhere it is deployed (domain root `/`, subfolders `/docs/`, `/wiki/`, GitHub Pages, or offline `file:///`).

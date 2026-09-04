@@ -1,7 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": false,
-  "trailingSlash": false,
+  "trailingSlash": true,
   "headers": [
     {
       "source": "/(.*\\.md)",
@@ -66,6 +66,17 @@
         }
       ],
       "destination": "/index.md"
+    },
+    {
+      "source": "/:path*/",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": ".*text\\/markdown.*"
+        }
+      ],
+      "destination": "/:path*/index.md"
     },
     {
       "source": "/:path((?!assets\\/|themes\\/|.*\\.[a-zA-Z0-9]+$).*)",

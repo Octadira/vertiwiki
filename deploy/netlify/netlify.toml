@@ -4,6 +4,9 @@
 [build]
   publish = "."
 
+[build.processing.html]
+  pretty_urls = true
+
 # Serve Markdown files with correct MIME type and permissive CORS
 [[headers]]
   for = "/*.md"
@@ -30,6 +33,13 @@
 [[redirects]]
   from = "/"
   to = "/index.md"
+  status = 200
+  conditions = {Headers = {Accept = "text/markdown"}}
+
+# Content Negotiation for Accept: text/markdown on directories with trailing slash
+[[redirects]]
+  from = "/*/"
+  to = "/:splat/index.md"
   status = 200
   conditions = {Headers = {Accept = "text/markdown"}}
 

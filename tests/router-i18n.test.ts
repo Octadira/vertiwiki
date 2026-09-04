@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { normalizePath, resolvePath, Router } from '../src/core/router';
+import { normalizePath, resolvePath, Router, normalizeDirectoryUrl } from '../src/core/router';
 import { LocaleConfig } from '../src/core/types';
 
 describe('Router & Path Normalization', () => {
@@ -76,5 +76,25 @@ describe('Router Multi-Language (i18n) Logic', () => {
 
     // Path with .md extension preserves exact filename
     expect(router.parseHash('#/features.md').filePath).toBe('features.md');
+  });
+});
+
+describe('normalizeDirectoryUrl Helper', () => {
+  it('ensures trailing slash before hash on directory routes', () => {
+    expect(normalizeDirectoryUrl('/docs', '', '#/')).toBe('/docs/#/');
+    expect(normalizeDirectoryUrl('/docs', '', '#/features.md')).toBe('/docs/#/features.md');
+    expect(normalizeDirectoryUrl('/subfolder', '?v=1', '#/')).toBe('/subfolder/?v=1#/');
+  });
+
+  it('leaves paths with existing trailing slash unchanged', () => {
+    expect(normalizeDirectoryUrl('/docs/', '', '#/')).toBe('/docs/#/');
+    expect(normalizeDirectoryUrl('/', '', '#/')).toBe('/#/');
+    expect(normalizeDirectoryUrl('', '', '#/')).toBe('#/');
+  });
+
+  it('leaves paths with file extensions unchanged', () => {
+    expect(normalizeDirectoryUrl('/index.html', '', '#/')).toBe('/index.html#/');
+    expect(normalizeDirectoryUrl('/vertiwiki.html', '', '#/guide.md')).toBe('/vertiwiki.html#/guide.md');
+    expect(normalizeDirectoryUrl('/docs/index.html', '', '#/')).toBe('/docs/index.html#/');
   });
 });

@@ -104,13 +104,18 @@ export class AEOEngine {
     }
 
     // Build BreadcrumbList elements
+    const rawPath = window.location.pathname || '/';
+    const basePath = (rawPath === '/' || rawPath.endsWith('/') || rawPath.match(/\.[a-zA-Z0-9]+$/))
+      ? rawPath
+      : `${rawPath}/`;
+
     const pathParts = filePath.split('/');
     const breadcrumbItems = [
       {
         '@type': 'ListItem',
         position: 1,
         name: 'Home',
-        item: window.location.origin + window.location.pathname + `#/${this.config.homePage}`
+        item: window.location.origin + basePath + `#/${this.config.homePage}`
       }
     ];
 
@@ -122,7 +127,7 @@ export class AEOEngine {
         '@type': 'ListItem',
         position: index + 2,
         name: isLast ? (parsed.title || part) : part.replace(/[-_]/g, ' '),
-        item: window.location.origin + window.location.pathname + `#/${accumPath}`
+        item: window.location.origin + basePath + `#/${accumPath}`
       });
     });
 

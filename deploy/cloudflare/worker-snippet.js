@@ -34,6 +34,12 @@ export default {
       }
     }
 
+    // Ensure trailing slash on directory-like requests to prevent browser /docs#/ malformation
+    if (!url.pathname.endsWith('/') && !url.pathname.includes('.') && !url.pathname.startsWith('/assets') && !url.pathname.startsWith('/themes')) {
+      url.pathname = `${url.pathname}/`;
+      return Response.redirect(url.toString(), 308);
+    }
+
     // Default: pass through to origin / static assets
     return fetch(request);
   }

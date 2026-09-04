@@ -28,6 +28,13 @@ export function normalizePath(path: string): string {
   return resolved.join('/');
 }
 
+export function normalizeDirectoryUrl(pathname: string, search: string = '', hash: string = ''): string {
+  if (!pathname || pathname === '/' || pathname.endsWith('/') || pathname.match(/\.[a-zA-Z0-9]+$/)) {
+    return `${pathname}${search}${hash}`;
+  }
+  return `${pathname}/${search}${hash}`;
+}
+
 export function resolvePath(baseFilePath: string, relativePath: string): string {
   // If already absolute or URL, return as is
   if (

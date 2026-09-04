@@ -1,6 +1,6 @@
 import './ui/styles/main.css';
 import { loadConfig } from './core/config';
-import { Router, RouteInfo } from './core/router';
+import { Router, RouteInfo, normalizeDirectoryUrl } from './core/router';
 import { MarkdownParser } from './core/parser';
 import { Pipeline } from './core/pipeline';
 import { Layout } from './ui/layout';
@@ -31,6 +31,15 @@ import { PrevNextNavigation } from './ui/prev-next';
 import { resolveFavicon, applyFavicon } from './core/favicon';
 
 async function bootstrap() {
+  // Normalize URL if opened without trailing slash on a directory path (e.g. /docs#/ -> /docs/#/)
+  if (typeof window !== 'undefined' && window.location && window.location.pathname) {
+    const rawPath = window.location.pathname;
+    const normalized = normalizeDirectoryUrl(rawPath, window.location.search, window.location.hash);
+    if (normalized !== `${rawPath}${window.location.search}${window.location.hash}`) {
+      window.history.replaceState(null, '', `${window.location.origin}${normalized}`);
+    }
+  }
+
   const config = await loadConfig();
 
   const faviconUrl = await resolveFavicon(config);

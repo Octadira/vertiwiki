@@ -31,6 +31,11 @@ This directory provides production-ready hosting configurations for **VertiWiki*
 
 ---
 
-## 💡 Root vs. Subfolder Deployment
+## 💡 Root vs. Subfolder Deployment & Trailing Slashes
 
-All recipes in this directory are configured by default for **root domain deployment** (`/`). If you host VertiWiki inside a subfolder alongside another website (such as `/docs/` or `/wiki/`), prefix the respective rules with your subfolder path (for example, change `/:path*` to `/docs/:path*` and `/index.html` to `/docs/index.html`).
+- **Trailing Slash Guarantee**:
+  When deploying VertiWiki in a directory (such as `/docs/`), web servers and CDNs must preserve or enforce the trailing slash (`/docs/` instead of `/docs`). If a host strips the trailing slash (such as Vercel with `"trailingSlash": false`), incoming requests like `/docs/#/` get 308-redirected to `/docs#/`. This breaks RFC-compliant relative resource resolution (`fetch('config.json')`) and generates malformed URL bars.
+  All recipes in this directory explicitly enforce trailing slashes on directory routes (for example, `"trailingSlash": true` in `vercel.json`, `pretty_urls = true` in `netlify.toml`, `DirectorySlash On` in Apache, and CloudFront/Cloudflare 308 normalization).
+
+- **Subfolder Rewrites**:
+  All recipes in this directory are configured by default for **root domain deployment** (`/`). If you host VertiWiki inside a subfolder alongside another website (such as `/docs/` or `/wiki/`), prefix the respective rules with your subfolder path (for example, change `/:path*` to `/docs/:path*` and `/index.html` to `/docs/index.html`).
