@@ -1,153 +1,196 @@
 ---
-title: XML Sitemaps & SEO Guide
-description: How to generate and deploy sitemap.xml for VertiWiki using online generators and best practices for SPA search engine indexing.
-tags: [sitemap, seo, aeo, googlebot, indexing]
+title: XML Sitemaps, SEO & Bot Indexing Guide
+description: Best practices for search engine indexing (Googlebot, Bingbot), avoiding the GSC Discovered - currently not indexed trap, and deploying XML sitemaps for VertiWiki.
+tags: [sitemap, seo, aeo, googlebot, indexing, search-console]
 ---
 
-# XML Sitemaps & Search Engine Indexing
+# XML Sitemaps, Search Engine Indexing & Bot Crawl Trees
 
-This guide explains how **XML Sitemaps (`sitemap.xml`)** work for VertiWiki, how to generate them using free online tools without building or coding, and how to configure them for maximum visibility in Google, Bing, and AI search engines (ChatGPT, Perplexity, Claude).
+This guide explains how **XML Sitemaps (`sitemap.xml`)** and **Search Engine Crawlers (Googlebot, Bingbot, PerplexityBot)** interact with VertiWiki, how to avoid common indexing pitfalls in Google Search Console, and how to structure your wiki for maximum search and answer engine visibility.
 
 ---
 
 ## 🧭 Visual Sitemap vs. XML Sitemap
 
-In VertiWiki, there are two complementary types of sitemaps:
+In VertiWiki, there are two distinct types of sitemaps designed for different consumers:
 
-| Type | Purpose | Audience | Technology |
+| Type | Target Audience | Technology | Purpose |
 | :--- | :--- | :--- | :--- |
-| **Visual Sitemap** | Interactive directory tree & live search in documentation | Human readers & users | Built-in `::: sitemap` plugin (100% client-side) |
-| **XML Sitemap** | Formal machine-readable URL catalog (`sitemap.xml`) | Search engine bots (Googlebot, Bingbot, Perplexity) | Static `sitemap.xml` file hosted on your web server |
+| **Visual Sitemap** | Human visitors | Client-side `::: sitemap` plugin | Interactive directory cards, counts, and live filtering. |
+| **XML Sitemap** | Search engines & crawlers | Static `sitemap.xml` at domain root | Formal machine-readable URL catalog submitted to Google Search Console / Bing. |
 
 ---
 
-## ⚠️ The SPA / Hash Route (`#/`) Challenge
+## ⚠️ The Hash Fragment (`#`) Search Engine Trap
 
-Because VertiWiki is a **zero-backend, client-side SPA (Single-Page Application)**, routes are represented with URL hashes (e.g. `https://yourdomain.com/vertiwiki.html#/docs/guides/authoring.md`).
+Because VertiWiki operates as a zero-backend client-side single-page application (SPA), in-app navigation utilizes hash routes (e.g. `https://yourdomain.com/docs/#/guides/deployment.md`).
 
-> [!IMPORTANT]
-> Standard / basic HTML scrapers do **not** execute JavaScript and ignore URL fragments (`#`). Therefore, when using online sitemap generators, you must use tools that either:
-> 1. **Support JavaScript rendering** (Headless Browser crawler), OR
-> 2. **Convert a list of URLs directly to XML** (Recommended — takes 10 seconds!).
->
-> **Note on Static `<title>` Fallback**: For distributed standalone templates, `vertiwiki.html` ships with `<title>VertiWiki</title>` while JavaScript dynamically sets page titles from `config.json`. For custom production deployments prioritizing non-JS bot indexing, customize the static `<title>` in `index.html` prior to building.
-
----
-
-## 🛠️ Method 1: Generate `sitemap.xml` from URL List (Fastest & 100% Reliable)
-
-The easiest and most reliable method is using a free **List-to-XML Sitemap Generator**:
-
-### Step 1: Copy your list of URLs
-Based on your `navigation.md` and domain (e.g. `https://docs.mycompany.com/`):
-
-```text
-https://docs.mycompany.com/vertiwiki.html
-https://docs.mycompany.com/vertiwiki.html#/index.md
-https://docs.mycompany.com/vertiwiki.html#/features.md
-https://docs.mycompany.com/vertiwiki.html#/themes.md
-https://docs.mycompany.com/vertiwiki.html#/sitemap.md
-https://docs.mycompany.com/vertiwiki.html#/docs/getting-started/installation.md
-https://docs.mycompany.com/vertiwiki.html#/docs/guides/authoring.md
-https://docs.mycompany.com/vertiwiki.html#/docs/guides/deployment.md
-https://docs.mycompany.com/vertiwiki.html#/docs/guides/sitemap-seo.md
-https://docs.mycompany.com/vertiwiki.html#/docs/architecture/overview.md
-https://docs.mycompany.com/vertiwiki.html#/docs/architecture/theme-engine.md
-https://docs.mycompany.com/vertiwiki.html#/docs/api/plugins.md
-https://docs.mycompany.com/vertiwiki.html#/Changelog.md
-https://docs.mycompany.com/vertiwiki.html#/docs/versioning-and-roadmap.md
-```
-
-### Step 2: Paste into a free Online Converter
-Use any of these free web tools:
-* **[Online XML Sitemap Generator](https://www.xml-sitemaps.com/)** (Text input mode)
-* **[Free Sitemap Generator (Web-Tool)](https://codebeautify.org/xml-sitemap-generator)**
-* **[Convert CSV / Text to XML Sitemap](https://www.convertcsv.com/csv-to-xml.htm)**
-
-### Step 3: Download and save as `sitemap.xml`
+> [!CAUTION]
+> **Never put URL fragments (`#`) in `sitemap.xml`!**
+> 1. Under **RFC 3986**, URL fragments (`#`) are strictly client-side identifiers and are **never sent over HTTP** to the web server.
+> 2. The official **[sitemaps.org protocol](https://www.sitemaps.org/protocol.html)** and **Googlebot specifications** explicitly state that search engine crawlers strip fragment identifiers.
+> 3. If you place `https://yourdomain.com/docs/#/features.md` in `sitemap.xml`, Googlebot strips everything after `#`, converting every entry into `https://yourdomain.com/docs/` and discarding the rest as duplicate URLs.
 
 ---
 
-## 🤖 Method 2: Free Online JavaScript SPA Crawlers
+## 🔍 Understanding "Discovered – currently not indexed" (GSC)
 
-If you want an online crawler to discover your pages automatically:
+A common issue reported in Google Search Console for static and markdown documentation engines is **"Discovered – currently not indexed"** (*Descoperită – nu este indexată*), where the "Last crawl" timestamp remains `1970-01-01` (meaning Googlebot has never actually crawled the page).
 
-1. **[Screaming Frog SEO Spider](https://www.screamingfrog.co.uk/seo-spider/)** (Free up to 500 URLs):
-   * Set *Configuration &rarr; Spider &rarr; Rendering &rarr; JavaScript*.
-   * Enter your VertiWiki URL.
-   * Click *Sitemaps &rarr; XML Sitemap &rarr; Export*.
-2. **[Octopus.do / Slickplan](https://octopus.do/)**: Visual sitemap scraper with SPA support.
+### Why does this happen?
+
+1. **Non-HTML MIME Type (`.md` / `.txt`)**:
+   Googlebot prioritizes web documents served as `text/html`. Raw Markdown (`.md`) and text (`llms.txt`) files receive low crawl budget priority unless strongly reinforced by incoming HTML links.
+2. **Orphan URLs (Zero Inbound HTML Links)**:
+   Googlebot determines crawl priority primarily from inbound links (`<a href="...">`). In a pure client-side SPA with an empty initial HTML container (`<div id="verti-app"></div>`), Googlebot's initial HTTP fetch finds zero static links. URLs listed only in `sitemap.xml` are classified as **orphan URLs** and queued with minimal priority.
+3. **Sitemap Noise & Pollution**:
+   Including error pages (such as `docs/404.md` or localized `404.md`), agent configuration files (`llms.txt`), or duplicate pages (e.g. `README.md` alongside `index.md`) degrades Googlebot's trust score for your sitemap, causing it to defer crawling.
 
 ---
 
-## 📄 Example: Valid `sitemap.xml` for VertiWiki
+## 🌳 The Solution: VertiWiki's Static Bot Crawl Tree
 
-Here is a ready-to-use template you can save directly as `sitemap.xml`:
+To eliminate the "orphan URLs" penalty without requiring a server-side build step or complex backend, VertiWiki includes a **Static Bot Crawl Tree** directly in `index.html`.
+
+### How it works:
+
+1. In the starter `index.html` (and inside `<noscript>` and `.verti-loading-shell`), VertiWiki embeds semantic `<a href="...">` anchor tags pointing directly to all articles:
+
+   ```html
+   <!-- VertiWiki Static Bot Crawl Tree -->
+   <nav class="verti-crawl-tree" aria-label="Documentation Navigation Index">
+     <h3>Getting Started</h3>
+     <ul>
+       <li><a href="index.md">Welcome to VertiWiki</a></li>
+       <li><a href="docs/getting-started/installation.md">Installation Guide</a></li>
+       <li><a href="features.md">Modern Features</a></li>
+     </ul>
+   </nav>
+   ```
+
+2. When Googlebot or Bingbot makes the initial HTTP request to your wiki root (`/docs/`), it immediately discovers real anchor links to all articles.
+3. The pages in `sitemap.xml` are no longer orphan URLs; they have established inbound internal link equity, prompting Googlebot to crawl and index them.
+4. When a human user opens the page with JavaScript enabled, the client-side router and theme engine bootstrap in less than 1 ms, replacing the static loading shell with the interactive VertiWiki application.
+
+---
+
+## 📄 Clean `sitemap.xml` Best Practices
+
+When generating `sitemap.xml` for VertiWiki:
+
+### 1. What to INCLUDE:
+* The wiki root URL (e.g. `https://yourdomain.com/docs/`).
+* Real canonical documentation files (e.g. `https://yourdomain.com/docs/installation.md`).
+* Genuine `<lastmod>` dates matching your file modification times.
+
+### 2. What to EXCLUDE:
+* ❌ **Never include error pages**: Remove `404.md`, `fr/404.md`, `ro/404.md`.
+* ❌ **Never include `llms.txt` in web sitemaps**: Reference `llms.txt` via `robots.txt` and `<link rel="llms-txt">`, not in web SERP sitemaps.
+* ❌ **Never include duplicate aliases**: If you have `index.md`, exclude `README.md`.
+* ❌ **Never use URL hashes (`#`)**: Exclude `#/...` fragments.
+
+### Example: Production-Ready `sitemap.xml`
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Wiki Root Application -->
   <url>
-    <loc>https://yourdomain.com/vertiwiki.html</loc>
-    <lastmod>2026-08-29</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://yourdomain.com/docs/</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
+
+  <!-- Core Articles -->
   <url>
-    <loc>https://yourdomain.com/vertiwiki.html#/features.md</loc>
-    <lastmod>2026-08-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://yourdomain.com/vertiwiki.html#/themes.md</loc>
-    <lastmod>2026-08-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://yourdomain.com/vertiwiki.html#/sitemap.md</loc>
-    <lastmod>2026-08-29</lastmod>
+    <loc>https://yourdomain.com/docs/index.md</loc>
+    <lastmod>2026-09-07</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://yourdomain.com/vertiwiki.html#/docs/getting-started/installation.md</loc>
-    <lastmod>2026-08-29</lastmod>
+    <loc>https://yourdomain.com/docs/features.md</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://yourdomain.com/docs/guides/deployment.md</loc>
+    <lastmod>2026-09-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://yourdomain.com/vertiwiki.html#/docs/architecture/overview.md</loc>
-    <lastmod>2026-08-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
   </url>
 </urlset>
 ```
 
 ---
 
-## 🚀 How to Deploy `sitemap.xml`
+## 🔄 Content Negotiation & Human Reader Redirection
 
-1. **Place `sitemap.xml` at the root of your website** alongside `vertiwiki.html` and `robots.txt`.
-2. **Reference it in `robots.txt`**:
+If search engines index raw `.md` URLs (e.g. `https://yourdomain.com/docs/guides/deployment.md`), a human user clicking a Google result might see raw monospaced text instead of the VertiWiki interface.
+
+VertiWiki's router supports query parameters (`?page=...`, `?p=...`, `?doc=...`) to solve this seamlessly:
+
+### Server-Level Content Negotiation (Nginx Example)
+
+Configure Nginx to inspect the `Accept` header:
+* If a browser requests a `.md` file with `Accept: text/html`, rewrite it to `index.html?page=...` so the VertiWiki UI renders.
+* If an AI agent, crawler, or `curl` requests with `Accept: text/markdown` or `*/*`, serve the raw Markdown file directly.
+
+```nginx
+# Nginx Content Negotiation for VertiWiki
+location ~* ^/docs/(.+\.md)$ {
+    # If the client is a human browser requesting HTML, route into VertiWiki
+    if ($http_accept ~* "text/html") {
+        rewrite ^/docs/(.+\.md)$ /docs/?page=$1 last;
+    }
+    # Otherwise, serve raw Markdown for AI agents and scrapers
+    default_type text/markdown;
+    try_files $uri =404;
+}
+```
+
+### Cloudflare Pages / Workers Example
+
+```javascript
+export default {
+  async fetch(request, env) {
+    const url = new URL(request.url);
+    const accept = request.headers.get('Accept') || '';
+
+    // Route human browser visits on *.md into VertiWiki viewer
+    if (url.pathname.endsWith('.md') && accept.includes('text/html')) {
+      const pagePath = url.pathname.replace(/^\/docs\//, '');
+      return Response.redirect(`${url.origin}/docs/?page=${encodeURIComponent(pagePath)}`, 302);
+    }
+
+    return fetch(request);
+  }
+};
+```
+
+---
+
+## 🤖 AEO & AI Engine Synergy (`llms.txt`)
+
+For AI search engines and answer engines (Perplexity, ChatGPT, Claude):
+
+1. **`robots.txt`**: Ensure all AI crawlers are granted permission:
    ```text
    User-agent: *
    Allow: /
 
+   User-agent: GPTBot
+   Allow: /
+
+   User-agent: ClaudeBot
+   Allow: /
+
+   User-agent: PerplexityBot
+   Allow: /
+
    Sitemap: https://yourdomain.com/sitemap.xml
    ```
-3. **Submit to Search Consoles**:
-   * **Google Search Console**: Go to *Sitemaps* &rarr; Add `sitemap.xml` &rarr; Submit.
-   * **Bing Webmaster Tools**: Go to *Sitemaps* &rarr; Submit sitemap URL.
-
----
-
-## ⚡ AEO (Answer Engine Optimization) Synergy
-
-When `sitemap.xml` is deployed alongside VertiWiki's built-in AEO features:
-
-1. **`robots.txt` + `sitemap.xml`**: Directs AI crawlers (GPTBot, ClaudeBot, PerplexityBot) to all available pages.
-2. **`llms.txt`**: Provides an LLM-tailored overview adhering to the `llmstxt.org` standard.
-3. **Dynamic Schema.org JSON-LD**: Automatically generated by VertiWiki's `aeo.ts` plugin for each article (`TechArticle`, `BreadcrumbList`, `WebSite`).
+2. **`llms.txt`**: Place an `llms.txt` file at your domain root adhering to the `llmstxt.org` specification.
+3. **JSON-LD Schema.org**: VertiWiki automatically injects `TechArticle` and `BreadcrumbList` microdata into the document `<head>` on every route transition.

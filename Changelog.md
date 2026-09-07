@@ -1,6 +1,20 @@
 # Changelog
 
-## VertiWiki 0.7.0 (September 2026) :badge[Latest]{type=success}
+## VertiWiki 0.8.0 (September 2026) :badge[Latest]{type=success}
+
+### 🌳 Static Bot Crawl Tree & Search Engine Indexing Architecture
+- **Static Bot Crawl Tree Engine (`src/core/crawl-tree.ts`)**: Built-in semantic HTML tree generator (`<nav class="verti-crawl-tree">`) producing valid `<a href="...">` anchor links. Directly resolves Google Search Console's "Discovered - currently not indexed" (*Descoperită – nu este indexată*) issue by removing the "orphan URLs" penalty on zero-backend Markdown SPAs.
+- **Query Parameter Routing (`?page=`, `?p=`, `?doc=`)**: Added automatic search query param parsing in `Router.init()`, enabling seamless server-side Content Negotiation and web server rewrites (Nginx, Cloudflare) that redirect direct `.md` hits into the interactive VertiWiki application.
+- **HTML Starter Shell Enhancement**: Replaced minimal loading placeholder links in `index.html` with a complete, structured Static Bot Crawl Tree covering all articles for instantaneous bot discovery prior to JavaScript execution.
+- **XML Sitemaps & SEO Guide Overhaul (`demo/docs/guides/sitemap-seo.md`)**:
+  - Removed invalid hash-in-sitemap examples per RFC 3986 and Googlebot standards.
+  - Documented strict sitemap hygiene (excluding error pages `404.md`, `llms.txt`, and duplicate `README.md` aliases).
+  - Added production-ready Nginx and Cloudflare Workers recipes for human browser Content Negotiation.
+- **Test Suite Expansion**: Added `tests/crawl-tree.test.ts` bringing automated test coverage to 18 test suites and 96 unit tests.
+
+---
+
+## VertiWiki 0.7.0 (September 2026)
 
 ### 🛡️ Core Security Hardening & Zero-XSS Guarantee
 - **DOM-Based XSS Remediation**: Secured the 404 route error handler, breadcrumbs navigation generator, search result modal snippets, and visual sitemap plugin using a centralized `escapeHtml` utility.

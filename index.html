@@ -22,30 +22,66 @@
         <h1 style="margin-top: 0; color: #0f172a;">VertiWiki</h1>
         <p><strong>VertiWiki</strong> is a 100% static, single-file, zero-backend Markdown wiki and documentation engine for 2026 and beyond.</p>
         <p>⚠️ <em>JavaScript is required to run the interactive client-side wiki app.</em></p>
-        <h2 style="color: #334155; margin-top: 1.5rem;">Documentation & Raw Markdown Files</h2>
-        <ul>
-          <li><a href="llms.txt" style="color: #0284c7; font-weight: 600;">llms.txt (AI & LLM Structured Index)</a></li>
-          <li><a href="index.md" style="color: #0284c7;">index.md (Welcome & Overview)</a></li>
-          <li><a href="features.md" style="color: #0284c7;">features.md (Modern Interactive Features)</a></li>
-          <li><a href="themes.md" style="color: #0284c7;">themes.md (Theme System & Custom Palettes)</a></li>
-          <li><a href="navigation.md" style="color: #0284c7;">navigation.md (Documentation Navigation Tree)</a></li>
-          <li><a href="sitemap.md" style="color: #0284c7;">sitemap.md (Visual Directory Sitemap)</a></li>
-        </ul>
+        <h2 style="color: #334155; margin-top: 1.5rem;">Documentation & Crawlable Articles</h2>
+        <nav class="verti-crawl-tree" aria-label="Documentation Navigation Index">
+          <h3 style="color: #475569; font-size: 1rem; margin-top: 1rem;">Getting Started</h3>
+          <ul>
+            <li><a href="index.md" style="color: #0284c7;">Welcome to VertiWiki</a></li>
+            <li><a href="docs/getting-started/installation.md" style="color: #0284c7;">Installation Guide</a></li>
+            <li><a href="features.md" style="color: #0284c7;">Modern Features (2026+)</a></li>
+            <li><a href="themes.md" style="color: #0284c7;">Theme System & Templates</a></li>
+            <li><a href="sitemap.md" style="color: #0284c7;">Visual Sitemap</a></li>
+          </ul>
+          <h3 style="color: #475569; font-size: 1rem; margin-top: 1rem;">Guides & Authoring</h3>
+          <ul>
+            <li><a href="docs/guides/authoring.md" style="color: #0284c7;">Authoring Guide</a></li>
+            <li><a href="docs/guides/multi-language.md" style="color: #0284c7;">Multi-Language (i18n) Setup</a></li>
+            <li><a href="docs/guides/wikilinks.md" style="color: #0284c7;">Wikilinks & Cross-Referencing</a></li>
+            <li><a href="docs/guides/deployment.md" style="color: #0284c7;">Deployment Guide</a></li>
+            <li><a href="docs/guides/sitemap-seo.md" style="color: #0284c7;">XML Sitemaps & SEO Guide</a></li>
+            <li><a href="docs/advanced/configuration.md" style="color: #0284c7;">Advanced Configuration</a></li>
+            <li><a href="math_diagrams.md" style="color: #0284c7;">Math & Mermaid Diagrams</a></li>
+          </ul>
+          <h3 style="color: #475569; font-size: 1rem; margin-top: 1rem;">Technical Architecture</h3>
+          <ul>
+            <li><a href="docs/architecture/overview.md" style="color: #0284c7;">Core Architecture Overview</a></li>
+            <li><a href="docs/architecture/theme-engine.md" style="color: #0284c7;">Theme Engine & Tokens</a></li>
+            <li><a href="docs/api/plugins.md" style="color: #0284c7;">Plugin Development API</a></li>
+          </ul>
+          <h3 style="color: #475569; font-size: 1rem; margin-top: 1rem;">Project & Reference</h3>
+          <ul>
+            <li><a href="navigation.md" style="color: #0284c7;">Full Navigation Hierarchy</a></li>
+            <li><a href="docs/versioning-and-roadmap.md" style="color: #0284c7;">Versioning Policy & Roadmap</a></li>
+            <li><a href="llms.txt" style="color: #0284c7; font-weight: 600;">llms.txt (AI & LLM Discovery Index)</a></li>
+          </ul>
+        </nav>
       </div>
     </noscript>
     <div class="verti-loading-shell" data-markdown-ignore style="font-family: system-ui, -apple-system, sans-serif; max-width: 800px; margin: 2rem auto; padding: 2rem; border-radius: 12px; background: #f9f9fb; border: 1px solid #e2e8f0; line-height: 1.6; color: #1e293b;">
       <h1 style="margin-top: 0; color: #0f172a;">VertiWiki</h1>
       <p><strong>VertiWiki</strong> is an ultra-fast, zero-backend, single-file Markdown wiki and documentation engine for 2026 and beyond.</p>
       <p>🤖 <strong>For AI Agents, Crawlers & Web Scrapers:</strong> This web application dynamically fetches and renders Markdown files on the client. For direct content extraction and LLM reading, please fetch raw Markdown files directly or access <a href="llms.txt" style="color: #0284c7; font-weight: 600;">llms.txt</a>.</p>
-      <h2 style="color: #334155; margin-top: 1.5rem;">Direct Content Links:</h2>
-      <ul>
-        <li><a href="llms.txt" style="color: #0284c7; font-weight: 600;">llms.txt (AI & LLM Discovery Index)</a></li>
-        <li><a href="index.md" style="color: #0284c7;">index.md (Welcome & Core Documentation)</a></li>
-        <li><a href="features.md" style="color: #0284c7;">features.md (Interactive Markdown Components)</a></li>
-        <li><a href="themes.md" style="color: #0284c7;">themes.md (Theme Engine & Token System)</a></li>
-        <li><a href="navigation.md" style="color: #0284c7;">navigation.md (Full Navigation Hierarchy)</a></li>
-        <li><a href="sitemap.md" style="color: #0284c7;">sitemap.md (Visual Tree Sitemap)</a></li>
-      </ul>
+      <nav class="verti-crawl-tree" aria-label="Documentation Crawl Index">
+        <h2 style="color: #334155; margin-top: 1.5rem; font-size: 1.2rem;">Direct Content & Crawlable Articles:</h2>
+        <ul>
+          <li><a href="index.md" style="color: #0284c7;">index.md (Welcome & Core Documentation)</a></li>
+          <li><a href="docs/getting-started/installation.md" style="color: #0284c7;">docs/getting-started/installation.md (Installation Guide)</a></li>
+          <li><a href="features.md" style="color: #0284c7;">features.md (Interactive Markdown Components)</a></li>
+          <li><a href="themes.md" style="color: #0284c7;">themes.md (Theme Engine & Token System)</a></li>
+          <li><a href="docs/guides/authoring.md" style="color: #0284c7;">docs/guides/authoring.md (Authoring Guide)</a></li>
+          <li><a href="docs/guides/multi-language.md" style="color: #0284c7;">docs/guides/multi-language.md (Multi-Language Setup)</a></li>
+          <li><a href="docs/guides/wikilinks.md" style="color: #0284c7;">docs/guides/wikilinks.md (Wikilinks Cross-Referencing)</a></li>
+          <li><a href="docs/guides/deployment.md" style="color: #0284c7;">docs/guides/deployment.md (Deployment Guide)</a></li>
+          <li><a href="docs/guides/sitemap-seo.md" style="color: #0284c7;">docs/guides/sitemap-seo.md (XML Sitemaps & SEO Guide)</a></li>
+          <li><a href="docs/advanced/configuration.md" style="color: #0284c7;">docs/advanced/configuration.md (Advanced Configuration)</a></li>
+          <li><a href="docs/architecture/overview.md" style="color: #0284c7;">docs/architecture/overview.md (Core Architecture)</a></li>
+          <li><a href="docs/architecture/theme-engine.md" style="color: #0284c7;">docs/architecture/theme-engine.md (Theme Engine)</a></li>
+          <li><a href="docs/api/plugins.md" style="color: #0284c7;">docs/api/plugins.md (Plugin Development API)</a></li>
+          <li><a href="navigation.md" style="color: #0284c7;">navigation.md (Full Navigation Hierarchy)</a></li>
+          <li><a href="sitemap.md" style="color: #0284c7;">sitemap.md (Visual Tree Sitemap)</a></li>
+          <li><a href="llms.txt" style="color: #0284c7; font-weight: 600;">llms.txt (AI & LLM Discovery Index)</a></li>
+        </ul>
+      </nav>
       <p style="margin-top: 1.5rem; font-size: 0.9rem; color: #64748b;"><em>Loading interactive VertiWiki application...</em></p>
     </div>
   </main>

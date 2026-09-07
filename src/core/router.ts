@@ -147,6 +147,14 @@ export class Router {
 
   public init(): void {
     if (!window.location.hash || window.location.hash === '#' || window.location.hash === '#!' || window.location.hash === '#/') {
+      if (typeof window !== 'undefined' && window.location.search) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const pageParam = urlParams.get('page') || urlParams.get('p') || urlParams.get('doc');
+        if (pageParam) {
+          window.location.hash = `#/${normalizePath(pageParam)}`;
+          return;
+        }
+      }
       window.location.hash = `#/${this.defaultPage}`;
     } else {
       this.handleHashChange();
