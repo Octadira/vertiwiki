@@ -4,7 +4,7 @@ description: Explore the comprehensive suite of 14 built-in plugins and interact
 tags: [features, plugins, tabs, math, mermaid, wikilinks, i18n, search, lightbox, aeo]
 ---
 
-# Modern Features & 14 Built-in Plugins :badge[v0.6.1]{type=primary} :badge[Interactive Demo]{type=success}
+# Modern Features & 14 Built-in Plugins :badge[v0.8.1]{type=primary} :badge[Interactive Demo]{type=success}
 
 VertiWiki includes **14 built-in zero-dependency plugins** that transform pure Markdown into a dynamic, rich documentation application directly in the browser.
 
@@ -68,7 +68,7 @@ Yes. The single standalone `vertiwiki.html` contains all scripts, fonts, stylesh
 
 ## 4. 🏷️ Inline Badges & Pills
 
-* :badge[v0.6.1]{type=primary} Core Release
+* :badge[v0.8.1]{type=primary} Core Release
 * :badge[Success]{type=success} Fast GPU Render
 * :badge[Warning]{type=warning} Deprecated
 * :badge[Error]{type=error} Failed Check
@@ -154,3 +154,22 @@ Every article automatically computes sequential reading navigation cards at the 
 * **Dynamic JSON-LD Graphs**: Automatically generates Schema.org `TechArticle` and `BreadcrumbList` graphs in `<head>` on route change.
 * **AI Alternate Links**: Exposes `<link rel="alternate" type="text/markdown">` and `<link rel="llms-txt">` headers for automated LLM scrapers.
 * **Zero-Recompile Analytics**: Built-in support for Google Analytics 4, Plausible, Cloudflare, Umami, and Matomo.
+* **Search Engine Crawl Tree**: Built-in semantic HTML bot crawl landmark (`.verti-sr-only`) keeping 100% crawl discoverability for Googlebot and Bingbot without cloaking penalties.
+
+---
+
+## 15. ⚡ Adaptive Critical Skeleton UI & In-Memory Cache
+
+VertiWiki eliminates the flash of unstyled/unrendered content (FOUC) entirely:
+
+* **Critical CSS Skeleton**: An inline, zero-shift skeleton screen with GPU-accelerated shimmer animations renders instantaneously upon HTML arrival, adapting automatically to system dark or light mode (`prefers-color-scheme`).
+* **Instant In-Memory Cache**: Visited Markdown documents and navigation trees are cached in RAM (`Map<string, string>`), enabling **0 ms** subsequent navigation transitions.
+* **Parallelized Fetch**: Navigation structures and target markdown pages load simultaneously via `Promise.all`.
+
+---
+
+## 16. 🌳 Static Bot Crawl Tree & Search Engine Indexing Architecture
+
+* **Semantic HTML Bot Landmark**: Embedded `<nav class="verti-crawl-tree">` outputs clean, crawlable `<a href="...">` anchor links, solving Google Search Console's "Discovered - currently not indexed" issue on client-side Markdown SPAs.
+* **Server-Side Content Negotiation**: Ready-to-use recipes in `deploy/` for Vercel, Netlify, Cloudflare Workers, Nginx, Apache, and AWS CloudFront that route `Accept: text/markdown` directly to raw `.md` documents.
+

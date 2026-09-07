@@ -76,7 +76,7 @@ When a user navigates or the page initially loads, VertiWiki executes the follow
    * Allows plugins to inspect or mutate the sanitized HTML string prior to DOM injection.
 
 7. **DOM Injection & Relative Link / Media Resolution**:
-   * Injects HTML into `<article id="cortex-content">`.
+   * Injects HTML into `<article class="verti-article">`.
    * Updates page title (`<title>`) and injects dynamic Schema.org JSON-LD graph (`TechArticle`, `BreadcrumbList`) for AI answer engines.
    * Renders breadcrumbs path at the top of the article.
    * Runs `router.transformLinks(container, currentFilePath)`:

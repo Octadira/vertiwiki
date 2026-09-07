@@ -17,7 +17,70 @@ VertiWiki adheres strictly to **Semantic Versioning 2.0.0 (SemVer)**:
 
 ## 📜 Version History
 
-### **v0.3.0** (Current Active Release — August 2026) :badge[Latest]{type=success}
+### **v0.8.1** (Current Active Release — September 2026) :badge[Latest]{type=success}
+* ⚡ **Adaptive Critical Skeleton UI**: Zero-FOUC inline skeleton screen with theme-adaptive styles (`prefers-color-scheme`) eliminating flash-of-unstyled-content while maintaining 0 CLS.
+* 🚀 **In-Memory Cache & Parallel Fetch**: Instant 0 ms subsequent navigation transitions and parallelized `Promise.all` fetching.
+* 🛡️ **Search Engine Crawl Landmark**: Standard accessible `.verti-sr-only` bot crawl tree protecting Google/Bing indexability without cloaking penalties.
+
+---
+
+### **v0.8.0** (September 2026)
+* 🌳 **Static Bot Crawl Tree Engine**: Built-in semantic HTML tree generator producing valid anchor links to resolve Google Search Console's "Discovered - currently not indexed" issue on client SPAs.
+* 🔀 **Query Parameter Routing**: Dynamic search query parameter routing (`?page=`, `?p=`, `?doc=`) and HTTP Content Negotiation (`Accept: text/markdown`).
+* 📋 **Production Hosting Recipes**: Ready-to-use recipes in `deploy/` for Vercel, Netlify, Cloudflare Workers, Nginx, Apache, and AWS CloudFront.
+
+---
+
+### **v0.7.0** (September 2026)
+* 🛡️ **Core Security Hardening**: Centralized HTML escaping, DOMPurify sanitization on SVG Mermaid diagrams, and iframe source origin validation.
+* ⚡ **KaTeX Font Optimization**: WOFF2 font pruning reducing CSS payload by 73% and bundle size from 5.13 MB to 4.02 MB.
+* 🧹 **Design System Standards**: Complete purge of legacy namespaces (`cortex-*`, `omni-*`) in favor of pure `.verti-*`.
+
+---
+
+### **v0.6.3** (September 2026)
+* 🐞 **Directory Trailing Slash Normalization**: Automated edge 308 redirects and router path defense preventing address bar corruption.
+
+---
+
+### **v0.6.2** (September 2026)
+* 🌐 **Universal Portability**: Fully path-agnostic relative asset resolution supporting root, subfolders, and offline `file:///`.
+
+---
+
+### **v0.6.1** (September 2026)
+* 🐞 **Universal Progressive Enhancement Favicons**: Inlined Data URI favicons and Apple touch icons for reliable rendering in standalone bundles.
+
+---
+
+### **v0.6.0** (September 2026)
+* 📁 **Subfolder Content Roots & Isolated Demo Fixtures**: Engine source decoupled from demo markdown in `demo/`.
+* 🧪 **Comprehensive Automated Unit Testing**: Expanded test suite to 18 suites and 96 tests with Vitest.
+
+---
+
+### **v0.5.1** (September 2026)
+* 🐞 **Mermaid Diagrams Contrast Harmonization**: Theme-aware SVG diagrams with guaranteed >10:1 contrast on dark themes.
+
+---
+
+### **v0.5.0** (September 2026)
+* 🎨 **Custom Theme Inheritance (`extends`)**: Flexible inheritance chain from built-in presets or standalone JSON themes.
+* 🤖 **AgentDocsSpec Discovery Directives**: Injected `<meta name="agent-docs">` and configurable `llmsTxtUrl`.
+
+---
+
+### **v0.4.1** (September 2026)
+* 🐞 **Localized Navigation Link Resolution**: Resilient relative link resolution and active accordion state preservation on language switch.
+
+---
+
+### **v0.4.0** (August 2026)
+* 🌐 **Native Multi-Language (i18n) & Mirror Architecture**: Zero-backend multi-language support, header globe switcher, and locale-scoped search.
+
+---
+
+### **v0.3.0** (August 2026)
 * 🔗 **Native Wikilinks (`[[...]]`)**: Direct double-bracket page linking, custom aliases (`[[page|alias]]`), deep anchors (`[[page#section]]`), and Obsidian/Logseq vault compatibility.
 * 🛡️ **Code Block Protection**: Automatic isolation of fenced code blocks and inline code spans during wikilink compilation.
 * 📚 **Synchronized Documentation**: Added dedicated Wikilinks guide, interactive feature demos, and updated sitemaps.
@@ -96,11 +159,11 @@ VertiWiki adheres strictly to **Semantic Versioning 2.0.0 (SemVer)**:
 ```mermaid
 timeline
     title VertiWiki Development Roadmap
-    2026 Q3 : v0.2.0 Release (Core Rewrite, Themes, Search, Subfolders)
-            : v0.2.1 Release (AEO Engine, Multi-Analytics, Badges, Tabs, Details, Lightbox)
-            : v0.2.2 Release (Obsidian Theme, Accordion Nav, Brand Display, Website Landing)
-    2026 Q4 : v0.3.0 (Live In-Browser Editor via File System Access API)
-    2027 Q1 : v0.4.0 (PWA Offline Service Worker & One-Click PDF Export)
-    2027 Q2 : v0.5.0 (Multi-Language i18n & Tag Filters)
+    2026 Q3 : v0.2.x - v0.3.x (Core Rewrite, Wikilinks, AEO, Markdown Suite)
+            : v0.4.x - v0.5.x (Multi-Language i18n, Theme Inheritance, AgentDocsSpec)
+            : v0.6.x - v0.7.x (Security Hardening, KaTeX Optimization, Multi-Host Deploy)
+            : v0.8.0 - v0.8.1 (Static Bot Crawl Tree, Critical Skeleton UI, In-Memory Cache)
+    2026 Q4 : v0.9.0 (PWA Offline Service Worker & One-Click PDF Export)
+    2027 Q1 : v0.10.0 (Live In-Browser Editor via File System Access API)
     2027+   : v1.0.0 Production Stable (Local-First Realtime CRDT Collaborative Sync)
 ```

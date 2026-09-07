@@ -103,7 +103,7 @@ export const sitemapPlugin: VertiWikiPlugin = {
 
 You can write badges anywhere in your Markdown documents:
 
-* Status: :badge[v0.2.6]{type=primary}
+* Status: :badge[v0.8.1]{type=primary}
 * Build: :badge[Passing]{type=success}
 * Caution: :badge[Review Needed]{type=warning}
 * Deprecated: :badge[Deprecated]{type=danger}

@@ -150,10 +150,15 @@ ${currentRawMarkdown}`;
   // Dynamic Navigation Loader per Locale
   let currentLoadedLocaleKey: string | null = null;
   let navigationItems: NavigationItem[] = [];
+  const navContentCache = new Map<string, string>();
+  const markdownCache = new Map<string, string>();
 
   async function loadNavigationForLocale(locale: LocaleConfig | null, currentActivePath?: string): Promise<void> {
     const localeKey = locale ? locale.code : 'default';
     if (currentLoadedLocaleKey === localeKey && navigationItems.length > 0) {
+      if (currentActivePath) {
+        layout.updateActiveNavLink(currentActivePath);
+      }
       return;
     }
 
@@ -177,15 +182,22 @@ ${currentRawMarkdown}`;
     }
 
     try {
-      let navResponse = await fetch(navFile);
-      if (!navResponse.ok && navFile !== config.navigationFile) {
-        // Fallback to default navigation file if localized one doesn't exist
-        navResponse = await fetch(config.navigationFile);
-        navFile = config.navigationFile;
+      let navRaw = navContentCache.get(navFile);
+      if (!navRaw) {
+        let navResponse = await fetch(navFile);
+        if (!navResponse.ok && navFile !== config.navigationFile) {
+          // Fallback to default navigation file if localized one doesn't exist
+          navResponse = await fetch(config.navigationFile);
+          navFile = config.navigationFile;
+        }
+
+        if (navResponse.ok) {
+          navRaw = await navResponse.text();
+          navContentCache.set(navFile, navRaw);
+        }
       }
 
-      if (navResponse.ok) {
-        const navRaw = await navResponse.text();
+      if (navRaw) {
         navigationItems = parseNavigationMarkdown(navRaw, navFile);
 
         const homeDir = config.homePage.includes('/')
@@ -215,6 +227,10 @@ ${currentRawMarkdown}`;
   }
 
   async function fetchMarkdownResource(targetPath: string): Promise<{ text: string; path: string } | null> {
+    if (markdownCache.has(targetPath)) {
+      return { text: markdownCache.get(targetPath)!, path: targetPath };
+    }
+
     try {
       const response = await fetch(targetPath);
       if (!response.ok) return null;
@@ -223,6 +239,7 @@ ${currentRawMarkdown}`;
                      text.trim().toLowerCase().startsWith('<html') ||
                      text.trim().toLowerCase().startsWith('<!html');
       if (isHtml) return null;
+      markdownCache.set(targetPath, text);
       return { text, path: targetPath };
     } catch {
       return null;
@@ -234,8 +251,23 @@ ${currentRawMarkdown}`;
     let filePath = route.filePath;
     const activeLocale = route.locale || router.getCurrentLocale(filePath);
 
-    // Ensure navigation matches the active locale and current active path
-    await loadNavigationForLocale(activeLocale, filePath);
+    // Parallelize navigation loading and markdown fetching for instant perceived speed
+    const navPromise = loadNavigationForLocale(activeLocale, filePath);
+    const fetchPromise = (async () => {
+      let res = await fetchMarkdownResource(filePath);
+      // Smart directory index and sibling markdown fallback resolution
+      if (!res) {
+        if (filePath.endsWith('/index.md')) {
+          res = await fetchMarkdownResource(filePath.replace(/\/index\.md$/, '.md'));
+        } else if (filePath.endsWith('.md')) {
+          res = await fetchMarkdownResource(filePath.replace(/\.md$/, '/index.md'));
+        }
+      }
+      return res;
+    })();
+
+    const [, fetched] = await Promise.all([navPromise, fetchPromise]);
+
     if (langDropdown) {
       langDropdown.renderMenu();
     }
@@ -244,17 +276,6 @@ ${currentRawMarkdown}`;
     }
 
     try {
-      let fetched = await fetchMarkdownResource(filePath);
-
-      // Smart directory index and sibling markdown fallback resolution
-      if (!fetched) {
-        if (filePath.endsWith('/index.md')) {
-          fetched = await fetchMarkdownResource(filePath.replace(/\/index\.md$/, '.md'));
-        } else if (filePath.endsWith('.md')) {
-          fetched = await fetchMarkdownResource(filePath.replace(/\.md$/, '/index.md'));
-        }
-      }
-
       if (!fetched) {
         throw new Error(`Failed to load ${filePath}`);
       }
