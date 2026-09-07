@@ -1,6 +1,25 @@
 # Changelog
 
-## VertiWiki 0.8.1 (September 2026) :badge[Latest]{type=success}
+## VertiWiki 0.8.3 (September 2026) :badge[Latest]{type=success}
+
+### 🎨 Theme-Harmonized Code Cards & UI Background Fixes
+- **Theme-Adaptive Code Block Cards**: Eliminated legacy hardcoded `#2d2d2d` background on code wrappers. Code cards now dynamically inherit `--verti-code-bg` (`--muted`), rendering crisp, light-themed cards on Light Mode and tailored dark-tinted cards on Dark Mode matching the active theme (Terracotta, Emerald, Dracula, Nord).
+- **High-Contrast Syntax Highlighting Tokens**: Introduced dual-mode Prism syntax highlighting tokens offering >7:1 WCAG AAA contrast ratios on Light Mode and vibrant pastel palettes on Dark Mode.
+- **Critical CSS Body Background Remediation**: Scoped critical skeleton styles strictly to `.verti-loading-shell` and removed global `html, body` background overrides. Explicitly declared `background-color: var(--verti-bg-base)` across `body`, `.verti-main-container`, `.verti-content-wrapper`, and `.verti-toc-sidebar` to ensure 100% full-screen theme consistency on all presets.
+- **Runtime Critical Style Cleanup**: Automatically unmounts `#verti-critical-css` from `<head>` upon layout initialization to eliminate any style contamination.
+
+---
+
+## VertiWiki 0.8.2 (September 2026)
+
+### 🤖 AgentDocsSpec (AFDocs) Compliance & AI Agent Directives
+- **In-Page AI Agent Discovery Directive**: Updated static (`index.html`) and runtime (`src/plugins/aeo.ts`) agent discovery directives (`.verti-agent-directive`) to strictly conform with AgentDocsSpec regex requirements (`<a href="./llms.txt">/llms.txt</a>`), guaranteeing instantaneous index discovery by AI crawlers and automated scoring tools.
+- **Deployment Templates Content Negotiation**: Enhanced server deployment configurations (`deploy/vercel/vercel.json`, `deploy/cloudflare/worker-snippet.js`) with explicit directory handling for `/docs` and `/docs/` when clients request `Accept: text/markdown`, routing directly to `/docs/index.md`.
+- **AEO Unit Test Suite**: Added automated test coverage in `tests/aeo.test.ts` validating HTML directive compliance against AgentDocsSpec `LINK_PATTERN` and `TEXT_PATTERN` regexes.
+
+---
+
+## VertiWiki 0.8.1 (September 2026)
 
 ### ⚡ Adaptive Critical Skeleton Screen & In-Memory Cache Architecture
 - **Critical Adaptive Skeleton UI (`index.html`)**: Introduced an inline zero-shift skeleton screen with GPU-accelerated shimmer animations that automatically harmonizes with the user's system theme (`@media (prefers-color-scheme: dark)` and `light`). Completely eliminates the flash of unstyled/unrendered content (FOUC) while keeping Cumulative Layout Shift (CLS) at 0.

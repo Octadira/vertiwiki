@@ -68,6 +68,28 @@
       "destination": "/index.md"
     },
     {
+      "source": "/docs",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": ".*text\\/markdown.*"
+        }
+      ],
+      "destination": "/docs/index.md"
+    },
+    {
+      "source": "/docs/",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": ".*text\\/markdown.*"
+        }
+      ],
+      "destination": "/docs/index.md"
+    },
+    {
       "source": "/:path*/",
       "has": [
         {

@@ -53,6 +53,7 @@ async function bootstrap() {
     config.enableThemeChooser !== false
   );
   const layout = new Layout(config);
+  document.getElementById('verti-critical-css')?.remove();
   const parser = new MarkdownParser();
   const pipeline = new Pipeline();
   const searchEngine = new SearchEngine();

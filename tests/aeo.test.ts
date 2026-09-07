@@ -60,8 +60,18 @@ describe('AEOEngine & Agent Directive', () => {
     new AEOEngine({ ...DEFAULT_CONFIG });
     const directive = (global as any).document.querySelector('.verti-agent-directive');
     expect(directive).not.toBeNull();
-    expect(directive.innerHTML).toContain('llms.txt');
+    expect(directive.innerHTML).toContain('href="./llms.txt"');
+    expect(directive.innerHTML).toContain('/llms.txt</a>');
     expect(directive.innerHTML).toContain('For AI coding agents');
+  });
+
+  it('matches AgentDocsSpec regex requirements for html directive', () => {
+    new AEOEngine({ ...DEFAULT_CONFIG });
+    const directive = (global as any).document.querySelector('.verti-agent-directive');
+    const LINK_PATTERN = /<a\s[^>]*href\s*=\s*["']([^"']*\/llms\.txt(?:[?#][^"']*)?)["'][^>]*>[\s\S]*?<\/a>/gi;
+    const TEXT_PATTERN = /\/llms\.txt/gi;
+    expect(LINK_PATTERN.test(directive.innerHTML)).toBe(true);
+    expect(TEXT_PATTERN.test(directive.innerHTML)).toBe(true);
   });
 
   it('injects custom llmsTxtUrl when configured', () => {

@@ -23,6 +23,8 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background-color: var(--verti-bg-base);
+  color: var(--verti-text-primary);
 }
 
 /* App Shell Layout */
@@ -317,6 +319,7 @@ body {
   max-width: 1600px;
   margin: 0 auto;
   position: relative;
+  background-color: var(--verti-bg-base);
 }
 
 /* Sidebar Left (Navigation) */
@@ -455,6 +458,7 @@ body {
   padding: 2.5rem 3rem;
   display: flex;
   justify-content: center;
+  background-color: var(--verti-bg-base);
 }
 
 .verti-article-container {
@@ -548,6 +552,7 @@ body {
   overflow-y: auto;
   padding: 2rem 1rem;
   border-left: 1px solid var(--verti-border);
+  background-color: var(--verti-bg-base);
   flex-shrink: 0;
 }
 
@@ -820,50 +825,162 @@ body {
   position: relative;
   margin: 1.5rem 0;
   border-radius: var(--verti-radius-md);
-  background-color: #2d2d2d;
+  background-color: var(--verti-code-bg);
   overflow: hidden;
   border: 1px solid var(--verti-border);
+  box-shadow: var(--verti-shadow-sm);
+  transition: border-color var(--verti-transition), background-color var(--verti-transition);
 }
 
 .verti-code-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.4rem 1rem;
-  background-color: rgba(0, 0, 0, 0.2);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.45rem 1rem;
+  background-color: color-mix(in srgb, var(--verti-code-bg) 65%, var(--verti-border) 35%);
+  border-bottom: 1px solid var(--verti-border);
   font-family: var(--verti-font-mono);
   font-size: 0.75rem;
-  color: #a0a0a0;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--verti-text-secondary);
+}
+
+.verti-code-lang {
+  user-select: none;
 }
 
 .verti-copy-code-btn {
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 4px;
-  color: #d0d0d0;
-  padding: 0.2rem 0.5rem;
+  background-color: color-mix(in srgb, var(--verti-bg-surface) 60%, transparent);
+  border: 1px solid var(--verti-border);
+  border-radius: var(--verti-radius-sm);
+  color: var(--verti-text-secondary);
+  padding: 0.2rem 0.6rem;
   font-size: 0.75rem;
+  font-weight: 500;
   cursor: pointer;
   transition: all var(--verti-transition);
 }
 
 .verti-copy-code-btn:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
+  background-color: var(--verti-accent-subtle);
+  border-color: var(--verti-accent);
+  color: var(--verti-accent);
 }
 
-.verti-article pre {
+.verti-article pre,
+.verti-article pre[class*="language-"] {
   margin: 0 !important;
   padding: 1.25rem !important;
   background-color: transparent !important;
   overflow-x: auto;
 }
 
-.verti-article pre code {
+.verti-article pre code,
+.verti-article pre code[class*="language-"] {
   font-family: var(--verti-font-mono);
   font-size: 0.875rem;
-  line-height: 1.6;
+  line-height: 1.65;
+  color: var(--verti-code-text, var(--verti-text-primary)) !important;
+  background: transparent !important;
+  text-shadow: none !important;
+}
+
+/* Theme-Adaptive Syntax Highlighting Tokens (High Contrast) */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: var(--verti-text-muted) !important;
+  font-style: italic;
+}
+
+.token.punctuation {
+  color: var(--verti-text-secondary) !important;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol {
+  color: #0284c7 !important;
+}
+
+.token.boolean,
+.token.number {
+  color: #d97706 !important;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin {
+  color: #16a34a !important;
+}
+
+.token.operator,
+.token.entity,
+.token.url {
+  color: #ea580c !important;
+}
+
+.token.keyword {
+  color: #7c3aed !important;
+  font-weight: 600;
+}
+
+.token.function,
+.token.class-name {
+  color: #2563eb !important;
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+  color: #dc2626 !important;
+}
+
+/* Dark Mode Syntax Token Enhancements */
+[data-theme='dark'] .token.property,
+[data-theme='dark'] .token.tag,
+[data-theme='dark'] .token.constant,
+[data-theme='dark'] .token.symbol {
+  color: #38bdf8 !important;
+}
+
+[data-theme='dark'] .token.boolean,
+[data-theme='dark'] .token.number {
+  color: #fbbf24 !important;
+}
+
+[data-theme='dark'] .token.selector,
+[data-theme='dark'] .token.attr-name,
+[data-theme='dark'] .token.string,
+[data-theme='dark'] .token.char,
+[data-theme='dark'] .token.builtin {
+  color: #4ade80 !important;
+}
+
+[data-theme='dark'] .token.operator,
+[data-theme='dark'] .token.entity,
+[data-theme='dark'] .token.url {
+  color: #f97316 !important;
+}
+
+[data-theme='dark'] .token.keyword {
+  color: #c084fc !important;
+}
+
+[data-theme='dark'] .token.function,
+[data-theme='dark'] .token.class-name {
+  color: #60a5fa !important;
+}
+
+[data-theme='dark'] .token.regex,
+[data-theme='dark'] .token.important,
+[data-theme='dark'] .token.variable {
+  color: #f87171 !important;
 }
 
 /* Images & Media */

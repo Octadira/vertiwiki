@@ -52,7 +52,14 @@ export class AEOEngine {
       }
     }
 
-    directiveEl.innerHTML = `<p>For AI coding agents: A complete documentation index is available at <a href="${targetUrl}">${targetUrl}</a>. Raw documentation pages are served as Markdown at corresponding *.md URLs or via Accept: text/markdown.</p>`;
+    const hrefUrl = targetUrl.startsWith('http://') || targetUrl.startsWith('https://') || targetUrl.startsWith('/') || targetUrl.startsWith('./')
+      ? targetUrl
+      : `./${targetUrl}`;
+    const labelUrl = targetUrl.startsWith('http://') || targetUrl.startsWith('https://')
+      ? targetUrl
+      : `/${targetUrl.replace(/^\.?\//, '')}`;
+
+    directiveEl.innerHTML = `<p>For AI coding agents: A complete documentation index is available at <a href="${hrefUrl}">${labelUrl}</a>. Raw documentation pages are served as Markdown at corresponding *.md URLs or via Accept: text/markdown.</p>`;
   }
 
   public updatePageMetadata(filePath: string, parsed: ParsedMarkdown): void {

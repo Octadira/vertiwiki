@@ -110,4 +110,4 @@ VertiWiki is a **100% client-side, zero-backend Markdown wiki and documentation 
 
 ---
 
-**Version**: 0.8.1 | **License**: MIT | **Updated**: September 2026
+**Version**: 0.8.3 | **License**: MIT | **Updated**: September 2026

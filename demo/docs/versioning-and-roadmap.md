@@ -17,7 +17,22 @@ VertiWiki adheres strictly to **Semantic Versioning 2.0.0 (SemVer)**:
 
 ## 📜 Version History
 
-### **v0.8.1** (Current Active Release — September 2026) :badge[Latest]{type=success}
+### **v0.8.3** (Current Active Release — September 2026) :badge[Latest]{type=success}
+* 🎨 **Theme-Adaptive Code Block Cards**: Eliminated hardcoded `#2d2d2d` background on code wrappers, inheriting `--verti-code-bg` (`--muted`) across all theme presets.
+* 🌈 **High-Contrast Syntax Highlighting Tokens**: Dual-mode Prism syntax highlighting tokens with >7:1 WCAG AAA contrast ratios on Light Mode and vibrant pastel palettes on Dark Mode.
+* 🛡️ **Critical CSS Body Background Remediation**: Scoped critical skeleton styles strictly to `.verti-loading-shell` and removed global `html, body` background overrides, ensuring 100% full-screen theme consistency.
+* 🧹 **Runtime Critical Style Cleanup**: Automatically unmounts `#verti-critical-css` from `<head>` upon layout initialization.
+
+---
+
+### **v0.8.2** (September 2026)
+* 🤖 **AgentDocsSpec (AFDocs) Compliance**: Fully compliant in-page AI agent directives (`.verti-agent-directive`) with `<a href="./llms.txt">/llms.txt</a>`.
+* ⚡ **Deployment Content Negotiation**: Direct routing for `/docs` and `/docs/` when requesting `Accept: text/markdown`.
+* 🛡️ **Automated AEO Tests**: Regression tests validating regex compatibility against the AgentDocsSpec standard.
+
+---
+
+### **v0.8.1** (September 2026)
 * ⚡ **Adaptive Critical Skeleton UI**: Zero-FOUC inline skeleton screen with theme-adaptive styles (`prefers-color-scheme`) eliminating flash-of-unstyled-content while maintaining 0 CLS.
 * 🚀 **In-Memory Cache & Parallel Fetch**: Instant 0 ms subsequent navigation transitions and parallelized `Promise.all` fetching.
 * 🛡️ **Search Engine Crawl Landmark**: Standard accessible `.verti-sr-only` bot crawl tree protecting Google/Bing indexability without cloaking penalties.

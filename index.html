@@ -31,18 +31,13 @@
         --v-text-muted: #57606a;
       }
     }
-    html, body {
-      margin: 0;
-      padding: 0;
-      background: var(--v-bg);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-      -webkit-font-smoothing: antialiased;
-    }
     .verti-loading-shell {
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       background: var(--v-bg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
     }
     .verti-skeleton-header {
       height: 60px;
@@ -125,7 +120,7 @@
 <body>
   <!-- AgentDocsSpec AI Agent Discovery Directive (llms-txt-directive-html) -->
   <div class="verti-agent-directive" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;" aria-hidden="false">
-    <p>For AI coding agents: A complete documentation index is available at <a href="llms.txt">llms.txt</a>. Raw documentation pages are served as Markdown at corresponding *.md URLs or via Accept: text/markdown.</p>
+    <p>For AI coding agents: A complete documentation index is available at <a href="./llms.txt">/llms.txt</a>. Raw documentation pages are served as Markdown at corresponding *.md URLs or via Accept: text/markdown.</p>
   </div>
   <main id="verti-app" role="main">
     <noscript data-markdown-ignore>

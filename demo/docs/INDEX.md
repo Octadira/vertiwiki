@@ -100,4 +100,4 @@ Verbatim TypeScript interfaces and schemas:
 
 ---
 
-**Last Updated**: September 2026 | **Version**: 0.8.1 | **License**: MIT
+**Last Updated**: September 2026 | **Version**: 0.8.3 | **License**: MIT

@@ -21,6 +21,12 @@ export default {
         return fetch(url.toString(), request);
       }
 
+      // Handle documentation hub directory without trailing slash
+      if (path === '/docs') {
+        url.pathname = '/docs/index.md';
+        return fetch(url.toString(), request);
+      }
+
       // Handle trailing slash directory requests
       if (path.endsWith('/')) {
         url.pathname = `${path}index.md`;
