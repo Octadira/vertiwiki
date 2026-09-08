@@ -41,4 +41,9 @@ AddDefaultCharset UTF-8
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME}.md -f
     RewriteRule ^(.*)$ $1.md [L]
+
+    # Human Reader Redirection: If human browser sends Accept: text/html on .md file
+    RewriteCond %{HTTP:Accept} text/html [NC]
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule ^(.*\.md)$ /#/$1 [R=302,NE,L]
 </IfModule>

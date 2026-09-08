@@ -4,7 +4,7 @@ description: Explore the comprehensive suite of 14 built-in plugins and interact
 tags: [features, plugins, tabs, math, mermaid, wikilinks, i18n, search, lightbox, aeo]
 ---
 
-# Modern Features & 14 Built-in Plugins :badge[v0.8.3]{type=primary} :badge[Interactive Demo]{type=success}
+# Modern Features & 14 Built-in Plugins :badge[v0.8.4]{type=primary} :badge[Interactive Demo]{type=success}
 
 VertiWiki includes **14 built-in zero-dependency plugins** that transform pure Markdown into a dynamic, rich documentation application directly in the browser.
 

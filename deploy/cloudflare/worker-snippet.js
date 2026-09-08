@@ -10,8 +10,9 @@ export default {
     const url = new URL(request.url);
     const acceptHeader = request.headers.get('Accept') || '';
     const isMarkdownRequested = acceptHeader.includes('text/markdown');
+    const isHtmlRequested = acceptHeader.includes('text/html');
 
-    // If the client explicitly requests Markdown
+    // 1. If the client explicitly requests Markdown (AI Agents, Crawlers, Curl)
     if (isMarkdownRequested) {
       let path = url.pathname;
 
@@ -37,6 +38,18 @@ export default {
       if (!path.includes('.') && !path.startsWith('/assets') && !path.startsWith('/themes')) {
         url.pathname = `${path}.md`;
         return fetch(url.toString(), request);
+      }
+    }
+
+    // 2. If client is a human browser requesting HTML, route into VertiWiki viewer
+    if (isHtmlRequested) {
+      const path = url.pathname;
+      if (path.endsWith('.md')) {
+        if (path.startsWith('/docs/')) {
+          const docRel = path.replace(/^\/docs\//, '');
+          return Response.redirect(`${url.origin}/docs/#/${docRel}`, 302);
+        }
+        return Response.redirect(`${url.origin}/#/${path.replace(/^\//, '')}`, 302);
       }
     }
 

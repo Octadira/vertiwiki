@@ -162,12 +162,35 @@ export default {
     // Route human browser visits on *.md into VertiWiki viewer
     if (url.pathname.endsWith('.md') && accept.includes('text/html')) {
       const pagePath = url.pathname.replace(/^\/docs\//, '');
-      return Response.redirect(`${url.origin}/docs/?page=${encodeURIComponent(pagePath)}`, 302);
+      return Response.redirect(`${url.origin}/docs/#/${pagePath}`, 302);
     }
 
     return fetch(request);
   }
 };
+```
+
+### Vercel Example (`vercel.json`)
+
+Configure `vercel.json` in your project root to redirect human browser requests (`Accept: text/html`) to the VertiWiki hash route:
+
+```json
+{
+  "redirects": [
+    {
+      "source": "/docs/(.*\\.md)",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": ".*text\\/html.*"
+        }
+      ],
+      "destination": "/docs/#/$1",
+      "permanent": false
+    }
+  ]
+}
 ```
 
 ---

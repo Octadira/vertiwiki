@@ -1,11 +1,13 @@
-# 🧠 VertiWiki 0.8.3
+# 🧠 VertiWiki 0.8.4
 
-> **The 100% Client-Side, Zero-Backend, Zero-Build Markdown Wiki & Documentation Engine for 2026 and Beyond.**
+> The next-generation, 100% static, single-file Markdown wiki & documentation engine built for 2026 and beyond.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](GPLv3.txt)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7+-blue.svg)](https://www.typescriptlang.org/)
-[![Vite](https://img.shields.io/badge/Vite-6.2+-646CFF.svg)](https://vitejs.dev/)
-[![Version](https://img.shields.io/badge/version-0.8.3-teal.svg)](https://github.com/Octadira/vertiwiki/releases)
+[![Vite](https://img.shields.io/badge/Vite-6.0+-purple.svg)](https://vitejs.dev/)
+[![Single File HTML](https://img.shields.io/badge/Bundle-Single--File-emerald.svg)](dist/vertiwiki.html)
+[![Version](https://img.shields.io/badge/version-0.8.4-teal.svg)](https://github.com/Octadira/vertiwiki/releases)
 [![Tests](https://img.shields.io/badge/tests-97%20passed-brightgreen.svg)](#-automated-testing)
 [![AI & AEO Ready](https://img.shields.io/badge/AI_%26_AEO-Ready-2ea44f.svg)](#-answer-engine-optimization-aeo)
 [![Live Demo](https://img.shields.io/badge/Demo-verti.wiki-emerald.svg)](https://verti.wiki)

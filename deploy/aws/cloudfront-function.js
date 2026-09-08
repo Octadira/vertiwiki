@@ -35,7 +35,18 @@ function handler(event) {
         }
     }
 
-    // 2. Default root index
+    // 2. Human Reader Redirection: If browser requests HTML on .md file, redirect to hash route
+    if (acceptHeader.indexOf('text/html') !== -1 && uri.endsWith('.md')) {
+        return {
+            statusCode: 302,
+            statusDescription: 'Found',
+            headers: {
+                location: { value: '/#' + uri }
+            }
+        };
+    }
+
+    // 3. Default root index
     if (uri === '' || uri === '/') {
         request.uri = '/index.html';
         return request;

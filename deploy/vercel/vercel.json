@@ -1,7 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": false,
-  "trailingSlash": true,
+  "trailingSlash": false,
   "headers": [
     {
       "source": "/(.*\\.md)",
@@ -53,6 +53,32 @@
           "value": "public, max-age=0, must-revalidate"
         }
       ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/(.*\\.md)",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": ".*text\\/html.*"
+        }
+      ],
+      "destination": "/#/$1",
+      "permanent": false
+    },
+    {
+      "source": "/:path((?!assets\\/|themes\\/|.*\\.[a-zA-Z0-9]+$).*)",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": ".*text\\/html.*"
+        }
+      ],
+      "destination": "/#/:path.md",
+      "permanent": false
     }
   ],
   "rewrites": [

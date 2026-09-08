@@ -1,6 +1,16 @@
 # Changelog
 
-## VertiWiki 0.8.3 (September 2026) :badge[Latest]{type=success}
+## VertiWiki 0.8.4 (September 2026) :badge[Latest]{type=success}
+
+### 🔄 Universal Human Reader Redirection & Content Negotiation Engine
+- **Defensive Engine Fetching (`src/main.ts`)**: Enforced explicit `Accept: text/markdown, text/plain, */*` headers across all internal engine fetch operations (`fetchMarkdownResource`, localized navigation manifest loader, and 404 handler). Completely shields the single-file application against browser document navigation header pollution, eliminating server redirect loops.
+- **Production-Ready Vercel Recipe (`deploy/vercel/vercel.json`)**: Added human browser redirection (`Accept: text/html`) routing direct `.md` hits and clean URLs into VertiWiki hash routes (`/#/...`), while preserving raw Markdown content delivery for AI agents (`Accept: text/markdown`) and genuine HTTP 404 status codes. Set `trailingSlash: false` for strict documentation path stability.
+- **Universal Multi-Cloud Modernization (`deploy/`)**: Upgraded deployment recipes across Netlify (`netlify.toml`), Cloudflare Pages (`worker-snippet.js`), Nginx (`vertiwiki.conf`), Apache (`.htaccess`), and AWS CloudFront Function (`cloudfront-function.js`) to provide simultaneous human reader redirection and autonomous AI agent Content Negotiation.
+- **Documentation & Deployment Recipes (`deploy/README.md`, `sitemap-seo.md`)**: Expanded official deployment guides with detailed Root (Scenario A) and Subfolder `/docs/` (Scenario B) configurations, and updated the SEO/AEO sitemap guide with Vercel deployment instructions.
+
+---
+
+## VertiWiki 0.8.3 (September 2026)
 
 ### 🎨 Theme-Harmonized Code Cards & UI Background Fixes
 - **Theme-Adaptive Code Block Cards**: Eliminated legacy hardcoded `#2d2d2d` background on code wrappers. Code cards now dynamically inherit `--verti-code-bg` (`--muted`), rendering crisp, light-themed cards on Light Mode and tailored dark-tinted cards on Dark Mode matching the active theme (Terracotta, Emerald, Dracula, Nord).

@@ -42,3 +42,11 @@
   to = "/:splat/index.md"
   status = 200
   conditions = {Headers = {Accept = "text/markdown"}}
+
+# Human Reader Redirection: route browser visits on *.md into VertiWiki viewer
+[[redirects]]
+  from = "/*.md"
+  to = "/#/:splat.md"
+  status = 302
+  conditions = {Headers = {Accept = "text/html"}}
+

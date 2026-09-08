@@ -39,13 +39,15 @@ In traditional SPA development (React, Vue), developers often add catch-all rewr
 
 ## ⚡ Capabilities Provided by These Recipes
 
-1. **AI Agent Content Negotiation**:
+1. **Human Reader Redirection**:
+   When human visitors click direct links to `.md` files or clean URLs (e.g. `/docs/features.md` or `/features`) sending `Accept: text/html`, the server redirects them to the client-side hash route (`/docs/#/features.md` or `/#/features.md`), booting VertiWiki interactively.
+2. **AI Agent Content Negotiation**:
    When autonomous AI agents (Claude Code, Cursor, Aider, OpenCode) send `Accept: text/markdown`, the server serves the raw `.md` file with `Content-Type: text/markdown; charset=utf-8`.
-2. **Permissive CORS**:
+3. **Permissive CORS**:
    AI crawlers, web LLMs, and third-party tools can fetch documentation markdown files and `llms.txt` without encountering cross-origin restrictions (`Access-Control-Allow-Origin: *`).
-3. **Genuine HTTP 404 Error Preservation**:
+4. **Genuine HTTP 404 Error Preservation**:
    Ensures missing or deleted URLs correctly return HTTP status 404, preventing Soft 404 penalties.
-4. **Correct MIME Types & UTF-8 Encoding**:
+5. **Correct MIME Types & UTF-8 Encoding**:
    Guarantees that `.md`, `.txt`, and `.json` files are served with proper character sets across all browsers.
 
 ---
@@ -62,29 +64,61 @@ If you are hosting VertiWiki as a dedicated standalone site (e.g. `wiki.mycompan
 If you are hosting VertiWiki in a subfolder alongside another website (e.g. a marketing landing page at `/` and documentation at `/docs/`):
 
 #### 1. Vercel (`vercel.json`):
-Prefix the rewrite sources and destinations with your subfolder:
+Place in project root. Prefix sources and destinations with `/docs`:
 ```json
-"rewrites": [
-  {
-    "source": "/docs",
-    "has": [{ "type": "header", "key": "accept", "value": ".*text\\/markdown.*" }],
-    "destination": "/docs/index.md"
-  },
-  {
-    "source": "/docs/",
-    "has": [{ "type": "header", "key": "accept", "value": ".*text\\/markdown.*" }],
-    "destination": "/docs/index.md"
-  },
-  {
-    "source": "/docs/:path((?!assets\\/|themes\\/|.*\\.[a-zA-Z0-9]+$).*)",
-    "has": [{ "type": "header", "key": "accept", "value": ".*text\\/markdown.*" }],
-    "destination": "/docs/:path.md"
-  }
-]
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": false,
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/docs/(.*\\.md)",
+      "has": [{ "type": "header", "key": "accept", "value": ".*text\\/html.*" }],
+      "destination": "/docs/#/$1",
+      "permanent": false
+    },
+    {
+      "source": "/docs/:path((?!assets\\/|themes\\/|.*\\.[a-zA-Z0-9]+$).*)",
+      "has": [{ "type": "header", "key": "accept", "value": ".*text\\/html.*" }],
+      "destination": "/docs/#/:path.md",
+      "permanent": false
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/docs",
+      "has": [{ "type": "header", "key": "accept", "value": ".*text\\/markdown.*" }],
+      "destination": "/docs/index.md"
+    },
+    {
+      "source": "/docs/",
+      "has": [{ "type": "header", "key": "accept", "value": ".*text\\/markdown.*" }],
+      "destination": "/docs/index.md"
+    },
+    {
+      "source": "/docs/:path*/",
+      "has": [{ "type": "header", "key": "accept", "value": ".*text\\/markdown.*" }],
+      "destination": "/docs/:path*/index.md"
+    },
+    {
+      "source": "/docs/:path((?!assets\\/|themes\\/|.*\\.[a-zA-Z0-9]+$).*)",
+      "has": [{ "type": "header", "key": "accept", "value": ".*text\\/markdown.*" }],
+      "destination": "/docs/:path.md"
+    }
+  ]
+}
 ```
 
 #### 2. Netlify (`netlify.toml`):
 ```toml
+# 1. Human Reader Redirection (Accept: text/html)
+[[redirects]]
+  from = "/docs/*.md"
+  to = "/docs/#/:splat.md"
+  status = 302
+  conditions = {Headers = {Accept = "text/html"}}
+
+# 2. AI Content Negotiation (Accept: text/markdown)
 [[redirects]]
   from = "/docs/"
   to = "/docs/index.md"
@@ -96,22 +130,42 @@ Prefix the rewrite sources and destinations with your subfolder:
   to = "/docs/index.md"
   status = 200
   conditions = {Headers = {Accept = "text/markdown"}}
+
+[[redirects]]
+  from = "/docs/*/"
+  to = "/docs/:splat/index.md"
+  status = 200
+  conditions = {Headers = {Accept = "text/markdown"}}
 ```
 
 #### 3. Nginx (`vertiwiki.conf`):
 ```nginx
 location /docs/ {
-    if ($wants_markdown) {
+    # Human Reader Redirection
+    if ($http_accept ~* "text/html") {
+        rewrite ^/docs/(.+\.md)$ /docs/#/$1 redirect;
+        rewrite ^/docs/([^.]+)$ /docs/#/$1.md redirect;
+    }
+
+    # AI Content Negotiation
+    if ($http_accept ~* "text/markdown") {
         rewrite ^/docs/?$ /docs/index.md last;
         rewrite ^/docs/(.+)/$ /docs/$1/index.md last;
         rewrite ^/docs/([^.]+)$ /docs/$1.md last;
     }
+
     try_files $uri $uri/ =404;
 }
 ```
 
 #### 4. Apache (`.htaccess`):
 ```apache
+# 1. Human Reader Redirection (Accept: text/html)
+RewriteCond %{HTTP:Accept} text/html [NC]
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^docs/(.*\.md)$ /docs/#/$1 [R=302,NE,L]
+
+# 2. AI Content Negotiation (Accept: text/markdown)
 RewriteCond %{HTTP:Accept} text/markdown [NC]
 RewriteRule ^docs/?$ docs/index.md [L]
 

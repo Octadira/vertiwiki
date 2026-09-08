@@ -185,10 +185,14 @@ ${currentRawMarkdown}`;
     try {
       let navRaw = navContentCache.get(navFile);
       if (!navRaw) {
-        let navResponse = await fetch(navFile);
+        let navResponse = await fetch(navFile, {
+          headers: { 'Accept': 'text/markdown, text/plain, */*' }
+        });
         if (!navResponse.ok && navFile !== config.navigationFile) {
           // Fallback to default navigation file if localized one doesn't exist
-          navResponse = await fetch(config.navigationFile);
+          navResponse = await fetch(config.navigationFile, {
+            headers: { 'Accept': 'text/markdown, text/plain, */*' }
+          });
           navFile = config.navigationFile;
         }
 
@@ -233,7 +237,11 @@ ${currentRawMarkdown}`;
     }
 
     try {
-      const response = await fetch(targetPath);
+      const response = await fetch(targetPath, {
+        headers: {
+          'Accept': 'text/markdown, text/plain, */*'
+        }
+      });
       if (!response.ok) return null;
       const text = await response.text();
       const isHtml = text.trim().toLowerCase().startsWith('<!doctype') ||
@@ -372,7 +380,9 @@ ${currentRawMarkdown}`;
 
       // Try 404.md fallback
       try {
-        const notFoundRes = await fetch('404.md');
+        const notFoundRes = await fetch('404.md', {
+          headers: { 'Accept': 'text/markdown, text/plain, */*' }
+        });
         if (notFoundRes.ok) {
           const notFoundMd = await notFoundRes.text();
           const notFoundIsHtml = notFoundMd.trim().toLowerCase().startsWith('<!doctype') ||
