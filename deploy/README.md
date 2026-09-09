@@ -73,36 +73,30 @@ Place in project root. Prefix sources and destinations with `/docs`:
   "redirects": [
     {
       "source": "/docs/(.*\\.md)",
-      "has": [{ "type": "header", "key": "accept", "value": ".*text\\/html.*" }],
+      "has": [{ "type": "header", "key": "accept", "value": ".*text/html.*" }],
       "destination": "/docs/#/$1",
-      "permanent": false
-    },
-    {
-      "source": "/docs/:path((?!assets\\/|themes\\/|.*\\.[a-zA-Z0-9]+$).*)",
-      "has": [{ "type": "header", "key": "accept", "value": ".*text\\/html.*" }],
-      "destination": "/docs/#/:path.md",
       "permanent": false
     }
   ],
   "rewrites": [
     {
       "source": "/docs",
-      "has": [{ "type": "header", "key": "accept", "value": ".*text\\/markdown.*" }],
+      "has": [{ "type": "header", "key": "accept", "value": ".*text/markdown.*" }],
       "destination": "/docs/index.md"
     },
     {
       "source": "/docs/",
-      "has": [{ "type": "header", "key": "accept", "value": ".*text\\/markdown.*" }],
+      "has": [{ "type": "header", "key": "accept", "value": ".*text/markdown.*" }],
       "destination": "/docs/index.md"
     },
     {
       "source": "/docs/:path*/",
-      "has": [{ "type": "header", "key": "accept", "value": ".*text\\/markdown.*" }],
+      "has": [{ "type": "header", "key": "accept", "value": ".*text/markdown.*" }],
       "destination": "/docs/:path*/index.md"
     },
     {
-      "source": "/docs/:path((?!assets\\/|themes\\/|.*\\.[a-zA-Z0-9]+$).*)",
-      "has": [{ "type": "header", "key": "accept", "value": ".*text\\/markdown.*" }],
+      "source": "/docs/:path((?!assets/|themes/|.*\\.[a-zA-Z0-9]+$).*)",
+      "has": [{ "type": "header", "key": "accept", "value": ".*text/markdown.*" }],
       "destination": "/docs/:path.md"
     }
   ]

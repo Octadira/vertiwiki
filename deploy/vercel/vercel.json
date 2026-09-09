@@ -57,6 +57,18 @@
   ],
   "redirects": [
     {
+      "source": "/docs/(.*\\.md)",
+      "has": [
+        {
+          "type": "header",
+          "key": "accept",
+          "value": ".*text/html.*"
+        }
+      ],
+      "destination": "/docs/#/$1",
+      "permanent": false
+    },
+    {
       "source": "/(.*\\.md)",
       "has": [
         {
@@ -66,18 +78,6 @@
         }
       ],
       "destination": "/#/$1",
-      "permanent": false
-    },
-    {
-      "source": "/:path((?!assets/|themes/|.*\\.[a-zA-Z0-9]+$).*)",
-      "has": [
-        {
-          "type": "header",
-          "key": "accept",
-          "value": ".*text/html.*"
-        }
-      ],
-      "destination": "/#/:path.md",
       "permanent": false
     }
   ],

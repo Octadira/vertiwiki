@@ -42,7 +42,12 @@ AddDefaultCharset UTF-8
     RewriteCond %{REQUEST_FILENAME}.md -f
     RewriteRule ^(.*)$ $1.md [L]
 
-    # Human Reader Redirection: If human browser sends Accept: text/html on .md file
+    # Human Reader Redirection: Subfolder /docs/*.md -> /docs/#/$1
+    RewriteCond %{HTTP:Accept} text/html [NC]
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule ^docs/(.*\.md)$ /docs/#/$1 [R=302,NE,L]
+
+    # Human Reader Redirection: Root *.md -> /#/$1
     RewriteCond %{HTTP:Accept} text/html [NC]
     RewriteCond %{REQUEST_FILENAME} -f
     RewriteRule ^(.*\.md)$ /#/$1 [R=302,NE,L]

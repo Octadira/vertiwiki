@@ -29,6 +29,19 @@
     Access-Control-Allow-Origin = "*"
     Cache-Control = "public, max-age=0, must-revalidate"
 
+# Content Negotiation for Accept: text/markdown on /docs hub
+[[redirects]]
+  from = "/docs"
+  to = "/docs/index.md"
+  status = 200
+  conditions = {Headers = {Accept = "text/markdown"}}
+
+[[redirects]]
+  from = "/docs/"
+  to = "/docs/index.md"
+  status = 200
+  conditions = {Headers = {Accept = "text/markdown"}}
+
 # Content Negotiation for Accept: text/markdown on root
 [[redirects]]
   from = "/"
@@ -43,7 +56,14 @@
   status = 200
   conditions = {Headers = {Accept = "text/markdown"}}
 
-# Human Reader Redirection: route browser visits on *.md into VertiWiki viewer
+# Human Reader Redirection: route subfolder /docs/*.md into VertiWiki viewer
+[[redirects]]
+  from = "/docs/*.md"
+  to = "/docs/#/:splat.md"
+  status = 302
+  conditions = {Headers = {Accept = "text/html"}}
+
+# Human Reader Redirection: route root *.md into VertiWiki viewer
 [[redirects]]
   from = "/*.md"
   to = "/#/:splat.md"

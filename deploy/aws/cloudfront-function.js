@@ -37,11 +37,14 @@ function handler(event) {
 
     // 2. Human Reader Redirection: If browser requests HTML on .md file, redirect to hash route
     if (acceptHeader.indexOf('text/html') !== -1 && uri.endsWith('.md')) {
+        var targetLocation = uri.startsWith('/docs/')
+            ? '/docs/#' + uri.substring(5)
+            : '/#' + uri;
         return {
             statusCode: 302,
             statusDescription: 'Found',
             headers: {
-                location: { value: '/#' + uri }
+                location: { value: targetLocation }
             }
         };
     }
