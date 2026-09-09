@@ -13,9 +13,46 @@ import { VertiWikiPlugin, PluginContext } from '../core/pipeline';
  * Automatically isolates fenced code blocks and inline backtick code so that
  * literal `[[...]]` written within code examples are left untouched.
  */
+function computeRelativePath(fromFilePath: string, targetPath: string): string {
+  if (targetPath.startsWith('/') || targetPath.startsWith('http://') || targetPath.startsWith('https://')) {
+    return targetPath;
+  }
+
+  const cleanFrom = fromFilePath.replace(/\\/g, '/').replace(/^\/+/, '');
+  const cleanTarget = targetPath.replace(/\\/g, '/').replace(/^\/+/, '');
+
+  const fromSegments = cleanFrom.split('/');
+  fromSegments.pop(); // remove filename, keep directory
+
+  const isLocale = fromSegments.length > 0 && ['ro', 'fr', 'de', 'es', 'it'].includes(fromSegments[0]);
+  let targetNormalized = cleanTarget;
+
+  if (isLocale) {
+    const localePrefix = fromSegments[0];
+    if (targetNormalized.startsWith(`${localePrefix}/`)) {
+      targetNormalized = targetNormalized.substring(localePrefix.length + 1);
+    }
+    targetNormalized = `${localePrefix}/${targetNormalized}`;
+  }
+
+  const targetSegments = targetNormalized.split('/');
+
+  let common = 0;
+  while (common < fromSegments.length && common < targetSegments.length && fromSegments[common] === targetSegments[common]) {
+    common++;
+  }
+
+  const upCount = fromSegments.length - common;
+  const upSteps = Array(upCount).fill('..');
+  const downSteps = targetSegments.slice(common);
+
+  const rel = [...upSteps, ...downSteps].join('/');
+  return rel || './';
+}
+
 export const wikilinksPlugin: VertiWikiPlugin = {
   name: 'wikilinks',
-  beforeParse: (markdown: string, _context: PluginContext) => {
+  beforeParse: (markdown: string, context?: PluginContext) => {
     if (!markdown || !markdown.includes('[[')) {
       return markdown;
     }
@@ -38,7 +75,6 @@ export const wikilinksPlugin: VertiWikiPlugin = {
     });
 
     // 3. Transform Wikilinks [[target(#anchor)?(|label)?]]
-    // Matches [[target#anchor|label]], [[target|label]], [[target#anchor]], [[target]]
     processed = processed.replace(/\[\[([^\]\n|#]+)(?:#([^\]\n|]+))?(?:\|([^\]\n]+))?\]\]/g, (match, rawTarget, rawAnchor, rawLabel) => {
       const target = (rawTarget || '').trim();
       if (!target) return match;
@@ -52,10 +88,14 @@ export const wikilinksPlugin: VertiWikiPlugin = {
         targetFile = `${targetFile}.md`;
       }
 
+      // Compute relative path if context.filePath is available
+      if (context && context.filePath) {
+        targetFile = computeRelativePath(context.filePath, targetFile);
+      }
+
       // Determine display label
       let displayLabel = label;
       if (!displayLabel) {
-        // Use filename / target base name or target name
         const lastSegment = target.includes('/') ? target.substring(target.lastIndexOf('/') + 1) : target;
         displayLabel = anchor ? `${lastSegment} #${anchor}` : lastSegment;
       }

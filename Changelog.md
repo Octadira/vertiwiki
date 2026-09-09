@@ -1,6 +1,15 @@
 # Changelog
 
-## VertiWiki 0.9.0 "Ichi" (September 2026) :badge[Latest]{type=success}
+## VertiWiki 0.9.1 (September 2026) :badge[Latest]{type=success}
+
+### 🐛 Subfolder & Localized Wikilink Relative Path Resolution
+- **Relative Path Resolution (`src/plugins/wikilinks.ts`)**: Enhanced `wikilinksPlugin` to compute relative directory traversal paths (`../`) based on `context.filePath`, resolving target files accurately when wikilinks are invoked from subdirectories (`configuration/`, `concepts/`, `guides/`, `reference/`).
+- **Locale Preservation**: Automatically preserves language context (`ro/`, `fr/`) so that wikilinks within localized subfolders resolve strictly within their active language directory.
+- **Unit Test Coverage (`tests/plugins-markup.test.ts`)**: Added automated Vitest coverage verifying subfolder and localized wikilink transformations, expanding the suite to 19 test files and 105 passed tests.
+
+---
+
+## VertiWiki 0.9.0 "Ichi" (September 2026)
 
 ### 🏛️ Modular Layout Engine, Decoupled Presets & Standalone Pro Themes
 - **Extensible Layout Engine (`data-layout`)**: Introduced modular layout modes (`default`, `book`, `handbook`, `api`, `hub`) toggled declaratively via `config.json` or per-page Frontmatter (`layout: book`, `layout: api`), fully powered by modern CSS Grid and Flexbox with zero runtime JavaScript bloat.

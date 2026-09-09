@@ -1,4 +1,4 @@
-# 🧠 VertiWiki 0.9.0 "Ichi"
+# 🧠 VertiWiki 0.9.1
 
 > The next-generation, 100% static, single-file Markdown wiki & documentation engine built for 2026 and beyond.
 
@@ -7,8 +7,8 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7+-blue.svg)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-6.0+-purple.svg)](https://vitejs.dev/)
 [![Single File HTML](https://img.shields.io/badge/Bundle-Single--File-emerald.svg)](dist/vertiwiki.html)
-[![Version](https://img.shields.io/badge/version-0.9.0--Ichi-teal.svg)](https://github.com/Octadira/vertiwiki/releases)
-[![Tests](https://img.shields.io/badge/tests-104%20passed-brightgreen.svg)](#-automated-testing)
+[![Version](https://img.shields.io/badge/version-0.9.1-teal.svg)](https://github.com/Octadira/vertiwiki/releases)
+[![Tests](https://img.shields.io/badge/tests-105%20passed-brightgreen.svg)](#-automated-testing)
 [![AI & AEO Ready](https://img.shields.io/badge/AI_%26_AEO-Ready-2ea44f.svg)](#-answer-engine-optimization-aeo)
 [![Live Demo](https://img.shields.io/badge/Demo-verti.wiki-emerald.svg)](https://verti.wiki)
 

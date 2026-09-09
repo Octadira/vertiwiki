@@ -139,6 +139,41 @@ Real link: [[real-page]]
     expect(result).toContain('[[AlsoNotALink|Keep literal]]');
     expect(result).toContain('[real-page](real-page.md)');
   });
+
+  it('resolves wikilinks correctly from subfolders and localized subfolders', () => {
+    // English subfolder: configuration/themes-and-styling.md -> reference/theme-schema
+    const contextEn: PluginContext = {
+      filePath: 'configuration/themes-and-styling.md',
+      rawMarkdown: '',
+      config: { ...DEFAULT_CONFIG },
+      container: null as any
+    };
+    const mdEn = 'Full schema in [[reference/theme-schema|Theme JSON Schema]].';
+    const resultEn = wikilinksPlugin.beforeParse!(mdEn, contextEn) as string;
+    expect(resultEn).toBe('Full schema in [Theme JSON Schema](../reference/theme-schema.md).');
+
+    // Romanian subfolder: ro/configuration/themes-and-styling.md -> reference/theme-schema
+    const contextRo: PluginContext = {
+      filePath: 'ro/configuration/themes-and-styling.md',
+      rawMarkdown: '',
+      config: { ...DEFAULT_CONFIG },
+      container: null as any
+    };
+    const mdRo = 'Schema în [[reference/theme-schema|Schema JSON]].';
+    const resultRo = wikilinksPlugin.beforeParse!(mdRo, contextRo) as string;
+    expect(resultRo).toBe('Schema în [Schema JSON](../reference/theme-schema.md).');
+
+    // Same folder: configuration/overview.md -> configuration/themes-and-styling
+    const contextSame: PluginContext = {
+      filePath: 'configuration/overview.md',
+      rawMarkdown: '',
+      config: { ...DEFAULT_CONFIG },
+      container: null as any
+    };
+    const mdSame = 'See [[configuration/themes-and-styling|Themes]].';
+    const resultSame = wikilinksPlugin.beforeParse!(mdSame, contextSame) as string;
+    expect(resultSame).toBe('See [Themes](themes-and-styling.md).');
+  });
 });
 
 describe('calloutsPlugin', () => {
