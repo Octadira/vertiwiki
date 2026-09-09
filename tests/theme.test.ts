@@ -98,8 +98,16 @@ describe('Theme Normalization & Defensive Contract', () => {
     expect(normalized.dark.primary).toBe(defaultTheme.dark.primary);
   });
 
-  it('supports extends to inherit from another builtin theme (e.g. nord)', () => {
-    const nordTheme = BUILTIN_THEMES.find(t => t.id === 'nord')!;
+  it('supports extends to inherit from another registered theme (e.g. nord in themesMap)', () => {
+    const nordBase: any = {
+      id: 'nord',
+      name: 'Nord Arctic',
+      previewColor: '#88c0d0',
+      light: { primary: '#5e81ac', background: '#eceff4', sidebar: '#e5e9f0' },
+      dark: { primary: '#88c0d0', background: '#242933', sidebar: '#1e222a' }
+    };
+    const themesMap = new Map();
+    themesMap.set('nord', normalizeThemePreset(nordBase));
 
     const partialNord: CustomThemeDefinition = {
       id: 'custom-nord-variant',
@@ -113,14 +121,14 @@ describe('Theme Normalization & Defensive Contract', () => {
       }
     };
 
-    const normalized = normalizeThemePreset(partialNord);
+    const normalized = normalizeThemePreset(partialNord, themesMap);
     expect(normalized.extends).toBe('nord');
     expect(normalized.light.primary).toBe('#10b981');
     expect(normalized.dark.primary).toBe('#34d399');
     // Inherits nord base colors instead of default
-    expect(normalized.light.background).toBe(nordTheme.light.background);
-    expect(normalized.dark.background).toBe(nordTheme.dark.background);
-    expect(normalized.light.sidebar).toBe(nordTheme.light.sidebar);
+    expect(normalized.light.background).toBe('#eceff4');
+    expect(normalized.dark.background).toBe('#242933');
+    expect(normalized.light.sidebar).toBe('#e5e9f0');
   });
 
   it('cleans dirty, empty or invalid values (null, undefined, empty strings)', () => {
@@ -250,7 +258,21 @@ describe('ThemeManager with Defensive Theme Injection', () => {
     expect(injectedStyle).toBeDefined();
     expect(injectedStyle.textContent).not.toContain('undefined');
     expect(injectedStyle.textContent).toContain('--primary: #f97316;');
-    expect(injectedStyle.textContent).toContain('--background: #fafafa;');
+    expect(injectedStyle.textContent).toContain('--background: #ffffff;');
+  });
+
+  it('injects arbitrary custom CSS rules when specified in theme definition', () => {
+    const proTheme: CustomThemeDefinition = {
+      id: 'pro-layout',
+      name: 'Pro Layout Theme',
+      css: '.verti-pro-custom { display: flex; }',
+      light: { primary: '#123456' }
+    };
+
+    const manager = new ThemeManager('auto', 'default', [proTheme]);
+    const style = createdElements.find(el => el.id === 'verti-theme-pro-layout');
+    expect(style).toBeDefined();
+    expect(style.textContent).toContain('.verti-pro-custom { display: flex; }');
   });
 
   it('allows dynamically registering and hot-reloading themes via registerTheme', () => {

@@ -57,6 +57,9 @@ export class ThemeManager {
     const normalized = normalizeThemePreset(theme, this.themes);
     this.themes.set(normalized.id, normalized);
     this.injectCustomThemeCss(normalized);
+    if (this.currentPreset === normalized.id) {
+      this.apply();
+    }
     return normalized;
   }
 
@@ -107,15 +110,18 @@ export class ThemeManager {
     }
   }
 
-  private apply(): void {
-    if (typeof document === 'undefined' || !document.documentElement) return;
+  public apply(): void {
+    if (typeof document === 'undefined') return;
 
-    // Set preset attribute
-    document.documentElement.setAttribute('data-theme-preset', this.currentPreset);
+    const preset = this.themes.get(this.currentPreset) || this.themes.get('default');
+    if (preset) {
+      document.documentElement.setAttribute('data-theme-preset', preset.id);
+    }
 
-    // Set dark/light mode attribute
-    let effectiveMode = this.currentMode;
-    if (effectiveMode === 'auto') {
+    let effectiveMode: 'light' | 'dark' = 'light';
+    if (this.currentMode === 'light' || this.currentMode === 'dark') {
+      effectiveMode = this.currentMode;
+    } else {
       const prefersDark =
         typeof window !== 'undefined' && window.matchMedia
           ? window.matchMedia('(prefers-color-scheme: dark)').matches
@@ -138,6 +144,29 @@ export class ThemeManager {
         link.id = fontLinkId;
         link.rel = 'stylesheet';
         link.href = fontUrl;
+        document.head.appendChild(link);
+      }
+    }
+
+    // Load external CSS stylesheets if provided in customCss array or string ending with .css
+    if (Array.isArray(theme.customCss)) {
+      theme.customCss.forEach((cssUrl, idx) => {
+        const linkId = `verti-custom-css-${theme.id}-${idx}`;
+        if (!document.getElementById(linkId)) {
+          const link = document.createElement('link');
+          link.id = linkId;
+          link.rel = 'stylesheet';
+          link.href = cssUrl;
+          document.head.appendChild(link);
+        }
+      });
+    } else if (typeof theme.customCss === 'string' && theme.customCss.trim().endsWith('.css')) {
+      const linkId = `verti-custom-css-${theme.id}`;
+      if (!document.getElementById(linkId)) {
+        const link = document.createElement('link');
+        link.id = linkId;
+        link.rel = 'stylesheet';
+        link.href = theme.customCss.trim();
         document.head.appendChild(link);
       }
     }
@@ -175,6 +204,11 @@ export class ThemeManager {
       ${colors.radius ? `--radius: ${colors.radius};` : ''}
     `;
 
+    // Support arbitrary custom CSS rules defined directly on the theme (e.g. for Pro themes)
+    const extraCss = theme.css ||
+      (typeof theme.customCss === 'string' && !theme.customCss.trim().endsWith('.css') ? theme.customCss : '');
+    const customCssRules = extraCss ? `\n/* Custom Theme Rules for ${theme.id} */\n${extraCss}` : '';
+
     style.textContent = `
       [data-theme-preset='${theme.id}'],
       [data-theme-preset='${theme.id}'][data-theme='light'] {
@@ -183,6 +217,7 @@ export class ThemeManager {
       [data-theme-preset='${theme.id}'][data-theme='dark'] {
         ${buildProps(theme.dark)}
       }
+      ${customCssRules}
     `;
 
     if (document.head) {

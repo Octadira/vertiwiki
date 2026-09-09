@@ -312,6 +312,13 @@ ${currentRawMarkdown}`;
         themeManager.setPreset(parsed.frontmatter.theme);
       }
 
+      // Support per-page layout mode & reading content width from frontmatter or config
+      const targetLayout = parsed.frontmatter?.layout || config.layoutMode || 'default';
+      layout.setLayoutMode(targetLayout);
+
+      const targetContentWidth = parsed.frontmatter?.contentWidth || config.contentWidth || 'normal';
+      layout.setContentWidth(targetContentWidth);
+
       currentRawMarkdown = rawMarkdown;
       currentParsedTitle = parsed.title;
       currentParsedDesc = parsed.description;

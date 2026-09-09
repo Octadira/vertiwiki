@@ -11,6 +11,7 @@
 * [Wikilinks & Cross-Referencing](docs/guides/wikilinks.md)
 * [Deployment Guide](docs/guides/deployment.md)
 * [XML Sitemaps & SEO Guide](docs/guides/sitemap-seo.md)
+* [Modular Layouts & Handbooks](docs/guides/layout-modes.md)
 * [Advanced Configuration](docs/advanced/configuration.md)
 * [Math & Mermaid Diagrams](math_diagrams.md)
 

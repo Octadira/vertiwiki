@@ -4,7 +4,7 @@ description: Explore the comprehensive suite of 14 built-in plugins and interact
 tags: [features, plugins, tabs, math, mermaid, wikilinks, i18n, search, lightbox, aeo]
 ---
 
-# Modern Features & 14 Built-in Plugins :badge[v0.8.4]{type=primary} :badge[Interactive Demo]{type=success}
+# Modern Features & 14 Built-in Plugins :badge[v0.9.0]{type=primary} :badge[Interactive Demo]{type=success}
 
 VertiWiki includes **14 built-in zero-dependency plugins** that transform pure Markdown into a dynamic, rich documentation application directly in the browser.
 
@@ -172,4 +172,15 @@ VertiWiki eliminates the flash of unstyled/unrendered content (FOUC) entirely:
 
 * **Semantic HTML Bot Landmark**: Embedded `<nav class="verti-crawl-tree">` outputs clean, crawlable `<a href="...">` anchor links, solving Google Search Console's "Discovered - currently not indexed" issue on client-side Markdown SPAs.
 * **Server-Side Content Negotiation**: Ready-to-use recipes in `deploy/` for Vercel, Netlify, Cloudflare Workers, Nginx, Apache, and AWS CloudFront that route `Accept: text/markdown` directly to raw `.md` documents.
+
+---
+
+## 17. 🏛️ Modular Layout Engine & Non-Technical Ergonomics
+
+* **Modular Layout Modes (`data-layout`)**: Switch effortlessly between `default` (wiki), `book` (literary reading), `handbook` (HR onboarding & policies), `api` (split code reference), and `hub` (bento-grid platform portals).
+* **Reading Ergonomics (`contentWidth: "readable"`)**: Constrains prose to the golden 68ch measure with 1.8 line-height for books and handbooks.
+* **Developer Control (`enableAiCopy: false`)**: Option to hide code/AI-centric buttons for non-technical company wikis.
+* **Top Navbar Links (`headerLinks`)**: Embed direct external links or styled buttons in the header navigation.
+* **Synchronized Code Tabs**: Clicking a tab (e.g. Python) synchronizes all matching code tabs across the page automatically.
+
 

@@ -14,10 +14,34 @@ export class Layout {
     this.config = config;
 
     this.appContainer = document.getElementById('verti-app') || document.body;
+    this.appContainer?.setAttribute?.('data-layout', this.config.layoutMode || 'default');
+    this.appContainer?.setAttribute?.('data-content-width', this.config.contentWidth || 'normal');
+
+    // Load custom CSS stylesheets configured globally in config.json
+    if (this.config.customCss && typeof document !== 'undefined' && document.head) {
+      const urls = Array.isArray(this.config.customCss) ? this.config.customCss : [this.config.customCss];
+      urls.forEach((url, idx) => {
+        const linkId = `verti-config-css-${idx}`;
+        if (!document.getElementById(linkId)) {
+          const link = document.createElement('link');
+          link.id = linkId;
+          link.rel = 'stylesheet';
+          link.href = url;
+          document.head.appendChild(link);
+        }
+      });
+    }
 
     const brandMode = this.config.brandDisplay || 'both';
     const showLogo = (brandMode === 'both' || brandMode === 'logo') && Boolean(this.config.logo);
     const showTitle = (brandMode === 'both' || brandMode === 'title' || !showLogo) && Boolean(this.config.title);
+
+    const headerLinksHtml = (this.config.headerLinks || []).map(link => {
+      const targetAttr = link.isExternal ? 'target="_blank" rel="noopener noreferrer"' : '';
+      const isButton = link.type === 'button';
+      const cssClass = isButton ? 'verti-btn verti-btn-sm verti-header-link-btn' : 'verti-header-link';
+      return `<a href="${escapeHtml(link.href)}" class="${cssClass}" ${targetAttr}>${escapeHtml(link.title)}</a>`;
+    }).join('');
 
     this.appContainer.innerHTML = `
       <header class="verti-header">
@@ -49,6 +73,7 @@ export class Layout {
         </div>
 
         <div class="verti-header-right">
+          ${headerLinksHtml ? `<nav class="verti-header-links" aria-label="Header Links">${headerLinksHtml}</nav>` : ''}
           ${this.config.enableSearch ? `
             <button class="verti-icon-btn verti-mobile-search-btn" aria-label="Search docs" title="Search (⌘K)">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -101,6 +126,7 @@ export class Layout {
             <div class="verti-article-topbar">
               <nav class="verti-breadcrumbs" id="verti-breadcrumbs" aria-label="Breadcrumb"></nav>
               <div class="verti-article-actions">
+                ${this.config.enableAiCopy !== false ? `
                 <button class="verti-ai-copy-btn" id="verti-ai-copy-btn" title="Copy Markdown with metadata for ChatGPT / Claude / Perplexity" aria-label="Copy for AI">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <rect width="16" height="12" x="4" y="8" rx="2"></rect>
@@ -110,6 +136,7 @@ export class Layout {
                   </svg>
                   <span>Copy for AI</span>
                 </button>
+                ` : ''}
               </div>
             </div>
             <article class="verti-article" id="verti-content"></article>
@@ -348,5 +375,25 @@ export class Layout {
         }
       }
     });
+  }
+
+  public setLayoutMode(mode: string): void {
+    if (this.appContainer) {
+      this.appContainer.setAttribute('data-layout', mode || 'default');
+    }
+  }
+
+  public getLayoutMode(): string {
+    return this.appContainer?.getAttribute('data-layout') || 'default';
+  }
+
+  public setContentWidth(width: string): void {
+    if (this.appContainer) {
+      this.appContainer.setAttribute('data-content-width', width || 'normal');
+    }
+  }
+
+  public getContentWidth(): string {
+    return this.appContainer?.getAttribute('data-content-width') || 'normal';
   }
 }

@@ -25,39 +25,68 @@ VertiWiki defines a universal set of CSS custom properties mapped across all the
 
 ---
 
-## 🎭 Built-in Themes Catalog
+## 🎭 Base Theme & Decoupled Presets Catalog
 
-VertiWiki includes 8 built-in theme presets:
+Starting with VertiWiki **0.9.0**, the engine bundles a single, canonical, ultra-clean base preset:
 
-1. **`obsidian` (Obsidian Framework)**:
-   * Deep carbon slate (`#10141a`, `#161B22`) with glowing neon cyan accents (`#00eefc`) and Geist typography.
-2. **`terracotta` (Warm Terracotta)**:
-   * Warm clay & sepia tones, Outfit typography (`#c96442`, `#faf9f5` / `#262624`, `#d97757`).
-3. **`emerald` (Forest Emerald)**:
-   * Crisp teal and vibrant emerald green (`#075e54`, `#25d366`, `#f0f2f5` / `#0b141a`, `#00a884`).
-4. **`default` (Modern Indigo)**:
-   * Minimalist documentation aesthetic inspired by VitePress and Tailwind UI.
-5. **`nord` (Nord Arctic)**:
-   * Cool arctic ice palette with frozen blues and muted slates.
-6. **`dracula` (Dracula Midnight)**:
-   * Classic high-contrast dark theme with vibrant purples and neon pinks.
-7. **`amethyst` (Amethyst Cyber)**:
-   * Electric purple, magenta, and cyberpunk accents.
-8. **`editorial` (Editorial Serif)**:
-   * Warm sepia paper background with elegant serif typography.
+1. **`default` (Modern Monochrome & Slate)**:
+   * Minimalist documentation aesthetic inspired by Shadcn/UI and Vercel. Features high-contrast monochrome design tokens (`#ffffff` light, `#09090b` dark, `#18181b` accents, and crisp system typography).
+
+### 🎨 Modular Presets in `themes/`
+All other presets are decoupled into dedicated, auto-resolving JSON files in the `themes/` directory:
+* **`themes/obsidian.json`**: Deep carbon slate with glowing neon cyan accents (`#00eefc`) and Geist typography.
+* **`themes/terracotta.json`**: Warm clay & sepia tones with Outfit typography.
+* **`themes/emerald.json`**: Crisp teal and vibrant emerald green.
+* **`themes/nord.json`**: Cool arctic ice palette with frozen blues.
+* **`themes/dracula.json`**: High-contrast dark theme with vibrant purples and neon pinks.
+* **`themes/amethyst.json`**: Electric violet and magenta cyberpunk style.
+* **`themes/editorial.json`**: Literary serif typography on sepia paper.
 
 ---
 
-## ⚙️ Configuration & Theming Options
+## 🏛️ Modular Layout Engine (`data-layout`)
 
-In `config.json`, you can customize the theme behavior:
+VertiWiki includes an extensible layout engine for **technical** and **non-technical** documentation:
 
+| Layout Mode | Intended Use Case | Behavior & Characteristics |
+| :--- | :--- | :--- |
+| `default` | Classic Documentation Wiki | Standard 3-column layout (Sidebar + Content + Table of Contents). |
+| `book` | Books, Novels, Essays, Academic Papers | Centered reading column, hidden TOC sidebar, elegant reading margins. |
+| `handbook` | Employee Onboarding, Company Policies, SOPs | Non-technical width, friendly padding, optimized for HR and Operations. |
+| `api` | REST APIs, SDK References | Expands content wrapper for dual-pane and sticky 3-column code rails. |
+| `hub` | Developer Portals, Multi-Product Platforms | Bento-grid card sections and glassmorphism navbar. |
+
+### Configuration Example
 ```json
 {
-  "themePreset": "obsidian",
-  "defaultTheme": "dark",
-  "enableThemeChooser": true,
-  "customThemes": [
+  "themePreset": "default",
+  "layoutMode": "handbook",
+  "contentWidth": "readable",
+  "enableAiCopy": false,
+  "headerLinks": [
+    { "title": "Platform", "href": "https://company.com", "isExternal": true },
+    { "title": "Sign In", "href": "https://app.company.com/login", "type": "button" }
+  ]
+}
+```
+
+---
+
+## 📖 Reading Ergonomics for Non-Technical Documentation
+
+For employee handbooks, onboarding guides, legal documents, and literary writing:
+* **`contentWidth: "readable"`**: Enforces the golden editorial standard of `68ch` (~68 characters per line) with relaxed `1.8` line-height, eliminating eye fatigue on wide monitors.
+* **`enableAiCopy: false`**: Hides developer-centric "Copy for AI" buttons to present a clean, friendly document for general audiences.
+
+---
+
+## ⚡ Standalone Commercial Pro Themes (`pro-themes/`)
+
+Pre-crafted commercial theme packages ready for enterprise deployment:
+1. **`pro-themes/company-handbook/`**: Soft sage/slate palette, checklist styling (`- [x]`), friendly pastel callouts.
+2. **`pro-themes/minimal-book/`**: Distraction-free reading with Lora serif typography and book chapter dividers.
+3. **`pro-themes/api-pro/`**: Stripe & Mintlify-grade 3-column layout with synchronized code tabs and HTTP method badges.
+4. **`pro-themes/developer-hub/`**: Enterprise developer portal with Bento-grid card tiles.
     "themes/obsidian.json"
   ]
 }

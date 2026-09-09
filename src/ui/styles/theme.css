@@ -63,303 +63,166 @@
 }
 
 /* ========================================================
-   THEME 1: DEFAULT (Modern Indigo)
+   DEFAULT THEME (Modern Monochrome & Slate)
    ======================================================== */
 :root,
 [data-theme-preset='default'] {
-  --background: #fafafa;
+  --background: #ffffff;
   --foreground: #09090b;
   --card: #ffffff;
   --card-foreground: #09090b;
-  --primary: #6366f1;
-  --primary-foreground: #ffffff;
+  --primary: #18181b;
+  --primary-foreground: #fafafa;
   --secondary: #f4f4f5;
   --secondary-foreground: #18181b;
   --muted: #f4f4f5;
   --muted-foreground: #71717a;
-  --accent: #6366f1;
-  --accent-foreground: #ffffff;
+  --accent: #18181b;
+  --accent-foreground: #fafafa;
   --border: #e4e4e7;
-  --sidebar: #ffffff;
+  --sidebar: #fafafa;
   --sidebar-foreground: #18181b;
   --sidebar-border: #e4e4e7;
-  --radius: 0.6rem;
+  --radius: 0.5rem;
 }
 
 [data-theme='dark'],
 [data-theme-preset='default'][data-theme='dark'] {
   --background: #09090b;
-  --foreground: #fafafa;
-  --card: #18181b;
-  --card-foreground: #fafafa;
-  --primary: #818cf8;
+  --foreground: #f4f4f5;
+  --card: #0f0f11;
+  --card-foreground: #f4f4f5;
+  --primary: #fafafa;
   --primary-foreground: #09090b;
-  --secondary: #27272a;
-  --secondary-foreground: #f4f4f5;
+  --secondary: #18181b;
+  --secondary-foreground: #fafafa;
   --muted: #18181b;
   --muted-foreground: #a1a1aa;
-  --accent: #818cf8;
+  --accent: #fafafa;
   --accent-foreground: #09090b;
   --border: #27272a;
-  --sidebar: #121215;
-  --sidebar-foreground: #fafafa;
+  --sidebar: #09090b;
+  --sidebar-foreground: #f4f4f5;
   --sidebar-border: #27272a;
 }
 
 /* ========================================================
-   THEME 2: TERRACOTTA (Warm Clay / Sepia / Outfit)
+   HEADER NAVIGATION LINKS (Enterprise & White-Label)
    ======================================================== */
-[data-theme-preset='terracotta'] {
-  --background: #faf9f5;
-  --foreground: #3d3929;
-  --card: #f5f4ef;
-  --card-foreground: #141413;
-  --primary: #c96442;
-  --primary-foreground: #ffffff;
-  --secondary: #e9e6dc;
-  --secondary-foreground: #535146;
-  --muted: #ede9de;
-  --muted-foreground: #6e6d68;
-  --accent: #e9e6dc;
-  --accent-foreground: #28261b;
-  --border: #dad9d4;
-  --sidebar: #f5f4ee;
-  --sidebar-foreground: #3d3d3a;
-  --sidebar-border: #ebebeb;
-  --font-sans: Outfit, system-ui, sans-serif;
-  --radius: 1rem;
+.verti-header-links {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-right: 0.5rem;
 }
 
-[data-theme-preset='terracotta'][data-theme='dark'] {
-  --background: #262624;
-  --foreground: #f1f1ef;
-  --card: #2c2c2b;
-  --card-foreground: #faf9f5;
-  --primary: #d97757;
-  --primary-foreground: #141413;
-  --secondary: #2c2c2b;
-  --secondary-foreground: #faf9f5;
-  --muted: #1b1b19;
-  --muted-foreground: #b7b5a9;
-  --accent: #34332e;
-  --accent-foreground: #f5f4ee;
-  --border: #3e3e38;
-  --sidebar: #1f1e1d;
-  --sidebar-foreground: #c3c0b6;
-  --sidebar-border: #3e3e38;
+.verti-header-link {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--verti-text-secondary);
+  text-decoration: none;
+  padding: 0.35rem 0.65rem;
+  border-radius: var(--verti-radius-md);
+  transition: var(--verti-transition);
+}
+
+.verti-header-link:hover {
+  color: var(--verti-text-primary);
+  background: var(--verti-bg-subtle);
+}
+
+.verti-header-link-btn {
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--verti-radius-md);
+  background: var(--verti-accent);
+  color: var(--verti-accent-contrast);
+  text-decoration: none;
+  transition: var(--verti-transition);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.verti-header-link-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 640px) {
+  .verti-header-links {
+    display: none;
+  }
 }
 
 /* ========================================================
-   THEME 3: EMERALD (Forest Teal / Green)
+   CONTENT WIDTH ERGONOMICS (Technical & Non-Technical)
    ======================================================== */
-[data-theme-preset='emerald'] {
-  --background: #f0f2f5;
-  --foreground: #111b21;
-  --card: #ffffff;
-  --card-foreground: #111b21;
-  --primary: #075e54;
-  --primary-foreground: #ffffff;
-  --secondary: #e7f8f0;
-  --secondary-foreground: #075e54;
-  --muted: #f0f2f5;
-  --muted-foreground: #667781;
-  --accent: #25d366;
-  --accent-foreground: #ffffff;
-  --border: #e9edef;
-  --sidebar: #ffffff;
-  --sidebar-foreground: #111b21;
-  --sidebar-border: #e9edef;
-  --font-sans: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-  --radius: 1rem;
+/* Readable Prose Measure for books, handbooks, essays (68ch) */
+[data-content-width='readable'] .verti-article {
+  max-width: 68ch;
+  line-height: 1.8;
+  font-size: 1.05rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-[data-theme-preset='emerald'][data-theme='dark'] {
-  --background: #0b141a;
-  --foreground: #e9edef;
-  --card: #1f2c34;
-  --card-foreground: #e9edef;
-  --primary: #00a884;
-  --primary-foreground: #111b21;
-  --secondary: #12332a;
-  --secondary-foreground: #00a884;
-  --muted: #182229;
-  --muted-foreground: #8696a0;
-  --accent: #25d366;
-  --accent-foreground: #111b21;
-  --border: #2a3942;
-  --sidebar: #111b21;
-  --sidebar-foreground: #e9edef;
-  --sidebar-border: #2a3942;
+[data-content-width='readable'] .verti-article-container {
+  max-width: 850px;
+}
+
+/* Full Width for extensive dashboards, wide tables, or canvas */
+[data-content-width='full'] .verti-article {
+  max-width: 100%;
+}
+
+[data-content-width='full'] .verti-article-container {
+  max-width: 100%;
 }
 
 /* ========================================================
-   THEME 4: NORD (Arctic Ice)
+   LAYOUT MODES (Modular Layout Engine)
    ======================================================== */
-[data-theme-preset='nord'] {
-  --background: #eceff4;
-  --foreground: #2e3440;
-  --card: #e5e9f0;
-  --card-foreground: #2e3440;
-  --primary: #5e81ac;
-  --primary-foreground: #eceff4;
-  --secondary: #d8dee9;
-  --secondary-foreground: #3b4252;
-  --muted: #d8dee9;
-  --muted-foreground: #4c566a;
-  --accent: #88c0d0;
-  --accent-foreground: #2e3440;
-  --border: #d8dee9;
-  --sidebar: #e5e9f0;
-  --sidebar-foreground: #2e3440;
-  --sidebar-border: #d8dee9;
-  --radius: 0.5rem;
+/* Book / Long-form Literary & Academic Mode */
+[data-layout='book'] .verti-toc-sidebar {
+  display: none !important;
 }
 
-[data-theme-preset='nord'][data-theme='dark'] {
-  --background: #242933;
-  --foreground: #eceff4;
-  --card: #2e3440;
-  --card-foreground: #eceff4;
-  --primary: #88c0d0;
-  --primary-foreground: #2e3440;
-  --secondary: #3b4252;
-  --secondary-foreground: #eceff4;
-  --muted: #3b4252;
-  --muted-foreground: #d8dee9;
-  --accent: #81a1c1;
-  --accent-foreground: #2e3440;
-  --border: #3b4252;
-  --sidebar: #1e222a;
-  --sidebar-foreground: #d8dee9;
-  --sidebar-border: #2e3440;
+[data-layout='book'] .verti-article-container {
+  max-width: 760px;
+  margin: 0 auto;
 }
 
-/* ========================================================
-   THEME 5: DRACULA (Midnight)
-   ======================================================== */
-[data-theme-preset='dracula'] {
-  --background: #f8f8f2;
-  --foreground: #282a36;
-  --card: #ffffff;
-  --card-foreground: #282a36;
-  --primary: #6272a4;
-  --primary-foreground: #f8f8f2;
-  --secondary: #e2e4ec;
-  --secondary-foreground: #282a36;
-  --muted: #eaebee;
-  --muted-foreground: #6272a4;
-  --accent: #ff79c6;
-  --accent-foreground: #ffffff;
-  --border: #d6d8e2;
-  --sidebar: #ffffff;
-  --sidebar-foreground: #282a36;
-  --sidebar-border: #d6d8e2;
-  --radius: 0.75rem;
+[data-layout='book'] .verti-article {
+  font-size: 1.1rem;
+  line-height: 1.85;
 }
 
-[data-theme-preset='dracula'][data-theme='dark'] {
-  --background: #1e1f29;
-  --foreground: #f8f8f2;
-  --card: #282a36;
-  --card-foreground: #f8f8f2;
-  --primary: #bd93f9;
-  --primary-foreground: #282a36;
-  --secondary: #44475a;
-  --secondary-foreground: #f8f8f2;
-  --muted: #21222c;
-  --muted-foreground: #6272a4;
-  --accent: #ff79c6;
-  --accent-foreground: #282a36;
-  --border: #44475a;
-  --sidebar: #191a21;
-  --sidebar-foreground: #f8f8f2;
-  --sidebar-border: #44475a;
+[data-layout='book'] .verti-article-topbar {
+  border-bottom: none;
+  margin-bottom: 2rem;
 }
 
-/* ========================================================
-   THEME 6: AMETHYST (Cyber Violet)
-   ======================================================== */
-[data-theme-preset='amethyst'] {
-  --background: #fcfaff;
-  --foreground: #2e1065;
-  --card: #ffffff;
-  --card-foreground: #2e1065;
-  --primary: #9333ea;
-  --primary-foreground: #ffffff;
-  --secondary: #f3e8ff;
-  --secondary-foreground: #581c87;
-  --muted: #f3e8ff;
-  --muted-foreground: #7e22ce;
-  --accent: #d946ef;
-  --accent-foreground: #ffffff;
-  --border: #e9d5ff;
-  --sidebar: #ffffff;
-  --sidebar-foreground: #3b0764;
-  --sidebar-border: #e9d5ff;
-  --radius: 0.8rem;
+/* Handbook / Company Manual / HR SOP Mode */
+[data-layout='handbook'] .verti-article-container {
+  max-width: 900px;
 }
 
-[data-theme-preset='amethyst'][data-theme='dark'] {
-  --background: #0d0714;
-  --foreground: #faf5ff;
-  --card: #1a0f2e;
-  --card-foreground: #faf5ff;
-  --primary: #c084fc;
-  --primary-foreground: #0d0714;
-  --secondary: #2e1065;
-  --secondary-foreground: #faf5ff;
-  --muted: #1e0c38;
-  --muted-foreground: #a855f7;
-  --accent: #f0abfc;
-  --accent-foreground: #0d0714;
-  --border: #3b0764;
-  --sidebar: #130924;
-  --sidebar-foreground: #faf5ff;
-  --sidebar-border: #2e1065;
+[data-layout='handbook'] .verti-article {
+  font-size: 1.025rem;
+  line-height: 1.75;
 }
 
-/* ========================================================
-   THEME 7: EDITORIAL (Serif Sepia)
-   ======================================================== */
-[data-theme-preset='editorial'] {
-  --background: #fbf9f4;
-  --foreground: #292524;
-  --card: #f5f0e6;
-  --card-foreground: #1c1917;
-  --primary: #78350f;
-  --primary-foreground: #ffffff;
-  --secondary: #eee7d7;
-  --secondary-foreground: #44403c;
-  --muted: #f0e9dc;
-  --muted-foreground: #78716c;
-  --accent: #b45309;
-  --accent-foreground: #ffffff;
-  --border: #e2d7c3;
-  --sidebar: #f5f0e6;
-  --sidebar-foreground: #292524;
-  --sidebar-border: #e2d7c3;
-  --font-sans: Georgia, Cambria, 'Times New Roman', serif;
-  --radius: 0.25rem;
+/* API Reference Split-Layout Base Hooks */
+[data-layout='api'] .verti-content-wrapper {
+  max-width: 100%;
 }
 
-[data-theme-preset='editorial'][data-theme='dark'] {
-  --background: #1c1917;
-  --foreground: #f5f5f4;
-  --card: #292524;
-  --card-foreground: #f5f5f4;
-  --primary: #d97706;
-  --primary-foreground: #1c1917;
-  --secondary: #44403c;
-  --secondary-foreground: #f5f5f4;
-  --muted: #292524;
-  --muted-foreground: #a8a29e;
-  --accent: #f59e0b;
-  --accent-foreground: #1c1917;
-  --border: #44403c;
-  --sidebar: #141210;
-  --sidebar-foreground: #f5f5f4;
-  --sidebar-border: #292524;
-  --font-sans: Georgia, Cambria, 'Times New Roman', serif;
+@media (min-width: 1280px) {
+  [data-layout='api'] .verti-article-container {
+    max-width: 1400px;
+  }
 }
 
 /* System Dark Mode Auto Sync */

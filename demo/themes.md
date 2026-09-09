@@ -4,18 +4,27 @@ VertiWiki comes with a powerful, **100% offline, zero-reload theme engine** base
 
 ---
 
-## 🎨 Built-in Theme Presets
+## 🎨 Base Theme & Decoupled Presets
 
-VertiWiki includes beautiful presets out of the box, each featuring dedicated **Light and Dark Mode** color palettes:
+VertiWiki features a modular, zero-bloat theme system:
 
-1. ⚡ **Obsidian Framework**: Neon cyan on deep carbon slate (`#00eefc`, `#10141a`, `#161B22`) with Geist & JetBrains Mono typography.
-2. 🍂 **Warm Terracotta**: Warm sepia and terracotta clay with Outfit typography (`#c96442`, `#faf9f5` / `#262624`, `#d97757`).
-3. 🌲 **Forest Emerald**: Fresh teal & emerald green with clean lines (`#075e54`, `#25d366`, `#f0f2f5` / `#0b141a`, `#00a884`).
-4. ⚡ **Modern Indigo**: Clean and crisp minimalist documentation theme inspired by VitePress.
-5. ❄️ **Nord Arctic**: Polar ice palette with muted blues and snow whites.
-6. 🧛 **Dracula Midnight**: High-contrast purple and pink aesthetic.
-7. 🔮 **Amethyst Cyber**: Electric violet and neon magenta.
-8. 📜 **Editorial Serif**: Warm literary serif typography on sepia paper.
+### 1. Built-in Base Theme:
+* ⚡ **`default` (Modern Monochrome & Slate)**: High-contrast, minimalist documentation aesthetic inspired by Shadcn/UI and Vercel (`#ffffff` / `#09090b`), bundled directly into the core engine with zero external requests.
+
+### 2. Modular Presets in `themes/`:
+* ⚡ **Obsidian Framework (`themes/obsidian.json`)**: Neon cyan on deep carbon slate with Geist typography.
+* 🍂 **Warm Terracotta (`themes/terracotta.json`)**: Warm sepia and terracotta clay with Outfit typography.
+* 🌲 **Forest Emerald (`themes/emerald.json`)**: Fresh teal & emerald green with clean lines.
+* ❄️ **Nord Arctic (`themes/nord.json`)**: Polar ice palette with muted blues and snow whites.
+* 🧛 **Dracula Midnight (`themes/dracula.json`)**: High-contrast purple and pink aesthetic.
+* 🔮 **Amethyst Cyber (`themes/amethyst.json`)**: Electric violet and neon magenta.
+* 📜 **Editorial Serif (`themes/editorial.json`)**: Warm literary serif typography on sepia paper.
+
+### 3. Commercial Standalone Pro Themes in `pro-themes/`:
+* 🤝 **Company Handbook (`pro-themes/company-handbook/`)**: Warm, friendly theme for HR onboarding, SOPs, and company policies.
+* 📖 **Minimal Book (`pro-themes/minimal-book/`)**: Distraction-free reading with Lora serif typography for books, essays, and courses.
+* ⚡ **API Reference Pro (`pro-themes/api-pro/`)**: Stripe & Mintlify-grade 3-column split layout for REST APIs and SDKs.
+* 🚀 **Developer Hub (`pro-themes/developer-hub/`)**: Multi-product platform portal with Bento-grid card sections.
 
 ---
 

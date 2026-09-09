@@ -1,6 +1,23 @@
 # Changelog
 
-## VertiWiki 0.8.4 (September 2026) :badge[Latest]{type=success}
+## VertiWiki 0.9.0 "Ichi" (September 2026) :badge[Latest]{type=success}
+
+### 🏛️ Modular Layout Engine, Decoupled Presets & Standalone Pro Themes
+- **Extensible Layout Engine (`data-layout`)**: Introduced modular layout modes (`default`, `book`, `handbook`, `api`, `hub`) toggled declaratively via `config.json` or per-page Frontmatter (`layout: book`, `layout: api`), fully powered by modern CSS Grid and Flexbox with zero runtime JavaScript bloat.
+- **Reading Ergonomics for Non-Technical Docs (`contentWidth: "readable"`)**: Added an editorial reading mode limiting prose width to 68ch with relaxed line-height (1.8), optimized for employee handbooks, onboarding guides, academic essays, and digital books.
+- **Developer UI Toggles (`enableAiCopy: false`)**: Enabled clean suppression of developer-specific UI actions (such as "Copy for AI") for non-technical audiences (HR, company wikis, customer support manuals).
+- **Header Navigation Links (`headerLinks`)**: Added configuration support for custom links and call-to-action buttons in the top navbar (`.verti-header-right`), facilitating seamless white-labeling and integration with SaaS platforms.
+- **Synchronized Code & Content Tabs**: Switching a tab (e.g. `cURL`, `Python`, or OS platforms) now automatically synchronizes all matching tabs across the page and saves user preferences to `localStorage`.
+- **Core Theme Decoupling**: Streamlined the bundled theme engine to a single canonical **`default` (Modern Monochrome & Slate)** preset, and decoupled former presets (`terracotta`, `emerald`, `nord`, `dracula`, `amethyst`, `editorial`) into standalone, auto-resolving JSON files in `themes/`.
+- **Standalone Commercial Pro Themes (`pro-themes/`)**:
+  - `company-handbook`: Tailored for employee onboarding, company policies, and SOPs with pastel callouts and checklist styling.
+  - `minimal-book`: Literary, distraction-free reading theme with Lora serif typography and book chapter dividers.
+  - `api-pro`: 3-column sticky split layout with HTTP method badges and compact parameter tables.
+  - `developer-hub`: Enterprise developer portal layout with Bento-grid card sections and glassmorphism navbar.
+
+---
+
+## VertiWiki 0.8.4 (September 2026)
 
 ### 🔄 Universal Human Reader Redirection & Content Negotiation Engine
 - **Defensive Engine Fetching (`src/main.ts`)**: Enforced explicit `Accept: text/markdown, text/plain, */*` headers across all internal engine fetch operations (`fetchMarkdownResource`, localized navigation manifest loader, and 404 handler). Completely shields the single-file application against browser document navigation header pollution, eliminating server redirect loops.

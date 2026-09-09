@@ -31,6 +31,9 @@ export interface ThemePreset {
   previewColor: string;
   fontUrl?: string;
   extends?: string;
+  css?: string;
+  customCss?: string | string[];
+  layout?: string;
   light: ThemeColors;
   dark: ThemeColors;
 }
@@ -43,8 +46,19 @@ export interface CustomThemeDefinition {
   previewColor?: string;
   fontUrl?: string;
   extends?: string;
+  css?: string;
+  customCss?: string | string[];
+  layout?: string;
   light?: Partial<ThemeColors>;
   dark?: Partial<ThemeColors>;
+}
+
+export interface HeaderLinkItem {
+  title: string;
+  href: string;
+  isExternal?: boolean;
+  icon?: string;
+  type?: 'link' | 'button';
 }
 
 export interface LocaleConfig {
@@ -65,6 +79,7 @@ export interface VertiWikiConfig {
   enableMath: boolean;
   enableMermaid: boolean;
   enableCodeCopy: boolean;
+  enableAiCopy?: boolean;
   enableThemeChooser: boolean;
   enableLanguageChooser?: boolean;
   locales?: LocaleConfig[];
@@ -73,6 +88,10 @@ export interface VertiWikiConfig {
   themePreset: string;
   customThemes?: (string | ThemePreset | CustomThemeDefinition)[] | string;
   resolvedThemes?: (ThemePreset | CustomThemeDefinition)[];
+  layoutMode?: 'default' | 'api' | 'book' | 'handbook' | 'hub' | string;
+  contentWidth?: 'normal' | 'readable' | 'full';
+  headerLinks?: HeaderLinkItem[];
+  customCss?: string | string[];
   navigationFile: string;
   homePage: string;
   llmsTxtUrl?: string | null;
