@@ -1,4 +1,4 @@
-# 🧠 VertiWiki 0.8.4
+# 🧠 VertiWiki 0.9.0 "Ichi"
 
 > The next-generation, 100% static, single-file Markdown wiki & documentation engine built for 2026 and beyond.
 
@@ -7,8 +7,8 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7+-blue.svg)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-6.0+-purple.svg)](https://vitejs.dev/)
 [![Single File HTML](https://img.shields.io/badge/Bundle-Single--File-emerald.svg)](dist/vertiwiki.html)
-[![Version](https://img.shields.io/badge/version-0.8.4-teal.svg)](https://github.com/Octadira/vertiwiki/releases)
-[![Tests](https://img.shields.io/badge/tests-97%20passed-brightgreen.svg)](#-automated-testing)
+[![Version](https://img.shields.io/badge/version-0.9.0--Ichi-teal.svg)](https://github.com/Octadira/vertiwiki/releases)
+[![Tests](https://img.shields.io/badge/tests-104%20passed-brightgreen.svg)](#-automated-testing)
 [![AI & AEO Ready](https://img.shields.io/badge/AI_%26_AEO-Ready-2ea44f.svg)](#-answer-engine-optimization-aeo)
 [![Live Demo](https://img.shields.io/badge/Demo-verti.wiki-emerald.svg)](https://verti.wiki)
 
@@ -21,21 +21,23 @@ VertiWiki is a lightning-fast, modern client-side documentation engine. It runs 
 ## ✨ Features (2026+)
 
 * 📦 **Single-File Distribution**: Ship a single standalone `vertiwiki.html` (or `index.html`) alongside standard `.md` files.
+* 🏛️ **Modular Layout Engine (`data-layout`)**: Switch between `default`, `book`, `handbook`, `api`, and `hub` layouts globally in `config.json` or per-page via Frontmatter (`layout: book`, `layout: api`), powered by zero-bloat CSS Grid.
+* 📖 **Reading Ergonomics for Non-Technical Docs (`contentWidth: "readable"`)**: Set optimal 68ch line length with relaxed 1.8 line height for company policies, employee onboarding, digital books, and long-form essays.
 * 🌳 **Static Bot Crawl Tree & Zero-Orphan SEO**: Built-in semantic HTML crawl tree (`<nav class="verti-crawl-tree">`) producing clean anchor links to resolve Google Search Console's "Discovered - currently not indexed" penalty on zero-backend SPAs.
 * 🔀 **Server-Side Content Negotiation & Query Routing**: Native URL query parameter routing (`?page=`, `?p=`, `?doc=`) and HTTP Content Negotiation (`Accept: text/markdown`) with production-ready recipes for all major hosts.
 * 🌐 **Native Multi-Language (i18n) & Subfolder Mirrors**: Configurable locales in `config.json` (`locales: [...]`), dynamic subfolder mirroring (`fr/`, `ro/`), language switcher dropdown, and locale-scoped search.
 * 🔗 **Native Wikilinks & PKM Interoperability**: Built-in client-side support for `[[page]]`, `[[page|alias]]`, and `[[page#anchor]]` with intelligent code fence protection and Obsidian vault compatibility.
-* 🎨 **Modular Themes & Inheritance (`extends`)**: Standalone theme JSON files in `themes/` (e.g. `themes/obsidian.json`), dynamic Google Fonts, and theme inheritance chains (`extends: "dracula"`).
+* 🎨 **Decoupled Standalone Themes & Inheritance**: Bundled engine ships with a single canonical **Modern Monochrome & Slate** preset, while rich themes (`terracotta`, `emerald`, `nord`, `dracula`, `amethyst`, `editorial`, `obsidian`, `onyx-ops`) resolve as decoupled JSON files in `themes/`.
 * ⚡ **Optimized Standalone Footprint**: Built-in KaTeX WOFF2 font pruning reduces CSS payload by 73% and brings the standalone single-file distribution to ~4.0 MB.
-* 🤖 **Answer Engine Optimization (AEO)**: Dynamic Schema.org JSON-LD breadcrumb graphs, `<meta name="agent-docs">`, `llms.txt` integration, and 1-click **Copy for AI** prompt exporter.
+* 🤖 **Answer Engine Optimization (AEO)**: Dynamic Schema.org JSON-LD breadcrumb graphs, `<meta name="agent-docs">`, `llms.txt` integration, and 1-click **Copy for AI** prompt exporter (toggleable for non-technical docs via `enableAiCopy`).
 * 🛡️ **Guaranteed Zero-XSS Security**: Complete XSS protection via [DOMPurify](https://github.com/cure53/DOMPurify), centralized HTML escaping, iframe origin validation, and zero use of `eval()`.
 * ⚡ **Instant Offline Search**: Client-side full-text search with fuzzy matching and locale scoping powered by **MiniSearch** (`⌘K` or `/`).
 * 📐 **KaTeX Math & Mermaid.js**: Fast LaTeX math equations and theme-aware interactive diagrams with automatic dark/light contrast harmonization.
-* 📑 **Interactive Markdown Suite**: Code tabs (`::: tabs`), collapsible FAQs (`::: details`), image lightbox zoom, and GFM alerts (`> [!NOTE]`, `> [!TIP]`, `> [!WARNING]`, etc.).
+* 📑 **Interactive Markdown Suite & Synced Tabs**: Code tabs (`::: tabs`) with synchronized switching across the document, collapsible FAQs (`::: details`), image lightbox zoom, and GFM alerts (`> [!NOTE]`, `> [!TIP]`, `> [!WARNING]`, etc.).
 * 🗂️ **Directory Indexing & Trailing Slash Normalization**: Automatic index resolution (`dir/` $\rightarrow$ `dir/index.md`), sibling fallbacks (`dir.md`), and defensive address bar normalization.
 * 🧭 **Dynamic TOC & Scrollspy**: Real-time Table of Contents powered by `IntersectionObserver`.
 * 📊 **Universal Analytics**: Dynamic zero-recompile tracking for GA4, GTM, Plausible, Cloudflare, Umami, and Matomo.
-* 🧪 **Automated Testing Suite**: 18 test suites and 96 unit tests powered by **Vitest**.
+* 🧪 **Automated Testing Suite**: 19 test suites and 104 unit tests powered by **Vitest**.
 
 ---
 
@@ -115,14 +117,24 @@ verti-wiki/
 ├── tests/                  # Automated unit test suite (Vitest)
 │   ├── config.test.ts      # Configuration loading and fallback tests
 │   ├── crawl-tree.test.ts  # Semantic bot crawl tree generation tests
+│   ├── layout-engine.test.ts # Layout modes, header links, and synced tabs tests
 │   ├── parser.test.ts      # Markdown parsing and slugification tests
 │   ├── router-i18n.test.ts # Locale routing and path normalization tests
 │   ├── security.test.ts    # Zero-XSS and iframe security tests
-│   └── ...                 # 18 test suites covering all plugins and modules
+│   └── ...                 # 19 test suites covering all plugins and modules
 │
 └── themes/                 # Dedicated custom theme JSON definitions
+    ├── amethyst.json       # Deep purple & violet theme
+    ├── apple-minimal.json  # Clean Cupertino aesthetic
+    ├── dracula.json        # Classic dark vampire theme
+    ├── editorial.json      # Warm literary reading theme
+    ├── emerald.json        # Modern forest green theme
+    ├── genome-teal.json    # Biotech-inspired teal theme
+    ├── nord.json           # Arctic ice & blue theme
     ├── obsidian.json       # Obsidian-inspired theme
-    └── onyx-ops.json       # Dark high-contrast operations theme
+    ├── onyx-ops.json       # Dark high-contrast operations theme
+    ├── signal-docs.json    # High-visibility developer docs theme
+    └── terracotta.json     # Warm clay & rust theme
 ```
 
 ---
@@ -141,13 +153,13 @@ Official, pre-configured recipes are located in [`deploy/`](./deploy).
 
 ## 🧪 Automated Testing
 
-VertiWiki includes an extensive test suite verifying Markdown parsing, plugin hooks, locale handling, path resolution, crawl trees, and XSS sanitization:
+VertiWiki includes an extensive test suite verifying Markdown parsing, plugin hooks, locale handling, path resolution, crawl trees, layout modes, and XSS sanitization:
 
 ```bash
 npm test
 ```
 
-All 18 test suites and 96 unit tests must pass before compiling production releases.
+All 19 test suites and 104 unit tests must pass before compiling production releases.
 
 ---
 
