@@ -5,6 +5,8 @@ description: Démonstration des composants Markdown modernes et du rendu interac
 
 # Fonctionnalités Interactives 🚀
 
+> For the complete documentation index and agent navigation, see [llms.txt](../llms.txt).
+
 VertiWiki enrichit le Markdown standard avec plus de 14 plugins intégrés et zéro dépendance lourde à l'exécution.
 
 ---

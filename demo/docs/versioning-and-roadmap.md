@@ -17,11 +17,33 @@ VertiWiki adheres strictly to **Semantic Versioning 2.0.0 (SemVer)**:
 
 ## 📜 Version History
 
-### **v0.8.3** (Current Active Release — September 2026) :badge[Latest]{type=success}
-* 🎨 **Theme-Adaptive Code Block Cards**: Eliminated hardcoded `#2d2d2d` background on code wrappers, inheriting `--verti-code-bg` (`--muted`) across all theme presets.
-* 🌈 **High-Contrast Syntax Highlighting Tokens**: Dual-mode Prism syntax highlighting tokens with >7:1 WCAG AAA contrast ratios on Light Mode and vibrant pastel palettes on Dark Mode.
-* 🛡️ **Critical CSS Body Background Remediation**: Scoped critical skeleton styles strictly to `.verti-loading-shell` and removed global `html, body` background overrides, ensuring 100% full-screen theme consistency.
-* 🧹 **Runtime Critical Style Cleanup**: Automatically unmounts `#verti-critical-css` from `<head>` upon layout initialization.
+### **v0.9.2** (Current Active Release — September 2026) :badge[Latest]{type=success}
+* 🐛 **Mermaid Diagram `<foreignObject>` Label Preservation**: Updated DOMPurify profile to preserve HTML nodes and labels in Mermaid SVGs.
+* 🕶️ **AI Agent Directive UI Suppression**: Modern CSS `:has()` rules hiding `llms.txt` directives from human browser viewports while keeping them 100% visible to AI agents.
+* 🤖 **AFDocs Universal Config**: Integrated `agent-docs.config.yml` with `urlPathPattern: md` for native Markdown scorecards.
+* 🌐 **Vercel Content Negotiation Fix**: Corrected regex escaping in `vercel.json` for `Accept: text/markdown` header routing.
+
+---
+
+### **v0.9.1** (September 2026)
+* 🐛 **Subfolder & Localized Wikilinks**: Relative path traversal computation (`../`) resolving cross-folder and localized (`ro/`, `fr/`) wikilinks.
+
+---
+
+### **v0.9.0 "Ichi"** (September 2026)
+* 🏛️ **Modular Layout Engine (`data-layout`)**: Extensible layout modes (`default`, `book`, `handbook`, `api`, `hub`).
+* 📖 **Readable Prose Width (`contentWidth: "readable"`)**: 68ch line length with relaxed 1.8 line-height.
+* 🎨 **Decoupled Theme Architecture**: Lightweight core preset with standalone JSON themes in `themes/`.
+* 📑 **Synchronized Tabs**: Cross-page tab state persistence in `localStorage`.
+
+---
+
+### **v0.8.4** (September 2026)
+* 🔄 **Universal Human Browser Redirection & Content Negotiation**: Multi-cloud deployment recipes for Vercel, Cloudflare, Netlify, Nginx, and Apache.
+
+---
+
+### **v0.8.3** (September 2026)
 
 ---
 

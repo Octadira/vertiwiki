@@ -5,6 +5,8 @@ description: Moteur de wiki et de documentation Markdown 100% statique, sans ser
 
 # Bienvenue sur VertiWiki ⚡
 
+> For the complete documentation index and agent navigation, see [llms.txt](../llms.txt).
+
 **VertiWiki** est un moteur de wiki et de documentation Markdown 100% statique, distribué en un **seul fichier autonome**, avec **zéro backend** et zéro étape de compilation côté serveur.
 
 > [!NOTE]

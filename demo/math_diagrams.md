@@ -1,5 +1,7 @@
 # Math & Mermaid Diagrams
 
+> For the complete documentation index and agent navigation, see [llms.txt](demo/llms.txt).
+
 VertiWiki comes with built-in support for **KaTeX** math formulas and **Mermaid.js** diagrams.
 
 ---

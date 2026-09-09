@@ -1,5 +1,7 @@
 # 🎨 VertiWiki Theme System :badge[OKLCH Color Space]{type=purple} :badge[Instant Switching]{type=success}
 
+> For the complete documentation index and agent navigation, see [llms.txt](demo/llms.txt).
+
 VertiWiki comes with a powerful, **100% offline, zero-reload theme engine** based on modern CSS custom properties and standard Tailwind / shadcn design tokens.
 
 ---

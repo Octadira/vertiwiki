@@ -6,6 +6,8 @@ tags: [vertiwiki, documentation, wiki, markdown, client-side]
 
 # 📚 VertiWiki Documentation Hub
 
+> For the complete documentation index and agent navigation, see [llms.txt](../../llms.txt).
+
 Welcome to the **VertiWiki** comprehensive documentation. VertiWiki is a fast, modern **client-side documentation engine** that runs entirely in the browser — **zero backend servers, zero databases, zero build steps**.
 
 ---
