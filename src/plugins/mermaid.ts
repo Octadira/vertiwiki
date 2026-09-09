@@ -35,7 +35,11 @@ export const mermaidPlugin: VertiWikiPlugin = {
       try {
         const { svg } = await mermaid.render(uniqueId, graphDefinition);
         const cleanSvg = typeof DOMPurify?.sanitize === 'function'
-          ? DOMPurify.sanitize(svg, { USE_PROFILES: { svg: true, svgFilters: true } })
+          ? DOMPurify.sanitize(svg, {
+              USE_PROFILES: { svg: true, svgFilters: true, html: true },
+              ADD_TAGS: ['foreignObject', 'style'],
+              HTML_INTEGRATION_POINTS: { foreignobject: true }
+            })
           : svg;
 
         const wrapper = document.createElement('div');

@@ -675,6 +675,16 @@ body {
   color: var(--verti-text-secondary);
 }
 
+/* AI Agent Directives - Visible to AI in raw Markdown, hidden from human UI */
+.verti-article blockquote:has(a[href*="llms.txt"]),
+.verti-article .verti-callout:has(a[href*="llms.txt"]),
+#verti-content blockquote:has(a[href*="llms.txt"]),
+#verti-content .verti-callout:has(a[href*="llms.txt"]),
+.verti-content blockquote:has(a[href*="llms.txt"]),
+.verti-content .verti-callout:has(a[href*="llms.txt"]) {
+  display: none !important;
+}
+
 /* Callout Alerts (GFM Style: > [!NOTE], [!WARNING], etc.) */
 .verti-callout {
   padding: 1rem 1.25rem;

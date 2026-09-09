@@ -78,4 +78,46 @@ describe('Mermaid Plugin Integration', () => {
     expect(mermaid.render).toHaveBeenCalled();
     expect(mockCode.parentElement.replaceWith).toHaveBeenCalled();
   });
+
+  it('preserves foreignObject and HTML text labels inside Mermaid SVGs', async () => {
+    const complexSvg = '<svg class="flowchart"><g><foreignObject width="100" height="40"><div xmlns="http://www.w3.org/1999/xhtml"><span class="nodeLabel">Architecture Core</span></div></foreignObject></g></svg>';
+    (mermaid.render as any).mockResolvedValueOnce({ svg: complexSvg });
+
+    let createdWrapper: any = null;
+    const mockCode = {
+      textContent: 'graph TD\nA[Architecture Core]',
+      parentElement: {
+        replaceWith: vi.fn()
+      }
+    };
+
+    const mockContainer = {
+      querySelectorAll: vi.fn().mockReturnValue([mockCode])
+    };
+
+    const mockDoc = {
+      documentElement: {
+        getAttribute: vi.fn().mockReturnValue('light')
+      },
+      createElement: vi.fn().mockImplementation(() => {
+        createdWrapper = { className: '', innerHTML: '' };
+        return createdWrapper;
+      })
+    };
+
+    (global as any).document = mockDoc;
+
+    const context: PluginContext = {
+      filePath: 'test.md',
+      rawMarkdown: '',
+      config: { enableMermaid: true } as any,
+      container: mockContainer as any
+    };
+
+    await mermaidPlugin.afterRender?.(context);
+
+    expect(createdWrapper).not.toBeNull();
+    expect(createdWrapper.innerHTML).toContain('foreignObject');
+    expect(createdWrapper.innerHTML).toContain('Architecture Core');
+  });
 });

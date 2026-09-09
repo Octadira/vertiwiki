@@ -1,4 +1,4 @@
-# 🧠 VertiWiki 0.9.1
+# 🧠 VertiWiki 0.9.2
 
 > The next-generation, 100% static, single-file Markdown wiki & documentation engine built for 2026 and beyond.
 
@@ -7,8 +7,8 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7+-blue.svg)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-6.0+-purple.svg)](https://vitejs.dev/)
 [![Single File HTML](https://img.shields.io/badge/Bundle-Single--File-emerald.svg)](dist/vertiwiki.html)
-[![Version](https://img.shields.io/badge/version-0.9.1-teal.svg)](https://github.com/Octadira/vertiwiki/releases)
-[![Tests](https://img.shields.io/badge/tests-105%20passed-brightgreen.svg)](#-automated-testing)
+[![Version](https://img.shields.io/badge/version-0.9.2-teal.svg)](https://github.com/Octadira/vertiwiki/releases)
+[![Tests](https://img.shields.io/badge/tests-106%20passed-brightgreen.svg)](#-automated-testing)
 [![AI & AEO Ready](https://img.shields.io/badge/AI_%26_AEO-Ready-2ea44f.svg)](#-answer-engine-optimization-aeo)
 [![Live Demo](https://img.shields.io/badge/Demo-verti.wiki-emerald.svg)](https://verti.wiki)
 
@@ -32,12 +32,12 @@ VertiWiki is a lightning-fast, modern client-side documentation engine. It runs 
 * 🤖 **Answer Engine Optimization (AEO)**: Dynamic Schema.org JSON-LD breadcrumb graphs, `<meta name="agent-docs">`, `llms.txt` integration, and 1-click **Copy for AI** prompt exporter (toggleable for non-technical docs via `enableAiCopy`).
 * 🛡️ **Guaranteed Zero-XSS Security**: Complete XSS protection via [DOMPurify](https://github.com/cure53/DOMPurify), centralized HTML escaping, iframe origin validation, and zero use of `eval()`.
 * ⚡ **Instant Offline Search**: Client-side full-text search with fuzzy matching and locale scoping powered by **MiniSearch** (`⌘K` or `/`).
-* 📐 **KaTeX Math & Mermaid.js**: Fast LaTeX math equations and theme-aware interactive diagrams with automatic dark/light contrast harmonization.
+* 📐 **KaTeX Math & Mermaid.js**: Fast LaTeX math equations and theme-aware interactive diagrams with complete `<foreignObject>` text node preservation and automatic dark/light contrast harmonization.
 * 📑 **Interactive Markdown Suite & Synced Tabs**: Code tabs (`::: tabs`) with synchronized switching across the document, collapsible FAQs (`::: details`), image lightbox zoom, and GFM alerts (`> [!NOTE]`, `> [!TIP]`, `> [!WARNING]`, etc.).
 * 🗂️ **Directory Indexing & Trailing Slash Normalization**: Automatic index resolution (`dir/` $\rightarrow$ `dir/index.md`), sibling fallbacks (`dir.md`), and defensive address bar normalization.
 * 🧭 **Dynamic TOC & Scrollspy**: Real-time Table of Contents powered by `IntersectionObserver`.
 * 📊 **Universal Analytics**: Dynamic zero-recompile tracking for GA4, GTM, Plausible, Cloudflare, Umami, and Matomo.
-* 🧪 **Automated Testing Suite**: 19 test suites and 104 unit tests powered by **Vitest**.
+* 🧪 **Automated Testing Suite**: 19 test suites and 106 unit tests powered by **Vitest**.
 
 ---
 

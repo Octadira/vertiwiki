@@ -62,19 +62,19 @@
         {
           "type": "header",
           "key": "accept",
-          "value": ".*text\\/html.*"
+          "value": ".*text/html.*"
         }
       ],
       "destination": "/#/$1",
       "permanent": false
     },
     {
-      "source": "/:path((?!assets\\/|themes\\/|.*\\.[a-zA-Z0-9]+$).*)",
+      "source": "/:path((?!assets/|themes/|.*\\.[a-zA-Z0-9]+$).*)",
       "has": [
         {
           "type": "header",
           "key": "accept",
-          "value": ".*text\\/html.*"
+          "value": ".*text/html.*"
         }
       ],
       "destination": "/#/:path.md",
@@ -88,7 +88,7 @@
         {
           "type": "header",
           "key": "accept",
-          "value": ".*text\\/markdown.*"
+          "value": ".*text/markdown.*"
         }
       ],
       "destination": "/index.md"
@@ -99,7 +99,7 @@
         {
           "type": "header",
           "key": "accept",
-          "value": ".*text\\/markdown.*"
+          "value": ".*text/markdown.*"
         }
       ],
       "destination": "/docs/index.md"
@@ -110,7 +110,7 @@
         {
           "type": "header",
           "key": "accept",
-          "value": ".*text\\/markdown.*"
+          "value": ".*text/markdown.*"
         }
       ],
       "destination": "/docs/index.md"
@@ -121,18 +121,18 @@
         {
           "type": "header",
           "key": "accept",
-          "value": ".*text\\/markdown.*"
+          "value": ".*text/markdown.*"
         }
       ],
       "destination": "/:path*/index.md"
     },
     {
-      "source": "/:path((?!assets\\/|themes\\/|.*\\.[a-zA-Z0-9]+$).*)",
+      "source": "/:path((?!assets/|themes/|.*\\.[a-zA-Z0-9]+$).*)",
       "has": [
         {
           "type": "header",
           "key": "accept",
-          "value": ".*text\\/markdown.*"
+          "value": ".*text/markdown.*"
         }
       ],
       "destination": "/:path.md"

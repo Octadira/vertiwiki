@@ -1,0 +1,7 @@
+# Agent-Friendly Documentation Specification (AFDocs) Configuration
+# https://agentdocsspec.com/spec/
+
+urlPathPattern: md
+coveragePassThreshold: 95
+coverageWarnThreshold: 80
+parityPassThreshold: 5

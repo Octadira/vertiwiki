@@ -1,6 +1,17 @@
 # Changelog
 
-## VertiWiki 0.9.1 (September 2026) :badge[Latest]{type=success}
+## VertiWiki 0.9.2 (September 2026) :badge[Latest]{type=success}
+
+### 🐛 Mermaid Diagram Labels & Agent-Friendly Docs (AFDocs) Modernization
+- **Mermaid `<foreignObject>` Label Preservation (`src/plugins/mermaid.ts`)**: Upgraded DOMPurify sanitization profile in `mermaidPlugin` to explicitly allow `foreignObject`, `style`, and HTML integration points, resolving an issue where diagram node texts and labels were stripped out during sanitization while preserving complete zero-XSS security.
+- **AI Agent Directive UI Suppression (`src/ui/styles/main.css`)**: Implemented modern CSS `:has(a[href*="llms.txt"])` rule to automatically hide in-markdown `llms.txt` directives from human browser viewports while keeping them 100% visible to autonomous AI coding agents and `afdocs` crawlers.
+- **AFDocs Universal Config (`agent-docs.config.yml`)**: Added standard Agent-Friendly Documentation Specification config with `urlPathPattern: md` for seamless native Markdown auditing.
+- **Vercel Content Negotiation Matching (`deploy/vercel/vercel.json`)**: Corrected regex escaping on `Accept: text/markdown` headers to guarantee instant Markdown content negotiation delivery on root `/docs` and subfolder hits.
+- **Automated Testing (`tests/mermaid.test.ts`)**: Added unit test coverage verifying `foreignObject` and HTML label preservation in Mermaid SVGs, bringing the test suite to 19 files and 106 passed tests.
+
+---
+
+## VertiWiki 0.9.1 (September 2026)
 
 ### 🐛 Subfolder & Localized Wikilink Relative Path Resolution
 - **Relative Path Resolution (`src/plugins/wikilinks.ts`)**: Enhanced `wikilinksPlugin` to compute relative directory traversal paths (`../`) based on `context.filePath`, resolving target files accurately when wikilinks are invoked from subdirectories (`configuration/`, `concepts/`, `guides/`, `reference/`).
