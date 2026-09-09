@@ -1,5 +1,6 @@
 import { VertiWikiConfig, NavigationItem } from '../core/types';
 import { escapeHtml } from '../core/escape';
+import { resolveResourceUrl } from '../core/router';
 
 export class Layout {
   private config: VertiWikiConfig;
@@ -26,7 +27,7 @@ export class Layout {
           const link = document.createElement('link');
           link.id = linkId;
           link.rel = 'stylesheet';
-          link.href = url;
+          link.href = resolveResourceUrl(url);
           document.head.appendChild(link);
         }
       });
@@ -54,7 +55,7 @@ export class Layout {
             </svg>
           </button>
           <a href="#/${this.config.homePage}" class="verti-brand">
-            ${showLogo ? `<img src="${escapeHtml(this.config.logo)}" class="verti-brand-logo" alt="${escapeHtml(this.config.title)}" />` : ''}
+            ${showLogo ? `<img src="${escapeHtml(resolveResourceUrl(this.config.logo))}" class="verti-brand-logo" alt="${escapeHtml(this.config.title)}" />` : ''}
             ${showTitle ? `<span>${escapeHtml(this.config.title)}</span>` : ''}
           </a>
         </div>

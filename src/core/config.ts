@@ -1,4 +1,5 @@
 import { VertiWikiConfig, ThemePreset, CustomThemeDefinition } from './types';
+import { resolveResourceUrl } from './router';
 
 export const DEFAULT_CONFIG: VertiWikiConfig = {
   title: 'VertiWiki',
@@ -23,7 +24,7 @@ export const DEFAULT_CONFIG: VertiWikiConfig = {
   navigationFile: 'navigation.md',
   homePage: 'index.md',
   llmsTxtUrl: 'llms.txt',
-  footerText: 'Powered by <a href="https://verti.wiki" target="_blank" rel="noopener noreferrer"><strong>VertiWiki 0.9.2</strong></a> — Built for 2026 and beyond',
+  footerText: 'Powered by <a href="https://verti.wiki" target="_blank" rel="noopener noreferrer"><strong>VertiWiki 0.9.3</strong></a> — Built for 2026 and beyond',
   githubUrl: ''
 };
 
@@ -31,7 +32,7 @@ export async function loadConfig(): Promise<VertiWikiConfig> {
   let mergedConfig: VertiWikiConfig = { ...DEFAULT_CONFIG };
 
   try {
-    const response = await fetch('config.json');
+    const response = await fetch(resolveResourceUrl('config.json'));
     if (response.ok) {
       const userConfig = await response.json();
       mergedConfig = { ...DEFAULT_CONFIG, ...userConfig };
@@ -50,7 +51,7 @@ export async function loadConfig(): Promise<VertiWikiConfig> {
     for (const item of rawThemes) {
       if (typeof item === 'string') {
         try {
-          const themeRes = await fetch(item);
+          const themeRes = await fetch(resolveResourceUrl(item));
           if (themeRes.ok) {
             const themeData = (await themeRes.json()) as CustomThemeDefinition;
             if (themeData && themeData.id) {
@@ -76,7 +77,7 @@ export async function loadConfig(): Promise<VertiWikiConfig> {
   ) {
     try {
       const autoPath = `themes/${mergedConfig.themePreset}.json`;
-      const autoRes = await fetch(autoPath);
+      const autoRes = await fetch(resolveResourceUrl(autoPath));
       if (autoRes.ok) {
         const themeData = (await autoRes.json()) as CustomThemeDefinition;
         if (themeData && themeData.id) {

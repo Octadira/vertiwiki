@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest';
-import { normalizePath, resolvePath, Router, normalizeDirectoryUrl } from '../src/core/router';
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { normalizePath, resolvePath, Router, normalizeDirectoryUrl, getBaseDirectory, resolveResourceUrl } from '../src/core/router';
 import { LocaleConfig } from '../src/core/types';
 
 describe('Router & Path Normalization', () => {
@@ -96,5 +96,50 @@ describe('normalizeDirectoryUrl Helper', () => {
     expect(normalizeDirectoryUrl('/index.html', '', '#/')).toBe('/index.html#/');
     expect(normalizeDirectoryUrl('/vertiwiki.html', '', '#/guide.md')).toBe('/vertiwiki.html#/guide.md');
     expect(normalizeDirectoryUrl('/docs/index.html', '', '#/')).toBe('/docs/index.html#/');
+  });
+});
+
+describe('Base Directory & Resource URL Resolution', () => {
+  const originalWindow = globalThis.window;
+
+  afterEach(() => {
+    globalThis.window = originalWindow;
+  });
+
+  it('correctly calculates base directory for various pathnames', () => {
+    (globalThis as any).window = { location: { pathname: '/docs' } };
+    expect(getBaseDirectory()).toBe('/docs/');
+
+    (globalThis as any).window = { location: { pathname: '/docs/' } };
+    expect(getBaseDirectory()).toBe('/docs/');
+
+    (globalThis as any).window = { location: { pathname: '/docs/index.html' } };
+    expect(getBaseDirectory()).toBe('/docs/');
+
+    (globalThis as any).window = { location: { pathname: '/' } };
+    expect(getBaseDirectory()).toBe('/');
+
+    (globalThis as any).window = { location: { pathname: '/index.html' } };
+    expect(getBaseDirectory()).toBe('/');
+
+    (globalThis as any).window = { location: { pathname: '/vertiwiki.html' } };
+    expect(getBaseDirectory()).toBe('/');
+
+    (globalThis as any).window = { location: { pathname: '/team/subfolder/docs' } };
+    expect(getBaseDirectory()).toBe('/team/subfolder/docs/');
+  });
+
+  it('resolves relative resource URLs safely across root and subfolder contexts', () => {
+    (globalThis as any).window = { location: { pathname: '/docs' } };
+    expect(resolveResourceUrl('config.json')).toBe('/docs/config.json');
+    expect(resolveResourceUrl('concepts/architecture.md')).toBe('/docs/concepts/architecture.md');
+    expect(resolveResourceUrl('themes/obsidian.json')).toBe('/docs/themes/obsidian.json');
+    expect(resolveResourceUrl('404.md')).toBe('/docs/404.md');
+    expect(resolveResourceUrl('/absolute/path.png')).toBe('/absolute/path.png');
+    expect(resolveResourceUrl('https://example.com/logo.svg')).toBe('https://example.com/logo.svg');
+
+    (globalThis as any).window = { location: { pathname: '/' } };
+    expect(resolveResourceUrl('config.json')).toBe('/config.json');
+    expect(resolveResourceUrl('concepts/architecture.md')).toBe('/concepts/architecture.md');
   });
 });

@@ -1,6 +1,6 @@
 import './ui/styles/main.css';
 import { loadConfig } from './core/config';
-import { Router, RouteInfo, normalizeDirectoryUrl } from './core/router';
+import { Router, RouteInfo, normalizeDirectoryUrl, resolveResourceUrl } from './core/router';
 import { MarkdownParser } from './core/parser';
 import { Pipeline } from './core/pipeline';
 import { Layout } from './ui/layout';
@@ -185,12 +185,12 @@ ${currentRawMarkdown}`;
     try {
       let navRaw = navContentCache.get(navFile);
       if (!navRaw) {
-        let navResponse = await fetch(navFile, {
+        let navResponse = await fetch(resolveResourceUrl(navFile), {
           headers: { 'Accept': 'text/markdown, text/plain, */*' }
         });
         if (!navResponse.ok && navFile !== config.navigationFile) {
           // Fallback to default navigation file if localized one doesn't exist
-          navResponse = await fetch(config.navigationFile, {
+          navResponse = await fetch(resolveResourceUrl(config.navigationFile), {
             headers: { 'Accept': 'text/markdown, text/plain, */*' }
           });
           navFile = config.navigationFile;
@@ -237,7 +237,7 @@ ${currentRawMarkdown}`;
     }
 
     try {
-      const response = await fetch(targetPath, {
+      const response = await fetch(resolveResourceUrl(targetPath), {
         headers: {
           'Accept': 'text/markdown, text/plain, */*'
         }
@@ -387,7 +387,7 @@ ${currentRawMarkdown}`;
 
       // Try 404.md fallback
       try {
-        const notFoundRes = await fetch('404.md', {
+        const notFoundRes = await fetch(resolveResourceUrl('404.md'), {
           headers: { 'Accept': 'text/markdown, text/plain, */*' }
         });
         if (notFoundRes.ok) {

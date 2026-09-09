@@ -1,5 +1,6 @@
 import MiniSearch from 'minisearch';
 import { SearchDocument, SearchResultItem, NavigationItem } from '../core/types';
+import { resolveResourceUrl } from '../core/router';
 
 export class SearchEngine {
   private miniSearch: MiniSearch<SearchDocument>;
@@ -45,7 +46,7 @@ export class SearchEngine {
     for (const path of paths) {
       if (this.indexedDocs.has(path)) continue;
       try {
-        const res = await fetch(path);
+        const res = await fetch(resolveResourceUrl(path));
         if (res.ok) {
           const raw = await res.text();
           const titleMatch = raw.match(/^#\s+(.+)$/m);

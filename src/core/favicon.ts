@@ -1,4 +1,5 @@
 import { VertiWikiConfig } from './types';
+import { resolveResourceUrl } from './router';
 
 export async function resolveFavicon(config: VertiWikiConfig): Promise<string> {
   if (config.favicon) return config.favicon;
@@ -12,7 +13,7 @@ export async function resolveFavicon(config: VertiWikiConfig): Promise<string> {
 
     for (const candidate of candidates) {
       try {
-        const res = await fetch(candidate, { method: 'HEAD' });
+        const res = await fetch(resolveResourceUrl(candidate), { method: 'HEAD' });
         if (res.ok) return candidate;
       } catch {}
     }
@@ -29,7 +30,7 @@ export async function resolveFavicon(config: VertiWikiConfig): Promise<string> {
 
   for (const candidate of fallbacks) {
     try {
-      const res = await fetch(candidate, { method: 'HEAD' });
+      const res = await fetch(resolveResourceUrl(candidate), { method: 'HEAD' });
       if (res.ok) return candidate;
     } catch {}
   }
@@ -45,7 +46,7 @@ export function applyFavicon(faviconUrl: string): void {
     favLink.rel = 'icon';
     document.head.appendChild(favLink);
   }
-  favLink.href = faviconUrl;
+  favLink.href = resolveResourceUrl(faviconUrl);
   if (faviconUrl.endsWith('.svg') || faviconUrl.startsWith('data:image/svg+xml')) {
     favLink.type = 'image/svg+xml';
   } else if (faviconUrl.endsWith('.png')) {

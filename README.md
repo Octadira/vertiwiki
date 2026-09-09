@@ -1,4 +1,4 @@
-# 🧠 VertiWiki 0.9.2
+# 🧠 VertiWiki 0.9.3
 
 > The next-generation, 100% static, single-file Markdown wiki & documentation engine built for 2026 and beyond.
 
@@ -7,8 +7,8 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7+-blue.svg)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-6.0+-purple.svg)](https://vitejs.dev/)
 [![Single File HTML](https://img.shields.io/badge/Bundle-Single--File-emerald.svg)](dist/vertiwiki.html)
-[![Version](https://img.shields.io/badge/version-0.9.2-teal.svg)](https://github.com/Octadira/vertiwiki/releases)
-[![Tests](https://img.shields.io/badge/tests-106%20passed-brightgreen.svg)](#-automated-testing)
+[![Version](https://img.shields.io/badge/version-0.9.3-teal.svg)](https://github.com/Octadira/vertiwiki/releases)
+[![Tests](https://img.shields.io/badge/tests-108%20passed-brightgreen.svg)](#-automated-testing)
 [![AI & AEO Ready](https://img.shields.io/badge/AI_%26_AEO-Ready-2ea44f.svg)](#-answer-engine-optimization-aeo)
 [![Live Demo](https://img.shields.io/badge/Demo-verti.wiki-emerald.svg)](https://verti.wiki)
 
@@ -159,7 +159,7 @@ VertiWiki includes an extensive test suite verifying Markdown parsing, plugin ho
 npm test
 ```
 
-All 19 test suites and 104 unit tests must pass before compiling production releases.
+All 19 test suites and 108 unit tests must pass before compiling production releases.
 
 ---
 

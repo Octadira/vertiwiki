@@ -35,6 +35,35 @@ export function normalizeDirectoryUrl(pathname: string, search: string = '', has
   return `${pathname}/${search}${hash}`;
 }
 
+export function getBaseDirectory(): string {
+  if (typeof window === 'undefined' || !window.location || !window.location.pathname) {
+    return '/';
+  }
+  const path = window.location.pathname;
+  if (!path || path === '/') return '/';
+  if (path.match(/\.[a-zA-Z0-9]+$/)) {
+    const lastSlash = path.lastIndexOf('/');
+    return lastSlash !== -1 ? path.substring(0, lastSlash + 1) : '/';
+  }
+  return path.endsWith('/') ? path : `${path}/`;
+}
+
+export function resolveResourceUrl(relativePath: string): string {
+  if (
+    !relativePath ||
+    relativePath.startsWith('http://') ||
+    relativePath.startsWith('https://') ||
+    relativePath.startsWith('//') ||
+    relativePath.startsWith('data:') ||
+    relativePath.startsWith('blob:') ||
+    relativePath.startsWith('/')
+  ) {
+    return relativePath;
+  }
+  const base = getBaseDirectory();
+  return `${base}${relativePath}`;
+}
+
 export function resolvePath(baseFilePath: string, relativePath: string): string {
   // If already absolute or URL, return as is
   if (
@@ -322,7 +351,7 @@ export class Router {
         !rawSrc.startsWith('blob:')
       ) {
         const resolvedSrc = resolvePath(currentFilePath, rawSrc);
-        img.setAttribute('src', resolvedSrc);
+        img.setAttribute('src', resolveResourceUrl(resolvedSrc));
       }
     });
   }

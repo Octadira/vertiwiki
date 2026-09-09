@@ -1,6 +1,6 @@
 import { VertiWikiPlugin } from '../core/pipeline';
 import { NavigationItem } from '../core/types';
-import { resolvePath } from '../core/router';
+import { resolvePath, resolveResourceUrl } from '../core/router';
 import { escapeHtml } from '../core/escape';
 
 export function parseNavigationMarkdown(navMarkdown: string, baseFilePath: string = ''): NavigationItem[] {
@@ -77,10 +77,10 @@ export const sitemapPlugin: VertiWikiPlugin = {
 
     let navItems: NavigationItem[] = [];
     try {
-      let navRes = await fetch(navFile);
+      let navRes = await fetch(resolveResourceUrl(navFile));
       if (!navRes.ok && navFile !== (context.config.navigationFile || 'navigation.md')) {
         navFile = context.config.navigationFile || 'navigation.md';
-        navRes = await fetch(navFile);
+        navRes = await fetch(resolveResourceUrl(navFile));
       }
       if (navRes.ok) {
         const navText = await navRes.text();

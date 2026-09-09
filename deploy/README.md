@@ -69,7 +69,7 @@ Place in project root. Prefix sources and destinations with `/docs`:
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": false,
-  "trailingSlash": false,
+  "trailingSlash": true,
   "redirects": [
     {
       "source": "/docs/(.*\\.md)",

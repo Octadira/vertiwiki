@@ -1,6 +1,16 @@
 # Changelog
 
-## VertiWiki 0.9.2 (September 2026) :badge[Latest]{type=success}
+## VertiWiki 0.9.3 (September 2026) :badge[Latest]{type=success}
+
+### 🐛 Deterministic Subfolder Resource Resolution & Deployment Trailing Slash Hardening
+- **Deterministic Subfolder Resource Resolution (`src/core/router.ts`)**: Introduced `getBaseDirectory()` and `resolveResourceUrl()`, guaranteeing that all relative resource requests (`config.json`, `navigation.md`, page Markdown, themes, custom CSS, favicon, and Markdown images) resolve accurately against the subfolder base directory (e.g. `/docs/`) regardless of whether the URL was opened with or without a trailing slash (`/docs#/guide.md` vs `/docs/#/guide.md`).
+- **Universal Lifecycle Integration (`src/main.ts`, `src/core/config.ts`, `src/ui/layout.ts`, `src/plugins/search.ts`, `src/plugins/sitemap.ts`, `src/core/favicon.ts`)**: Bound `resolveResourceUrl` across all resource fetching layers, eliminating soft 404s and broken Markdown requests on subfolder instances.
+- **Vercel Trailing Slash Enforcement (`deploy/vercel/vercel.json`, `deploy/README.md`)**: Configured `"trailingSlash": true` to prevent edge CDN 308 redirects from stripping directory slashes and corrupting browser address bars.
+- **Unit Test Coverage (`tests/router-i18n.test.ts`)**: Added automated test coverage for `getBaseDirectory()` and `resolveResourceUrl()`, expanding the test suite to 19 files and 108 passed unit tests.
+
+---
+
+## VertiWiki 0.9.2 (September 2026)
 
 ### 🐛 Mermaid Diagram Labels & Agent-Friendly Docs (AFDocs) Modernization
 - **Mermaid `<foreignObject>` Label Preservation (`src/plugins/mermaid.ts`)**: Upgraded DOMPurify sanitization profile in `mermaidPlugin` to explicitly allow `foreignObject`, `style`, and HTML integration points, resolving an issue where diagram node texts and labels were stripped out during sanitization while preserving complete zero-XSS security.
