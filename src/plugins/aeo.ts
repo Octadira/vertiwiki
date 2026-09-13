@@ -158,7 +158,7 @@ export class AEOEngine {
           headline: parsed.title,
           description: description,
           articleBody: cleanSnippet,
-          inLanguage: 'en',
+          inLanguage: (typeof document !== 'undefined' && document.documentElement.lang) || 'en',
           isPartOf: { '@id': `${window.location.origin}/#website` },
           author: parsed.author ? { '@type': 'Person', name: parsed.author } : { '@type': 'Organization', name: this.config.title },
           datePublished: parsed.date || new Date().toISOString().split('T')[0],

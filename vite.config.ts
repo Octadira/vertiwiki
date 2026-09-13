@@ -64,6 +64,8 @@ function scriptToEndOfBodyPlugin(): Plugin {
           // Ensure favicon link in standalone bundle remains assets/favicon.ico for zero-build end-user configuration
           html = html.replace(/<link rel="icon"[^>]*href="[^"]*favicon[^"]*"[^>]*>/i, '<link rel="icon" href="assets/favicon.ico" />');
           fs.writeFileSync(distIndex, html, 'utf8');
+          const distVerti = path.resolve(process.cwd(), 'dist/vertiwiki.html');
+          fs.writeFileSync(distVerti, html, 'utf8');
         }
       }
       const distDir = path.resolve(process.cwd(), 'dist');

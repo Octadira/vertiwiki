@@ -1,4 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import DOMPurify from 'dompurify';
 import { escapeHtml } from '../src/core/escape';
 import { Layout } from '../src/ui/layout';
 import { DEFAULT_CONFIG } from '../src/core/config';
@@ -85,6 +86,74 @@ describe('Security and XSS Sanitization Suite', () => {
 
       expect(renderedItem).not.toContain('<svg onload=alert(1)>');
       expect(renderedItem).toContain('&lt;svg onload=alert(1)&gt;');
+    });
+  });
+
+  describe('Iframe Sandbox & Security Hook', () => {
+    it('enforces sandbox attribute on valid https iframes and removes invalid protocols', async () => {
+      let registeredHook: ((node: any, data: any) => void) | null = null;
+      (DOMPurify as any).addHook = vi.fn((name: string, cb: any) => {
+        if (name === 'uponSanitizeElement') registeredHook = cb;
+      });
+      (DOMPurify as any).removeHook = vi.fn();
+      (DOMPurify as any).sanitize = vi.fn((html: string) => html);
+
+      const { MarkdownParser } = await import('../src/core/parser');
+      const parser = new MarkdownParser();
+      parser.parse('# Test');
+
+      expect(registeredHook).toBeDefined();
+
+      // Test valid https iframe
+      const validEl = {
+        getAttribute: vi.fn().mockImplementation((attr: string) => {
+          if (attr === 'src') return 'https://example.com/embed';
+          return null;
+        }),
+        setAttribute: vi.fn(),
+        remove: vi.fn()
+      };
+      registeredHook!(validEl, { tagName: 'iframe' });
+      expect(validEl.setAttribute).toHaveBeenCalledWith('sandbox', 'allow-scripts allow-same-origin allow-popups allow-forms allow-presentation');
+      expect(validEl.remove).not.toHaveBeenCalled();
+
+      // Test dangerous iframe
+      const invalidEl = {
+        getAttribute: vi.fn().mockImplementation((attr: string) => {
+          if (attr === 'src') return 'javascript:alert(1)';
+          return null;
+        }),
+        setAttribute: vi.fn(),
+        remove: vi.fn()
+      };
+      registeredHook!(invalidEl, { tagName: 'iframe' });
+      expect(invalidEl.remove).toHaveBeenCalled();
+    });
+  });
+
+  describe('Dangerous URI Scheme Neutralization', () => {
+    it('strips javascript: and vbscript: hrefs from anchor elements', async () => {
+      const { Router } = await import('../src/core/router');
+      const router = new Router('index.md', async () => {});
+
+      const mockAnchor = {
+        getAttribute: vi.fn().mockReturnValue('javascript:alert(1)'),
+        removeAttribute: vi.fn(),
+        setAttribute: vi.fn()
+      };
+
+      const container = {
+        querySelectorAll: vi.fn().mockImplementation((selector: string) => {
+          if (selector === 'a[href]') {
+            return [mockAnchor];
+          }
+          return [];
+        })
+      };
+
+      router.transformLinks(container as any);
+      expect(mockAnchor.removeAttribute).toHaveBeenCalledWith('href');
+      expect(mockAnchor.setAttribute).not.toHaveBeenCalledWith('target', '_blank');
     });
   });
 });

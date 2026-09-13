@@ -21,11 +21,11 @@ export async function resolveFavicon(config: VertiWikiConfig): Promise<string> {
   }
 
   const fallbacks = [
-    'demo/assets/favicon.ico',
-    'demo/assets/favicon.svg',
     'assets/favicon.ico',
     'assets/favicon.svg',
-    'favicon.ico'
+    'favicon.ico',
+    'demo/assets/favicon.ico',
+    'demo/assets/favicon.svg'
   ];
 
   for (const candidate of fallbacks) {

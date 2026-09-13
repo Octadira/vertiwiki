@@ -1,14 +1,15 @@
 {
   "name": "vertiwiki",
-  "version": "0.9.3",
+  "version": "0.10.0",
   "description": "100% static, single-file, zero-backend Markdown wiki and documentation engine for 2026 and beyond.",
   "type": "module",
   "main": "dist/vertiwiki.html",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && cp dist/index.html dist/vertiwiki.html",
+    "build": "vite build",
     "preview": "vite preview",
-    "test": "vitest run"
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
   },
   "engines": {
     "node": ">=22"

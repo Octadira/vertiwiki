@@ -13,7 +13,7 @@ import { VertiWikiPlugin, PluginContext } from '../core/pipeline';
  * Automatically isolates fenced code blocks and inline backtick code so that
  * literal `[[...]]` written within code examples are left untouched.
  */
-function computeRelativePath(fromFilePath: string, targetPath: string): string {
+function computeRelativePath(fromFilePath: string, targetPath: string, configuredLocales?: string[]): string {
   if (targetPath.startsWith('/') || targetPath.startsWith('http://') || targetPath.startsWith('https://')) {
     return targetPath;
   }
@@ -24,7 +24,8 @@ function computeRelativePath(fromFilePath: string, targetPath: string): string {
   const fromSegments = cleanFrom.split('/');
   fromSegments.pop(); // remove filename, keep directory
 
-  const isLocale = fromSegments.length > 0 && ['ro', 'fr', 'de', 'es', 'it'].includes(fromSegments[0]);
+  const knownLocales = new Set(['ro', 'fr', 'de', 'es', 'it', ...(configuredLocales || [])]);
+  const isLocale = fromSegments.length > 0 && knownLocales.has(fromSegments[0]);
   let targetNormalized = cleanTarget;
 
   if (isLocale) {
@@ -90,7 +91,8 @@ export const wikilinksPlugin: VertiWikiPlugin = {
 
       // Compute relative path if context.filePath is available
       if (context && context.filePath) {
-        targetFile = computeRelativePath(context.filePath, targetFile);
+        const configuredLocales = context.config?.locales?.map(l => l.prefix || l.code).filter(Boolean) as string[] | undefined;
+        targetFile = computeRelativePath(context.filePath, targetFile, configuredLocales);
       }
 
       // Determine display label

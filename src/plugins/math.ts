@@ -51,8 +51,8 @@ export const mathPlugin: VertiWikiPlugin = {
       const text = node.nodeValue || '';
       if (!text.includes('$')) return;
 
-      // Match $$...$$ (display math) or $...$ (inline math)
-      const mathRegex = /\$\$([\s\S]+?)\$\$|\$([^\$\n]+?)\$/g;
+      // Match $$...$$ (display math) or $...$ (inline math, disallowing inner leading/trailing whitespace)
+      const mathRegex = /\$\$([\s\S]+?)\$\$|\$(?!\s)([^\$\n]+?)(?<!\s)\$/g;
       if (!mathRegex.test(text)) return;
 
       const fragment = document.createDocumentFragment();

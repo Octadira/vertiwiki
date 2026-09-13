@@ -291,14 +291,20 @@ export class Router {
       const rawHref = a.getAttribute('href');
       if (!rawHref) return;
 
+      // Dangerous script schemes
+      const lowerHref = rawHref.toLowerCase().trim();
+      if (lowerHref.startsWith('javascript:') || lowerHref.startsWith('vbscript:')) {
+        a.removeAttribute('href');
+        return;
+      }
+
       // External links
       if (
         rawHref.startsWith('http://') ||
         rawHref.startsWith('https://') ||
         rawHref.startsWith('//') ||
         rawHref.startsWith('mailto:') ||
-        rawHref.startsWith('tel:') ||
-        rawHref.startsWith('javascript:')
+        rawHref.startsWith('tel:')
       ) {
         a.setAttribute('target', '_blank');
         a.setAttribute('rel', 'noopener noreferrer');

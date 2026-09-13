@@ -1,4 +1,4 @@
-# VertiWiki 0.8.3 robots.txt
+# VertiWiki robots.txt
 # Optimized for AI Answer Engines, Search Bots, and LLMs
 
 User-agent: *

@@ -160,9 +160,12 @@ export class MarkdownParser {
       DOMPurify.removeHook('uponSanitizeElement');
       DOMPurify.addHook('uponSanitizeElement', (node, data) => {
         if (data.tagName === 'iframe') {
-          const src = node.getAttribute('src') || '';
+          const el = node as Element;
+          const src = el.getAttribute('src') || '';
           if (!src || (!src.startsWith('https://') && !src.startsWith('http://') && !src.startsWith('/'))) {
-            node.remove();
+            el.remove();
+          } else if (!el.getAttribute('sandbox')) {
+            el.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-popups allow-forms allow-presentation');
           }
         }
       });
@@ -223,7 +226,8 @@ export class MarkdownParser {
         'stroke-linejoin',
         'data-tab-target',
         'data-tabs-id',
-        'open'
+        'open',
+        'sandbox'
       ]
     };
 

@@ -83,9 +83,10 @@ function getLightbox(): LightboxManager {
 export const lightboxPlugin: VertiWikiPlugin = {
   name: 'lightbox',
   afterRender: (context) => {
-    // Attach click listener to article images
+    // Attach click listener to article images that are not inside links
     const images = context.container.querySelectorAll<HTMLImageElement>('img:not(.no-lightbox)');
     images.forEach(img => {
+      if (img.closest('a')) return;
       img.classList.add('verti-zoomable-img');
       img.addEventListener('click', () => {
         const src = img.getAttribute('src') || '';

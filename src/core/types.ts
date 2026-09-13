@@ -146,5 +146,5 @@ export interface RenderContext {
   currentPath: string;
   rawMarkdown: string;
   htmlContent: string;
-  config: CortexWikiConfig;
+  config: VertiWikiConfig;
 }

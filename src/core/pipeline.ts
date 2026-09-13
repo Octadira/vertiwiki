@@ -4,6 +4,7 @@ export interface PluginContext {
   filePath: string;
   config: VertiWikiConfig;
   container: HTMLElement;
+  rawMarkdown?: string;
 }
 
 export type BeforeParseHook = (markdown: string, context: PluginContext) => Promise<string> | string;

@@ -1,6 +1,22 @@
 # Changelog
 
-## VertiWiki 0.9.3 (September 2026) :badge[Latest]{type=success}
+## VertiWiki 0.10.0 "Épure" (September 2026) :badge[Latest]{type=success}
+
+### 🏛️ Complete Engine Stabilization, Security Hardening & Zero-Conflict Clean Architecture
+* **Landmark Milestone Codename ("Épure")**: Named in the French architectural and Enlightenment tradition of *l'épure*—a master drawing where all superfluous decoration and impurities are stripped away to reveal essential, crystal-clear structure and uncompromising elegance.
+* **100% Unambiguous MIT Licensing**: Completely eliminated conflicting legacy GPLv3 files (`LICENSE.txt`, `GPLv3.txt`) and outdated badges, establishing 100% clean, unencumbered MIT open-source licensing across the engine, scripts, and distribution packages.
+* **Strict TypeScript Type Safety (`package.json`, `src/`)**: Resolved all dormant compiler type errors in `parser.ts` and `layout.ts`, added `rawMarkdown?: string` to `PluginContext`, aligned `RenderContext` to `VertiWikiConfig`, and integrated `"typecheck": "tsc --noEmit"` into development scripts.
+* **Native Cross-Platform Single-File Build (`vite.config.ts`)**: Upgraded Vite bundle completion lifecycle to natively write both `dist/index.html` and `dist/vertiwiki.html` directly during `closeBundle()`, removing OS-dependent shell copy commands (`cp`) and guaranteeing seamless builds across Windows, macOS, and Linux.
+* **Production Zero-404 Favicon Fallback (`src/core/favicon.ts`)**: Reordered candidate resolution to prioritize production paths (`assets/favicon.ico`, `assets/favicon.svg`, `favicon.ico`) before demo development fallbacks, eliminating spurious 404 console errors on clean deployments.
+* **Iframe Sandboxing & Presentation Protocol (`src/core/parser.ts`)**: Hardened raw iframe Markdown embedding by enforcing a secure default sandbox (`sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-presentation"`) while preventing top-window hijacking/frame busting and allowing user custom sandboxes.
+* **Dangerous URI Scheme Neutralization (`src/core/router.ts`)**: Neutralized dangerous `javascript:` and `vbscript:` schemes on anchor tags to prevent DOM execution.
+* **Lightbox Anchor Protection (`src/plugins/lightbox.ts`)**: Updated image zoom handler to skip images inside anchor links (`:not(a img)`), preserving intended navigation on linked banners and badges.
+* **Dynamic i18n & Parsing Refinements**: Enabled dynamic locale detection in Schema.org JSON-LD AEO graphs (`inLanguage`), expanded wikilink relative path traversal with configured locales, tightened KaTeX inline math delimiters (`$`) to avoid capturing currency values, and prevented code-fence wrapper collisions with math blocks.
+* **Automated Unit Test Suite (`tests/security.test.ts`)**: Added comprehensive tests for iframe sandboxing, URI neutralization, and type verification, expanding the test suite to 19 test files and 110 passed unit tests.
+
+---
+
+## VertiWiki 0.9.3 (September 2026)
 
 ### 🐛 Deterministic Subfolder Resource Resolution & Deployment Trailing Slash Hardening
 - **Deterministic Subfolder Resource Resolution (`src/core/router.ts`)**: Introduced `getBaseDirectory()` and `resolveResourceUrl()`, guaranteeing that all relative resource requests (`config.json`, `navigation.md`, page Markdown, themes, custom CSS, favicon, and Markdown images) resolve accurately against the subfolder base directory (e.g. `/docs/`) regardless of whether the URL was opened with or without a trailing slash (`/docs#/guide.md` vs `/docs/#/guide.md`).

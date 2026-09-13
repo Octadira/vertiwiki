@@ -36,8 +36,8 @@ export const codeHighlightPlugin: VertiWikiPlugin = {
         }
       }
 
-      if (language === 'mermaid') {
-        // Skip mermaid; handled by mermaidPlugin
+      if (language === 'mermaid' || language === 'math') {
+        // Skip mermaid and math; handled by their respective plugins
         return;
       }
 

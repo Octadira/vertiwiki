@@ -55,7 +55,7 @@ export class Layout {
             </svg>
           </button>
           <a href="#/${this.config.homePage}" class="verti-brand">
-            ${showLogo ? `<img src="${escapeHtml(resolveResourceUrl(this.config.logo))}" class="verti-brand-logo" alt="${escapeHtml(this.config.title)}" />` : ''}
+            ${showLogo && this.config.logo ? `<img src="${escapeHtml(resolveResourceUrl(this.config.logo))}" class="verti-brand-logo" alt="${escapeHtml(this.config.title)}" />` : ''}
             ${showTitle ? `<span>${escapeHtml(this.config.title)}</span>` : ''}
           </a>
         </div>
